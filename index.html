@@ -60,6 +60,42 @@
     color: var(--green);
     letter-spacing: 0.1em;
   }
+  .suite-head {
+    margin: 3rem 0 0.4rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+  }
+  .suite-sub {
+    margin: 0 0 1.4rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+  }
+  .suite {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    max-width: 1100px;
+    width: 100%;
+  }
+  .module {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .module img { width: 100%; height: auto; display: block; }
+  .module .m-name {
+    margin: 0.7rem 1rem 0.15rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+  }
+  .module .m-what {
+    margin: 0 1rem 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+  .module .m-soon { color: var(--green); }
   footer { text-align: center; margin-top: 3rem; }
   footer p { font-size: 0.8rem; }
   footer a { color: var(--green); }
@@ -169,6 +205,62 @@
     <h2>IN CONCERT</h2>
     <p>Not one app &mdash; a system. Notebook, CAD, image forge, print
     pipeline: modules built to work together on your own machines.</p>
+  </div>
+</div>
+
+<div class="suite-head">THE LEVIATHAN DESIGN SUITE</div>
+<div class="suite-sub">design &rarr; toolpath &rarr; machine &mdash; every module named for the one who did it first</div>
+
+<div class="suite">
+  <div class="module">
+    <img src="splash/tiamat.jpg" alt="Tiamat — dragon of the deep coiled around a glowing core" loading="lazy">
+    <div class="m-name">TIAMAT</div>
+    <p class="m-what">The host. Every tool on one board &mdash; putting chaos to work.</p>
+  </div>
+  <div class="module">
+    <img src="splash/vitruvius.jpg" alt="Vitruvius — the architect at his drafting table" loading="lazy">
+    <div class="m-name">VITRUVIUS</div>
+    <p class="m-what">CAD with an AI drafting hand. Solids in, drawings out.</p>
+  </div>
+  <div class="module">
+    <img src="splash/hephaestus.jpg" alt="Hephaestus — the smith at his forge, sparks becoming toolpaths" loading="lazy">
+    <div class="m-name">HEPHAESTUS</div>
+    <p class="m-what">CAM. Profiles, pockets, drills, 3D roughing &mdash; straight to G-code.</p>
+  </div>
+  <div class="module">
+    <img src="splash/iris.jpg" alt="Iris — a rainbow beam narrowing into a cutting laser" loading="lazy">
+    <div class="m-name">IRIS</div>
+    <p class="m-what">Laser &amp; plasma prep. Raster, vectorize, kerf, cut.</p>
+  </div>
+  <div class="module">
+    <img src="splash/jove.jpg" alt="Jove — lightning curing a resin lattice on a storm cloud" loading="lazy">
+    <div class="m-name">JOVE</div>
+    <p class="m-what">Resin print prep. Supports, drains, slice to the vat.</p>
+  </div>
+  <div class="module">
+    <img src="splash/oannes.jpg" alt="Oannes — the sage from the water with a glowing scroll" loading="lazy">
+    <div class="m-name">OANNES</div>
+    <p class="m-what">The shop advisor. Grounded answers, honest G-code post.</p>
+  </div>
+  <div class="module">
+    <img src="splash/gilgamesh.jpg" alt="GilgaMESH — the hero built of glowing wireframe" loading="lazy">
+    <div class="m-name">GILGAMESH</div>
+    <p class="m-what">Image to mesh. <span class="m-soon">forging_</span></p>
+  </div>
+  <div class="module">
+    <img src="splash/daedalus.jpg" alt="Daedalus — wings over a labyrinth of printed layers" loading="lazy">
+    <div class="m-name">DAEDALUS</div>
+    <p class="m-what">The viewer. Toolpaths and slice files, seen before they run.</p>
+  </div>
+  <div class="module">
+    <img src="splash/ouranos.jpg" alt="Ouranos — a constellation sky arched over a glowing geodesic dome" loading="lazy">
+    <div class="m-name">OURANOS</div>
+    <p class="m-what">Geodesic dome design. Cut lists, hub schedules, FEA &mdash; tape-measure ready.</p>
+  </div>
+  <div class="module">
+    <img src="splash/morpheus.jpg" alt="Morpheus — the dream god shaping images from mist" loading="lazy">
+    <div class="m-name">MORPHEUS</div>
+    <p class="m-what">Image generation on your own iron. No queue, no account.</p>
   </div>
 </div>
 
