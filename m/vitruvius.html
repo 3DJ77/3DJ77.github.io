@@ -157,9 +157,9 @@ SPEC build mode (≤2 clarifying questions → parameter sheet →
 quantities against the compiled program, and a VLM judge that renders
 the part and rules on shape class (advisory; JUDGE FAIL triggers one
 repair round). <strong>Honest note:</strong> the AI lane needs a
-configured LLM endpoint (<code>SIG_LLM_URL</code>, default the Tiamat
-nemotron shim) and its reliability work is still open — the AI-assist
-claim is deliberately OFF the public page until it holds.</li>
+configured LLM endpoint (<code>SIG_LLM_URL</code>, default the GPU
+host's nemotron shim) and its reliability work is still open — the
+AI-assist claim is deliberately OFF the public page until it holds.</li>
 <li><strong>Backdrops</strong> — SHOP / HILLS / SPACE skydome
 wallpapers, BG LEVEL trim.</li>
 <li><strong>SpaceMouse</strong> — direct hidraw driver (no daemon), full
@@ -240,11 +240,11 @@ input.</li>
 <code>~/XOS/.timeline-events.jsonl</code> for the operator surface's
 timeline dots.</li>
 <li><strong>LLM endpoints</strong> — CO-OP posts to
-<code>SIG_LLM_URL</code> (default the Tiamat nemotron shim
-<code>http://10.0.0.2:18205</code>); the judge renders via local
+<code>SIG_LLM_URL</code> (default the GPU host's nemotron shim
+<code>http://$GPU_HOST:18205</code>); the judge renders via local
 <code>openscad</code> and asks a VLM endpoint. Vitruvius calls over HTTP
-and holds no GPU itself — Tiamat-side GPU serialization is the Styx
-lease, owned by whatever runs the model server.</li>
+and holds no GPU itself — host-side GPU serialization is the Styx lease,
+owned by whatever runs the model server.</li>
 </ul>
 <h2 id="env-knobs">Env knobs</h2>
 <p>Env is launch-time trim; the NAV panel / nav.json is the durable home
@@ -328,7 +328,7 @@ for feel.</p>
 </tr>
 <tr class="even">
 <td><code>SIG_LLM_URL</code></td>
-<td><code>http://10.0.0.2:18205</code></td>
+<td><code>http://$GPU_HOST:18205</code></td>
 <td>CO-OP LLM endpoint</td>
 </tr>
 <tr class="odd">

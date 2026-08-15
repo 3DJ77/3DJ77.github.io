@@ -62,11 +62,10 @@ shapes images out of nothing; so does this. Kin in the pantheon:</p>
 <ul>
 <li><strong>Galatea</strong> — reserved for the video layer (still →
 motion), later.</li>
-<li><strong>HADES</strong> — the Tiamat-side resident-model keeper
-(<code>tools/sd-serve.sh</code>, deployed as
-<code>tiamat:~/sd-serve</code>). Decides which giant is awake in the
-vault; everything else sleeps until called. Command name stays
-<code>sd-serve</code>.</li>
+<li><strong>HADES</strong> — the GPU-host resident-model keeper
+(<code>tools/sd-serve.sh</code>, deployed as <code>~/sd-serve</code> on
+that host). Decides which giant is awake in the vault; everything else
+sleeps until called. Command name stays <code>sd-serve</code>.</li>
 </ul></div>
 <p class="tagline">Image generation on your own iron. No queue, no account.</p>
 <div class="shots-head">IN ACTION</div>
@@ -80,12 +79,12 @@ Business.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/XOS/Morpheus <span class="kw">&amp;&amp;</span> <span class="ex">cargo</span> run <span class="at">--release</span></span></code></pre></div>
 <ol type="1">
-<li>Window opens on the workstation (Locutous holds the screen — nothing
-renders here).</li>
+<li>Window opens on your workstation (the screen box — nothing renders
+here).</li>
 <li>Type a prompt in the text box. Press <strong>Shape</strong> (or
 Enter).</li>
 <li>Status reads
-<code>shaping with &lt;model&gt; on Tiamat… (holds the GPU lease)</code>.
+<code>shaping with &lt;model&gt; on the GPU host… (holds the GPU lease)</code>.
 Schnell lands in ~35s warm; first render after a cold keeper pays the
 model load.</li>
 <li>The render fills the <strong>canvas</strong> and joins the
@@ -95,8 +94,8 @@ full-res PNG to an editor; <strong>swap</strong> cycles to the next
 installed editor. <strong>Fit to monitor</strong> opens a monitor-sized
 copy.</li>
 </ol>
-<p>All GPU work runs remotely on Tiamat. The PNG comes back over the
-shared Hydra NFS mount — same path on every node.</p>
+<p>All GPU work runs remotely on the GPU host. The PNG comes back over a
+shared NFS mount — same path on every node.</p>
 <h2 id="what-it-is">What it is</h2>
 <p>A standalone Rust app (fyrox window + the <code>image</code> crate,
 Kish-style — its own repo, not a Leviathan module). It is the image half
@@ -120,18 +119,17 @@ by design).</li>
 </ul></li>
 <li><strong>Two execution paths</strong> — resident models POST the
 <strong>A1111 API</strong>
-(<code>http://tiamat:7860/sdapi/v1/txt2img</code>) to the sd-server
+(<code>http://$GPU_HOST:7860/sdapi/v1/txt2img</code>) to the sd-server
 HADES holds warm with <code>--eager-load</code> (~35s/render, no
 per-render reload). Non-resident models run one-shot via
-<code>ssh tiamat '~/sd-serve --cli &lt;key&gt; &lt;out&gt;'</code>,
+<code>ssh $GPU_HOST '~/sd-serve --cli &lt;key&gt; &lt;out&gt;'</code>,
 prompt piped over stdin so no shell quoting can bite.</li>
 <li><strong>GPU lease</strong> — every render runs under
 <code>flock</code> on the Styx lease
 (<code>/tmp/xos_gpu_lock.json</code>), serializing politely against the
 LLM lanes.</li>
-<li><strong>Shared NFS</strong> — weights on
-<code>/mnt/hydra/models/image/</code>, renders land in
-<code>/mnt/hydra/models/image/_out/</code> (readable from every
+<li><strong>Shared NFS</strong> — weights on the shared models mount,
+renders land in its <code>_out/</code> directory (readable from every
 node).</li>
 <li><strong>Open in…</strong> — hands the current render to
 gimp/krita/inkscape/gthumb/eog/ feh/nomacs; first installed wins,
@@ -154,7 +152,7 @@ the fleet; override only for a packaged install or a renamed host.</li>
 <tbody>
 <tr class="odd">
 <td><code>MORPHEUS_TIAMAT</code></td>
-<td><code>tiamat</code></td>
+<td>(your GPU host)</td>
 <td>GPU host to ssh/POST</td>
 </tr>
 <tr class="even">
@@ -164,7 +162,7 @@ the fleet; override only for a packaged install or a renamed host.</li>
 </tr>
 <tr class="odd">
 <td><code>MORPHEUS_OUT_DIR</code></td>
-<td><code>/mnt/hydra/models/image/_out</code></td>
+<td>(shared NFS <code>_out/</code>)</td>
 <td>where renders land</td>
 </tr>
 <tr class="even">
@@ -187,8 +185,8 @@ for both paths.</p>
 <li><strong>Render</strong>: pick a model, type, Shape. Status line
 tells you what's happening; there's no progress bar yet — "shaping…"
 then the image lands.</li>
-<li><strong>Cold start</strong>: first render after Tiamat reboot or a
-model switch blocks while HADES loads the model
+<li><strong>Cold start</strong>: first render after a GPU-host reboot or
+a model switch blocks while HADES loads the model
 (<code>~/sd-serve &lt;key&gt;</code> is idempotent — a no-op if that
 model is already resident, otherwise it kills the old server, starts the
 new one, and waits for "listening on" or fails loud).</li>
@@ -201,10 +199,10 @@ back, Open/Fit act on it.</li>
 </ul>
 <h2 id="how-it-connects">How it connects</h2>
 <pre><code>Morpheus (workstation window)
-  ├─ ssh tiamat ~/sd-serve &lt;key&gt;      HADES: make the model resident (no-op if warm)
+  ├─ ssh $GPU_HOST ~/sd-serve &lt;key&gt;   HADES: make the model resident (no-op if warm)
   ├─ flock &lt;styx lease&gt; curl :7860    A1111 txt2img under the GPU lease
   │     └─ sd-server --eager-load     one giant awake at a time
-  └─ /mnt/hydra/.../_out/*.png        render back over shared NFS</code></pre>
+  └─ &lt;shared NFS&gt;/_out/*.png          render back over shared NFS</code></pre>
 <p>One GPU, many claimants: Morpheus competes politely with the LLM
 lanes (nemotron, Devstral) through the same Styx flock — the lease is
 truth, never the label file. HADES enforces "one model resident" on the
@@ -219,11 +217,11 @@ the next small add.</li>
 <li><strong>FLUX.2 dev is slow one-shot by design</strong> — its ~266s
 <code>--offload-to-cpu</code> first step outlasts the A1111 HTTP socket,
 so it can't ride the resident path.</li>
-<li><strong>Cold-keeper tax</strong> — first render after a Tiamat
+<li><strong>Cold-keeper tax</strong> — first render after a GPU-host
 reboot or model switch pays the full NFS model load. HADES persistence
 is nohup-level: survives renders and SSH disconnects, not a reboot
 (systemd user unit is the follow-up, off-by-default like
-<code>llama-server</code> — Tiamat boots quiet by design).</li>
+<code>llama-server</code> — the host boots quiet by design).</li>
 <li><strong>No negative prompt, no seed control</strong> — seed is
 <code>-1</code> (random) today.</li>
 <li><strong>No progress bar</strong> — status text only.</li>
@@ -239,7 +237,7 @@ fix.</li>
 <li>Progress feedback during long shapes.</li>
 <li>systemd user unit for HADES (boot/crash restart, off by
 default).</li>
-<li>Pooled-VRAM path (<code>--rpc</code> to Tiamat) for bigger
+<li>Pooled-VRAM path (<code>--rpc</code> to the GPU host) for bigger
 models.</li>
 <li><strong>Galatea</strong> — sd-cli has <code>-M vid_gen</code>; the
 still→motion layer.</li>

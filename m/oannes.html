@@ -152,10 +152,10 @@ characters.</li>
 </ul>
 <h2 id="how-it-connects">How it connects</h2>
 <ul>
-<li>Generation runs on Tiamat: the engine defaults to the nemotron shim
-at <code>:18205</code> (<code>CNC_NEMOTRON_SHIM_BASE</code>); Devstral
-is proven for the G-code review lane, nemotron holds the advisor
-feeds/speeds lane. Residency is the HADES keeper's business —
+<li>Generation runs on the GPU host: the engine defaults to the nemotron
+shim at <code>:18205</code> (<code>CNC_NEMOTRON_SHIM_BASE</code>);
+Devstral is proven for the G-code review lane, nemotron holds the
+advisor feeds/speeds lane. Residency is the HADES keeper's business —
 last-loaded model stays warm.</li>
 <li>All GPU calls go through the Styx lease: <code>flock</code> on
 <code>/tmp/xos_gpu_lock.json</code> (the CLI, the window's worker

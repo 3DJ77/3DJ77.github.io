@@ -75,7 +75,7 @@ the writer is <strong>Thoth</strong>, image styles are
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/XOS/Kish</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> ping orchestrate        <span class="co"># prove the Tiamat seam answers</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> ping orchestrate        <span class="co"># prove the LLM seam answers</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> dub mynotes             <span class="co"># create a notebook (a &quot;Dub&quot;)</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> ingest mynotes doc.pdf  <span class="co"># extract + chunk + embed</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> doctor mynotes          <span class="co"># audit what actually indexed</span></span>
@@ -157,7 +157,8 @@ endpoints only:</p>
 <tbody>
 <tr class="odd">
 <td>orchestrate</td>
-<td><code>http://10.0.0.2:18205/v1</code> (Tiamat nemotron3 shim)</td>
+<td><code>http://$GPU_HOST:18205/v1</code> (the GPU host's nemotron3
+shim)</td>
 <td><code>nemotron3</code></td>
 </tr>
 <tr class="even">
@@ -168,7 +169,7 @@ alternates)</td>
 </tr>
 <tr class="odd">
 <td>embed</td>
-<td><code>http://127.0.0.1:18110/v1</code> (Locutous CPU,
+<td><code>http://127.0.0.1:18110/v1</code> (local CPU,
 <code>llama-server@kish-embed</code>)</td>
 <td><code>nomic-embed-text</code> (v1.5, Apache-2.0)</td>
 </tr>
@@ -181,8 +182,8 @@ shim. A per-Dub override replaces the WHOLE alias
 artifacts (Kish = the report half of "image+report for release");
 <strong>Oannes</strong> is the shop-floor advisor sibling. Folio
 painting shells to
-<code>Eidolon-Forge/python/eidolon_chat_pipeline.py</code> (Tiamat GPU,
-one lease per batch).</p>
+<code>Eidolon-Forge/python/eidolon_chat_pipeline.py</code> (GPU-host
+GPU, one lease per batch).</p>
 <h2 id="known-limits">Known limits</h2>
 <ul>
 <li>Embed endpoint down ⇒ ingest/ask/report dead. Chat lane cold-starts

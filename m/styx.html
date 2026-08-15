@@ -59,7 +59,7 @@
 <h1 class="mname">STYX</h1>
 <div class="lore"><p>The Styx is the river every soul must cross one at a time, and an
 oath sworn on it binds even a god. The GPU lease is that oath: while one
-holder has it, nobody else crosses. All GPU work on Tiamat serializes
+holder has it, nobody else crosses. All GPU work on the host serializes
 through this one crossing.</p>
 <p>The canonical lock file is
 <code>DEFAULT_LOCK_FILE = /tmp/xos_gpu_lock.json</code> (override:
@@ -85,7 +85,7 @@ the GPU, held for as long as the value lives:</p>
 class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">styx::</span><span class="op">{</span>Endpoint<span class="op">,</span> Lease<span class="op">,</span> ensure_model<span class="op">,</span> run<span class="op">};</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> lease <span class="op">=</span> <span class="pp">Lease::</span>acquire(<span class="st">&quot;hephaestus&quot;</span>)<span class="op">?;</span>     <span class="co">// flock, non-blocking: busy = Err</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> ep <span class="op">=</span> <span class="pp">Endpoint::</span><span class="kw">default</span>()<span class="op">;</span>                  <span class="co">// Nemotron shim on 10.0.0.2:18205</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> ep <span class="op">=</span> <span class="pp">Endpoint::</span><span class="kw">default</span>()<span class="op">;</span>                  <span class="co">// Nemotron shim on the GPU host</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ensure_model(<span class="op">&amp;</span>ep<span class="op">,</span> <span class="op">&amp;</span>lease)<span class="op">?;</span>                    <span class="co">// wake a cold model, wait it out</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> answer <span class="op">=</span> run(<span class="op">&amp;</span>ep<span class="op">,</span> <span class="st">&quot;prompt&quot;</span><span class="op">,</span> <span class="cn">Some</span>(<span class="op">&amp;</span>lease))<span class="op">?;</span> <span class="co">// one completion under the lease</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">// drop(lease) → the kernel releases the lock</span></span></code></pre></div>

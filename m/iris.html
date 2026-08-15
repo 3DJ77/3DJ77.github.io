@@ -207,8 +207,8 @@ pierced-and-led-in plasma G-code out.</li>
 Tia's OpenAI-compatible llama-server ports in order :18140 (gemma
 preferred), :18205, :18130, :18120, :18102, :18103 and uses the first
 warm one. Nothing warm = loud error, exit 1. The window sets
-<code>IRIS_CHAT_HOST=10.0.0.2</code>; CLI defaults to localhost (Iris is
-Tia-resident in deployment).</li>
+<code>IRIS_CHAT_HOST</code> to the GPU host; CLI defaults to localhost
+(Iris is Tia-resident in deployment).</li>
 <li><strong>Styx lease</strong> — chat rides whatever resident server
 already holds the GPU; it never takes the lease itself. Any GPU job you
 run around Iris goes through
