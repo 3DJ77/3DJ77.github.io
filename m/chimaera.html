@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHIMAERA — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/chimaera.jpg" alt="CHIMAERA splash"></div>
+<h1 class="mname">CHIMAERA</h1>
+<p class="tagline">The hands. Camera, puck, and pointer — many beasts, one body.</p>
+
+<div class="manual">
+<h1 id="chimaera--crate-manual">Chimaera — Crate Manual</h1>
+<h2 id="quickstart">Quickstart</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode toml"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargo.toml</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">[dependencies]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">chimaera</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">path</span><span class="op"> =</span> <span class="st">&quot;../Chimaera&quot;</span><span class="op"> }</span></span></code></pre></div>
+<p>The central type is <code>chimaera::camera::OrbitCamera</code> — the
+perspective orbit/pan/zoom/fly rig every viewport drives:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">chimaera::camera::</span>OrbitCamera<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> cam <span class="op">=</span> <span class="pp">OrbitCamera::</span><span class="kw">default</span>()<span class="op">;</span>          <span class="co">// 3/4 CAD view, above the plate</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>cam<span class="op">.</span>apply_drag(dx_px<span class="op">,</span> dy_px)<span class="op">;</span>                  <span class="co">// left-drag orbit</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>cam<span class="op">.</span>apply_pan(dx_px<span class="op">,</span> dy_px)<span class="op">;</span>                   <span class="co">// middle-drag &quot;grab the world&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>cam<span class="op">.</span>apply_scroll(ticks)<span class="op">;</span>                       <span class="co">// wheel dollies the orbit radius</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cam<span class="op">.</span>update(<span class="op">&amp;</span><span class="kw">mut</span> scene<span class="op">.</span>graph<span class="op">,</span> camera_handle<span class="op">,</span> dt_ms)<span class="op">;</span> <span class="co">// per-frame: writes the node</span></span></code></pre></div>
+<h2 id="what-it-is">What it is</h2>
+<p>The viewport crate of the Leviathan Design Suite: 3D camera control,
+SpaceMouse input, and pure picking/gizmo math, lifted out of the design
+tool (2026-08-09) so every window that shows a scene shares one proven
+set of hands. Sovereign, local-first, fyrox 1.0 only; PolyForm Small
+Business licensed. Ground truth for every sign in here = operator hands
+— the <code>pan_canon_*</code> tests pin the grab-the-world contract;
+never re-derive from documentation.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p>The Chimaera is the impossible hybrid — lion, goat, serpent in one
+body. This crate fuses three unrelated concerns the same way: camera,
+spacemouse, and picking, one body, none of them domain logic.</p>
+<h2 id="api-surface">API surface</h2>
+<ul>
+<li><code>camera::OrbitCamera</code> — orbit target/radius, quaternion
+rotation, FOV; <code>apply_drag</code> / <code>apply_drag_local</code> /
+<code>apply_pan</code> / <code>apply_scroll</code> /
+<code>apply_roll</code>, <code>tween_to</code> /
+<code>clear_focus</code> / <code>frame</code> / <code>snap_view</code>,
+fly mode (<code>enter_fly</code>, <code>fly_translate</code>,
+<code>exit_fly_to_orbit</code>, <code>is_flying</code>),
+<code>world_position</code> / <code>rotation</code> for ray math,
+per-frame <code>update</code>.</li>
+<li><code>camera::pan_canon</code> — THE one pan seam (camera-relative,
+both consumers).</li>
+<li><code>spacemouse</code> — 3Dconnexion Compact (256f:c635) hidraw
+reader:
+<code>spawn_hidraw_reader() -&gt; Option&lt;SpaceMouseHandle&gt;</code>,
+<code>fresh_axes()</code> / <code>inject()</code>,
+<code>parse_report</code>, <code>apply_deadzone</code> /
+<code>scale_axis</code> / <code>response_curve</code>,
+<code>probe(seconds)</code> for windowless device checks.</li>
+<li><code>interact</code> — pure math: <code>cursor_to_ray</code>,
+<code>world_to_screen</code>, <code>plane_point</code>,
+<code>ray_vs_aabb</code>, <code>ray_vs_triangle</code>,
+<code>surface_snap_y</code>, <code>closest_point_on_axis</code>,
+<code>ring_angle</code> / <code>ring_hit</code>,
+<code>snap_angle_deg</code> / <code>round_to_step</code>,
+<code>arrow_delta</code>, <code>ruler_segments</code>,
+<code>skydome_mesh</code>, <code>compass_ticks</code>,
+<code>shift_pick</code> / <code>clear_multi</code>,
+<code>PickCycle</code>.</li>
+</ul>
+<h2 id="consumers">Consumers</h2>
+<p>Vitruvius (the design module), Ouranos, and the prep windows (Iris,
+Jove). Any Leviathan surface that opens a 3D viewport takes Chimaera as
+a path dependency rather than growing its own camera.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li>Poisoned-mutex on the spacemouse thread reads as idle:
+<code>fresh_axes()</code> returns <code>None</code> on a poisoned lock,
+so a panicked reader looks like a hands-off device instead of failing
+loud. Open finding.</li>
+<li>Legacy <code>SIG_*</code> env names are still honored
+(<code>SIG_PAN_SIGN</code>, <code>SIG_SPACEMOUSE_HIDRAW</code>,
+<code>SIG_SPACEMOUSE_FLY_SPEED</code>) — SigNature-era names that
+predate the Vitruvius rename.</li>
+<li>Fyrox-shaped: the X-mirror compensation and +Z-forward conventions
+in <code>interact</code> are fyrox renderer facts, not portable
+math.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

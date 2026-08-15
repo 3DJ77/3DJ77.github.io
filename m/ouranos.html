@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OURANOS — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/ouranos.jpg" alt="OURANOS splash"></div>
+<h1 class="mname">OURANOS</h1>
+<p class="tagline">Geodesic dome design. Cut lists, hub schedules, FEA — tape-measure ready.</p>
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/ouranos-argo-nav.jpg" alt="the NAV panel — ARGO's shared feel" loading="lazy"><figcaption>the NAV panel — ARGO's shared feel</figcaption></figure><figure><img src="shots/ouranos-atlas-fea.jpg" alt="ATLAS: member utilization, both tails" loading="lazy"><figcaption>ATLAS: member utilization, both tails</figcaption></figure><figure><img src="shots/ouranos-base-mode.jpg" alt="Base mode with pinned joints" loading="lazy"><figcaption>Base mode with pinned joints</figcaption></figure><figure><img src="shots/ouranos-cover-clickout.jpg" alt="Cover mode — click panels out" loading="lazy"><figcaption>Cover mode — click panels out</figcaption></figure><figure><img src="shots/ouranos-framework-night.jpg" alt="the framework under the night sky" loading="lazy"><figcaption>the framework under the night sky</figcaption></figure><figure><img src="shots/ouranos-fullerene-soccerball.jpg" alt="fullerene dual — the soccer-ball combo" loading="lazy"><figcaption>fullerene dual — the soccer-ball combo</figcaption></figure></div>
+<div class="manual">
+<h1 id="ouranos--operator-manual">Ouranos — Operator Manual</h1>
+<p>Geodesic dome design module of the Leviathan Design Suite. Sovereign,
+local-first, zero-dep core. License: PolyForm Small Business 1.0.0.</p>
+<h2 id="quickstart">Quickstart</h2>
+<pre><code>cd ~/XOS/Ouranos
+cargo build --release --features win
+target/release/ouranos-win</code></pre>
+<ol type="1">
+<li>Pick <strong>Frequency</strong> (3V), <strong>Part of
+sphere</strong> (7/12), <strong>Timber size</strong> (89 × 89).</li>
+<li>Read the <strong>Results</strong> block on the right — counts, cuts,
+timbers — and the <strong>ATLAS</strong> block under it — worst/laziest
+utilization, deflection, verdict.</li>
+<li>Hit <strong>Cut list (PDF)…</strong> and take the traveler to the
+bench.</li>
+</ol>
+<p>Defaults ARE his dome: 3V icosa, R 2.2 m, 7/12, Kruschke flat base,
+miter + plasma plates, 89×89 timber, snow 4.31 kPa (90 psf — the Anson
+planning figure). Launch and it is already built.</p>
+<p>There is also <code>ouranos-cli</code> (no features needed): same
+core, prints the cut sheet, hub schedule, validation checks,
+spherical-cap block, sill ring + anchor bolt coordinates, shim table,
+and writes an STL with <code>--out</code>. Flags:
+<code>--freq --radius(-mm) --fraction --connection --base --hub-offset --timber-mm --stock-mm --kerf-mm --out</code>.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>Ouranos turns four dials — frequency, radius, sphere fraction, timber
+— into a buildable dome: a live 3D model with real mitred joints, a
+strut cut sheet with hub-adjusted lengths, a hub schedule with
+block-face angles for CAM, a pin-jointed truss FEA run on every change,
+and exports for the bench (per-strut STLs, PDF traveler) and for CAD
+(OBJ / STEP solids).</p>
+<p>The core math is clean-room Class-I/II/III geodesic subdivision
+(public-domain Fuller/Kruschke). Reference pages (acidome.ru save,
+domerama, monolithicdome) informed WHAT to compute — never source code.
+Cut lengths are HUB-ADJUSTED: struts have a real cross-section, so cut =
+chord − offset(A end) − offset(B end). Cutting raw chords on 3.5" timber
+produces a dome that cannot close.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p><strong>Ouranos</strong> is the primordial Greek sky — the dome
+itself, arched over the world. The module was "Buck Dome" (after
+Buckminster Fuller) until it earned a proper noun.
+<strong>ATLAS</strong>, the in-repo FEA, is the titan who holds up
+Ouranos: the load-bearer holds up the sky-dome, the solver holds up the
+design.</p>
+<h2 id="features">Features</h2>
+<h3 id="geometry-the-left-panel-dropdowns">Geometry (the left-panel
+dropdowns)</h3>
+<ul>
+<li><strong>Polyhedron</strong> — Icosahedron or Octahedron seed.</li>
+<li><strong>Frequency</strong> — 1V through 18V.</li>
+<li><strong>Subdivision class</strong> — I, III 1,2, III 2,1, II
+(Goldberg–Coxeter, acidome semantics: ν = a+b). Class II needs an even
+ν; Class III needs ν divisible by 3. Picking an impossible pair is
+refused with a status message; changing frequency under an incompatible
+class resets the class to I and says so. III 1,2 and III 2,1 are true
+chiral twins (tested).</li>
+<li><strong>Subdivision method</strong> — equal chords (planar grid
+projected), equal arcs (great-circle slerp rows), Kruschke (flat base —
+chords + base snap). <strong>Mexican is SKIPPED by operator
+ruling</strong> — the entry is shown honestly, selecting it reports
+"queued" and reverts. Picking chords/arcs sets the base to natural;
+picking Kruschke sets it flat.</li>
+<li><strong>Rotational symmetry</strong> — which seed feature points up
+before the cut: Pentad (vertex up), Cross (edge up), Triad (face up).
+Changes the whole ring set and therefore the fraction menu.</li>
+<li><strong>Fullerene</strong> — the Goldberg dual: no / inscribed in
+sphere / described around. One hub per triangle, hex/pent panels per
+vertex (3V dome → 12 pentagons + 80 hexagons, every hub 3-way).
+Described = panel planes tangent to the sphere; inscribed = hubs pulled
+onto it.</li>
+<li><strong>Part of sphere</strong> — the fraction menu is COMPUTED from
+the actual vertex ring clusters of the current
+seed/class/symmetry/method/fullerene, labeled with the nicest rational
+(dome culture counts in twelfths: 1/4, 5/12, 7/12, 3/4). Only cuts
+between 0.18 and 0.92 are offered. Changing any figure option recomputes
+the menu and snaps to the nearest previous cut.</li>
+<li><strong>Base</strong> — flat (pad): Kruschke snap moves every base
+vertex onto the circle where the plane cuts the sphere — dead flat at z
+= 0 for a concrete pad, and on odd frequencies this is what buys the
+extra strut class (3V: A,B,C → A,B,C,D). Natural (shims): raw Method-1
+geometry, base genuinely uneven, lowest hub rests on the pad; the CLI
+prints the per-hub shim table.</li>
+<li><strong>Shell section</strong> — full / 3/4 / 1/2 / 1/4 wedge. His
+shelter-first build: 90° = the quarter-sphere covered work area. Whole
+panels only, like the fraction cut; the vertical edge lands on existing
+hubs.</li>
+<li><strong>Connection</strong> — nine schemes, each with its own
+end-offset math and hardware line: <strong>miter + plates</strong> (his
+build, default — tight bisector-mitred ends + plasma-cut steel plates
+bolted through the closed joint), GoodKarma (whirl butt), piped,
+semicone, cone, joint, lag block (CNC hub block + lag screws), star
+plate, no-hub miter.</li>
+<li><strong>Sphere radius</strong> — 1.0–8.0 m (field takes
+<code>2.2</code>, <code>14ft</code>, <code>2.2m</code>).</li>
+<li><strong>Timber size</strong> — width × depth, 10–400 mm. Bare
+numbers follow the Units mode; <code>3.5in</code>, <code>3.5"</code>,
+<code>89mm</code> override either way.</li>
+</ul>
+<p>Derived shop math, always live: strut classes by chord length (A, B,
+C…, each with count, chord factor, and a fixed display color), the hub
+schedule grouped by way-count and base flag with the axial angle range
+(the block face tilt Hephaestus machines), and first-fit-decreasing
+nesting of the cuts into 6 ft stock with 4 mm kerf.</p>
+<h3 id="views-the-top-mode-row">Views (the top mode row)</h3>
+<ul>
+<li><strong>Base</strong> — sill timbers on their foundations (concrete
+pads for the flat base, posts-to-ground for natural) with
+screen-projected chord dimension labels on every segment, in the current
+unit.</li>
+<li><strong>Framework</strong> (default) — the timber model with REAL
+joints: each strut is a convex solid cut from its four timber side
+planes plus the bisector planes against its neighbors at both hubs (plus
+an envelope plane where the scheme has a physical hub part the ends stop
+against — pipe, block, cone). Adjacent ends share their bisector planes
+face-to-face; the joint is solid wood until drilled for the bolt. Struts
+are colored by class; plate/bolt, block, and pipe hub parts render where
+the scheme has them; dark edge outlines make flush timbers read as
+separate sticks.</li>
+<li><strong>Scheme</strong> — the class letter pinned to every strut
+midpoint in the class color (acidome's schema view).</li>
+<li><strong>Cover</strong> — one translucent panel per polygon
+(triangle, or hex/pent with the fullerene on), colored by panel-size
+class. <strong>Click a panel to remove it</strong> — it becomes a dashed
+opening (doors, lights, vents); click again to close it. Picks survive
+rebuilds until the panel topology changes.</li>
+</ul>
+<p>The scene is the night field: warm point light at the dome's heart,
+grass, hills, stars, ground grid, sill ring in amber. The dome is the
+lamp.</p>
+<h3 id="analysis--atlas">Analysis — ATLAS</h3>
+<p>Runs live on EVERY rebuild; the block sits under Results.</p>
+<ul>
+<li>Clean-room pin-jointed 3-D truss, direct stiffness method, dense
+in-place Cholesky, zero deps, in-repo (<code>src/atlas.rs</code>).</li>
+<li>Loads: dead (member self-weight, half to each end) + snow on the
+horizontal projection of every panel, split to its corners. Base ring
+pinned.</li>
+<li>Utilization = |stress| / allowable; the compression allowable
+includes Euler buckling on the unbraced chord (K = 1 pin-pin, FS
+2).</li>
+<li><strong>Both tails, per the Spruce Goose principle</strong>:
+<code>worst N%  laziest N%</code> — over-stressed members are obvious,
+under-worked members are wasted wood carrying itself. Per-class worst
+follows, then max deflection, total load, and a verdict ("all members
+inside capacity" or "N members OVER 100% — up-size or 2-ply").</li>
+<li><strong>Fails loud, and that is correct</strong>: a fullerene/hex
+frame or a free-edged shell section is a MECHANISM as a pin-jointed
+truss. ATLAS returns the refusal message instead of lying with a
+singular matrix. Those frames need the 12-DOF beam element, which is
+queued — until then the honest answer is "no answer".</li>
+</ul>
+<h3 id="units">Units</h3>
+<p>Metric / Imperial dropdown, propagated EVERYWHERE: row labels (m/mm ↔︎
+ft/in), field text, Results, snow (kPa ↔︎ psf), Base-mode dimension
+labels, cut sheet, PDF, and export scaling. Imperial lengths print as
+US-tape fractional inches to the nearest 1/16" (<code>30 3/16"</code>),
+because that is what a tape reads. One unit per document — never
+both.</p>
+<h3
+id="exports-right-panel-zenity-pickers-status-line-reports-every-result">Exports
+(right panel, zenity pickers, status line reports every result)</h3>
+<ul>
+<li><strong>Per-strut STLs…</strong> — one labeled file per strut
+(<code>A01.stl</code>, <code>B07.stl</code>…), the exact mitred solid in
+assembled position, Z-up, in the chosen unit — the bench check.</li>
+<li><strong>Shell (stl/obj/step)…</strong> — the panel surface; format
+by extension.</li>
+<li><strong>Timber model (stl/obj/step)…</strong> — every strut solid;
+labels survive as OBJ <code>o</code> groups and one STEP solid per
+strut. STL merges into one mesh.</li>
+<li>STEP is AP214 ADVANCED_BREP with shared edge topology, always
+declared mm — the dialect OpenCascade actually opens (validated via
+FreeCAD's importer). OBJ/STL scale to the chosen unit.</li>
+<li><strong>Cut sheet (.txt)</strong> — class, chord, CUT, count,
+bend/end.</li>
+<li><strong>Cut list (PDF)…</strong> — the shop traveler (~9 pages on
+the 3V default): header (design, timbers, hardware, hubs); one row per
+class with color chip, letter × count, CUT length, and a TO-SCALE
+dimensioned profile — long point up, miter angle from square, all
+classes on ONE shared scale so relative lengths read at a glance;
+<strong>PANELS</strong> — every distinct panel type drawn true-shape
+with edges colored by class, side chords and interior corner angles
+labeled; <strong>HUB POLYGONS</strong> — one diagram per hub type: grey
+spokes (chords), colored perimeter ring labeled class + chord + end-face
+angle (90 − bend), neighbor way-counts — lay each polygon flat, bolt the
+ring, then lift. Default filename
+<code>~/Desktop/ouranos-cutlist-&lt;mm|in&gt;-&lt;N&gt;.pdf</code>; the
+filesystem is the counter, and an existing name bumps its trailing
+number — no traveler ever clobbers an earlier one.</li>
+</ul>
+<h3 id="navigation--argo">Navigation — ARGO</h3>
+<p>The <strong>Navigation</strong> button drops the shared feel panel:
+mouse orbit/zoom/pan sensitivity + direction, SpaceMouse
+sensitivity/speed, and per-axis source/invert for all six puck axes
+(tilt F/B, tilt L/R, push/pull, twist, slides). Shift + puck = attitude
+layer (roll/pitch; fly gates off, yaw + lift stay live). Every commit
+writes <code>~/.config/signature/nav.json</code> — read-modify-write, so
+keys other suite apps own survive. One ship, many helmsmen: the puck
+feels identical in Ouranos, Vitruvius, and Hyphae. Viewport: drag
+orbits, wheel zooms, middle-drag pans.</p>
+<h2 id="using-it">Using it</h2>
+<p><strong>His dome (3V 7/12).</strong> Launch. It's on screen: 3V, R
+2.2 m, 7/12 Kruschke, miter + plates, 89×89. Results says 4 classes (the
+Kruschke 4th), 15 base hubs, timbers needed off 6 ft stock, 660 bolts.
+Done looking? Export.</p>
+<p><strong>Check the wood is working.</strong> Read ATLAS: worst near
+100% means the timber is earning its keep; laziest at 2% with worst at
+60% means most of the frame is carrying itself — consider smaller
+timber, per Spruce Goose. Snow field takes psf in Imperial, kPa in
+Metric; edit it and ATLAS re-runs on commit.</p>
+<p><strong>Quarter-section work shelter.</strong> Shell section →
+<code>1/4 (90 deg)</code>. The wedge keeps whole panels and lands its
+vertical edge on hubs. ATLAS will refuse the free-edged section as a
+pin-jointed mechanism — that refusal is the correct answer until the
+beam element lands. The cut list, hub schedule, and exports all still
+work; the STEP/OBJ shell of exactly this wedge goes to CAD.</p>
+<p><strong>Fullerene soccer-ball.</strong> Fullerene → inscribed.
+Hex/pent panels, 3-way hubs, Cover mode colors the pentagons apart from
+the hexagons. ATLAS refuses it honestly (same mechanism reason). Cut
+list and hub polygons still print.</p>
+<p><strong>To the bench and to CAD.</strong> Per-strut STLs for the
+chop-saw check; PDF traveler for the bench; timber model STEP for
+CAD/Jove — one solid per strut, labels intact; shell STEP for the
+covering model. Imperial mode stamps <code>in</code> into the filename
+and fractional inches into every dimension.</p>
+<h2 id="how-it-connects">How it connects</h2>
+<ul>
+<li><strong>Iris</strong> cuts the plasma hub plates (miter + plates is
+the default scheme because the plasma table is his).</li>
+<li><strong>STEP/STL</strong> open in FreeCAD (validated) or feed
+<strong>Jove</strong> for resin/3D prep.</li>
+<li><strong>Labyrinth</strong> (ex-Daedalus) views exported toolpaths
+and meshes.</li>
+<li><strong>ARGO</strong> feel is shared with Vitruvius and Hyphae via
+<code>~/.config/signature/nav.json</code>.</li>
+<li><strong>Hephaestus</strong> gets the hub schedule's axial angles
+when hub blocks are CAM'd.</li>
+<li><strong>No Styx lease needed</strong> — Ouranos is pure CPU, no GPU
+job, no lock.</li>
+</ul>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li>ATLAS dense Cholesky is capped at <strong>400 hubs</strong> — bigger
+frames get a loud refusal; the sparse/band solver is queued for when a
+&gt;400-hub frame is actually analyzed.</li>
+<li>FEA material constants are <strong>documented SPF No.2 calibration
+knobs</strong>, not gospel (<code>atlas.rs</code>: E 9 000 MPa, Fc 6.5,
+Ft 3.5, density 450 kg/m³) — trim them when he buys something other than
+SPF.</li>
+<li>The cut-sheet hub offset is the connection's mean (6-way) figure;
+the window models each joint per-vertex exactly. CLI
+<code>--hub-offset</code> overrides.</li>
+<li>Nesting assumes 6 ft stock / 4 mm kerf in the window (CLI takes
+flags).</li>
+<li>Single-user, fail-loud: no fallbacks, no degraded modes. A refused
+solve, a failed export, a bad field value — each says so in the status
+line and stops.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<ul>
+<li>ATLAS 12-DOF <strong>beam element</strong> — unlocks fullerene
+frames, free-edged shell sections, and the POSTS phase.</li>
+<li>ATLAS <strong>wind</strong> and <strong>solar-tilt</strong> load
+cases.</li>
+<li>Sparse solver past the 400-hub cap.</li>
+<li>Mexican subdivision method — listed in the UI, skipped by operator
+ruling.</li>
+<li>Species/grade picker for the ATLAS material knobs.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

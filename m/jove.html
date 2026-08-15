@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOVE — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/jove.jpg" alt="JOVE splash"></div>
+<h1 class="mname">JOVE</h1>
+<p class="tagline">Resin print prep. Supports, drains, slice to the vat.</p>
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/jove-prep-gnome.jpg" alt="a 447k-triangle mesh on the Jupiter plate, ready for drains and supports" loading="lazy"><figcaption>a 447k-triangle mesh on the Jupiter plate, ready for drains and supports</figcaption></figure></div>
+<div class="manual">
+<h1 id="jove--operator-manual">Jove — Operator Manual</h1>
+<p>Resin print prep, Leviathan Design Suite. Sovereign, local-first, no
+web tech. License: PolyForm Small Business 1.0.0 (vendored
+<code>.ctb</code> writer and the Kiri support lift are MIT — notices
+preserved in-tree).</p>
+<h2 id="quickstart">Quickstart</h2>
+<pre><code>cd ~/XOS/Jove
+cargo build --release --features prep
+./target/release/jove-prep</code></pre>
+<ol type="1">
+<li><strong>Load model…</strong> — zenity picker, STL only. Part lands
+XY-centered, rested on the plate.</li>
+<li>Orient with the <strong>X/Y/Z ±90°</strong> buttons. Rotating clears
+any placed holes/supports (narrated) — place marks after you
+orient.</li>
+<li><strong>Auto: ON</strong> for Kiri island supports;
+<strong>Add/remove…</strong> arms picking for manual pillars (click part
+= add blue marker, click within 3 mm of one = remove).</li>
+<li><strong>Drill drains…</strong> arms picking; each click stores a red
+drain at the current <strong>Hole r</strong> (1.0 / 1.5 / 2.0 mm).</li>
+<li>Pick <strong>Layer</strong> (0.025 / 0.05 / 0.1 mm), hit
+<strong>SLICE -&gt; .ctb</strong>, point the save dialog anywhere —
+flash drives live under <code>/media</code>. Default lands in
+<code>~/Desktop/bezier/&lt;part&gt;.ctb</code>.</li>
+</ol>
+<p>Camera: right-drag orbits, wheel zooms (scroll up = camera away).
+Left click only picks when a mode is armed, and only right of the
+panel.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>The hands of the resin lane. A fyrox window (<code>jove-prep</code>)
+for orient / drains / supports / slice, driving two headless stages:
+<code>tools/jove_slice.py</code> (trimesh sections, shapely polygons,
+PIL rasterizes — raw mask stack streamed to disk, never held in RAM) and
+the <code>jove</code> CLI (the <code>ctb_writer</code> crate, vendored
+from Open Resin Alliance's MIT <code>df-plugin-ctb</code>), which
+streams masks one layer at a time into a finished <code>.ctb</code>.
+Target machine: <strong>Elegoo Jupiter 6K</strong> — .ctb v5, 5448 x
+3064, 51 um pixels, mirror X, 277.8 x 156.3 mm plate. The plate in the
+window is that plate, to the millimetre.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p>Jove — Jupiter, the sky father whose weapon is
+<strong>lightning</strong>. This module's whole job is arranging a part
+so UV light can cure it, layer by layer, and the target printer is
+literally an Elegoo Jupiter. The god of the bolt, prepping for the
+machine named after him.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Plate view</strong> — graph-paper Jupiter plate, dark slab,
+orbit camera; part in amber, drains red, manual supports blue.</li>
+<li><strong>±90° rotates</strong> on print-space X/Y/Z; part re-rests on
+the plate after every turn. (Fine rotation not built.)</li>
+<li><strong>Auto supports</strong> — Kiri:Moto's SLA algorithm, ported
+MIT lift: island detection (layer minus grown layer-below), contact
+sampling (centroid + boundary every 6 mm), clustering, tapered pillars
+(tip → branch → trunk radii, Kiri's own constants), 3-foot flare bases
+with pads, on-model landings with a tip pad. Merge-routing
+(findMergeNode/maxTreeMove) is phase 2 — one pillar per contact for
+now.</li>
+<li><strong>Manual supports</strong> — click-to-add /
+click-near-to-remove picking; each point threads through
+<code>--support-at X,Y,Z</code> and becomes a pillar from that clicked
+surface point. Combines with auto.</li>
+<li><strong>Drain holes</strong> — vertical through-bores erased in mask
+space every layer (the UVtools way, no mesh CSG). <strong>Each hole
+keeps the radius it was placed at</strong> — cycling Hole r afterward
+does not retro-edit old holes.</li>
+<li><strong>Flare feet</strong> — legs lerp from flared-at-the-plate to
+the trunk hub going up, so foot pads bond to their legs. (The old lerp
+inverted this; fixed, comment in <code>jove_support.py</code> tells the
+story.)</li>
+<li><strong>Slice to .ctb</strong> — watertight-checked,
+plate-fit-checked mask stack, then the streaming Rust writer.
+<code>--metadata</code> JSON overrides exposure/lift; defaults are
+Jupiter <strong>starting values, not correct ones</strong> — run an
+exposure ladder.</li>
+<li><strong>Encrypted-ctb machinery</strong> — the vendored writer
+carries the CTB AES-256-CBC block cipher and per-layer XOR scrambling.
+The encoder currently passes XOR key 0 (v4-style, scrambling off).</li>
+</ul>
+<h2 id="using-it">Using it</h2>
+<p>The window never blocks: file dialogs and the slice job run on
+threads, progress lands in the status line (and echoes to stdout as
+<code>JOVE …</code>). One pick mode at a time — arming drills disarms
+supports and vice versa. <code>Clear holes</code> /
+<code>Clear supports</code> wipe their marks. SLICE writes a temp STL of
+the oriented part, runs <code>jove_slice.py</code> (prints
+<code>SUPPORTS …</code> counts and <code>layer n/N</code> progress),
+then <code>target/release/jove</code> writes the container and cleans up
+the temps. <code>OK -&gt; path</code> or <code>FAIL reason</code> — no
+silent outcomes.</p>
+<p>Headless use, no window needed:</p>
+<pre><code>python3 tools/jove_slice.py --stl part.stl --out masks.raw --layer-height 0.05 --supports
+./target/release/jove --masks masks.raw --out part.ctb --layers N --layer-height 0.05</code></pre>
+<p><code>jove --print-metadata</code> dumps the default exposure JSON to
+edit and feed back with <code>--metadata</code>.
+<code>--no-mirror-x</code>, <code>--width/--height/--pixel-mm</code>
+cover non-Jupiter machines.</p>
+<p>Fail-loud, by design: non-watertight mesh dies with one line (repair
+first — GilgaMESH output is watertight); part bigger than the plate
+dies; an all-empty stack dies; a mask stack whose byte count disagrees
+with the layer grid is refused up front, because the alternative is a
+diagonally sheared print you only discover in the tank.</p>
+<h3 id="panel-reference">Panel reference</h3>
+<div class="twrap"><table>
+<thead>
+<tr class="header">
+<th>Button</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Load model…</td>
+<td>zenity STL picker (async, window stays live)</td>
+</tr>
+<tr class="even">
+<td>X/Y/Z −90° / +90°</td>
+<td>rotate in print space, re-rest on plate, clear marks</td>
+</tr>
+<tr class="odd">
+<td>Drill drains…</td>
+<td>arm/disarm drain picking (disarms support picking)</td>
+</tr>
+<tr class="even">
+<td>Hole r: N mm</td>
+<td>cycle 1.0 → 1.5 → 2.0; applies to holes placed after</td>
+</tr>
+<tr class="odd">
+<td>Clear holes</td>
+<td>drop all drains</td>
+</tr>
+<tr class="even">
+<td>Auto: off/ON</td>
+<td>toggle Kiri auto supports at slice time</td>
+</tr>
+<tr class="odd">
+<td>Add/remove… (n)</td>
+<td>arm/disarm manual support picking; n = count</td>
+</tr>
+<tr class="even">
+<td>Clear supports</td>
+<td>drop all manual points</td>
+</tr>
+<tr class="odd">
+<td>Layer: N mm</td>
+<td>cycle 0.025 → 0.05 → 0.1</td>
+</tr>
+<tr class="even">
+<td>SLICE -&gt; .ctb</td>
+<td>write temp STL, run the two stages, save dialog</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="repo-layout">Repo layout</h3>
+<pre><code>src/bin/jove-prep.rs   the window (feature &quot;prep&quot;: fyrox + Chimaera)
+src/main.rs            the jove CLI — mask stack -&gt; .ctb, streaming
+src/lib.rs             ctb_writer crate: Printer / Job / Encoder
+src/ctb/               vendored df-plugin-ctb writer (MIT, byte-identical
+                       bodies; local edits confined to shim.rs + mod.rs)
+tools/jove_slice.py    STL -&gt; raw mask stack (trimesh/shapely/PIL)
+tools/jove_support.py  Kiri:Moto SLA support lift (MIT, provenance in header)
+tests/e2e.sh           end-to-end: geometry, drains, supports, magic bytes</code></pre>
+<h2 id="how-it-connects">How it connects</h2>
+<ul>
+<li><strong>In:</strong> STL exports from Vitruvius, GilgaMESH, or
+Ouranos — anything that emits a watertight STL.</li>
+<li><strong>Out:</strong> <code>.ctb</code> for the Jupiter. Inspect it
+in <strong>Labyrinth</strong> (the viewer, ex-Daedalus) before
+committing resin — note Labyrinth's encrypted-ctb decode is a known open
+bug on its side.</li>
+<li><strong>Tiamat</strong> (the suite host window) probes for and
+launches <code>jove-prep</code>.</li>
+<li>The <code>ctb_writer</code> lib is a clean crate boundary: any
+caller that can produce a raw mask stack and run a process can write a
+<code>.ctb</code> — that is the whole contract.</li>
+</ul>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li><strong>The test suite does not compile.</strong>
+<code>cargo test</code> dies at <code>src/ctb/shim.rs:109</code> — a
+stale <code>crate::slicer::PixelGrid</code> reference left from the
+scrapped Rust rasteriser (deep-review 2.4). Verified today:
+<code>error[E0433] could not find slicer in the crate root</code>,
+<code>jove (lib test)</code> fails to build. Consequence: the
+<code>.ctb</code> safety asserts in <code>src/lib.rs</code> — mask-size
+shear refusal, valid header magic, nonzero exposure, empty-input
+rejection — and the STL round-trip tests in <code>jove-prep</code>
+<strong>do not run</strong>. The runtime checks exist in the shipping
+code paths, but we are flying blind on regression coverage until the ref
+is fixed. <code>tests/e2e.sh</code> (annulus + floating-cube supports,
+real masks, real .ctb) is the runnable check meanwhile — needs the
+release binary and python deps.</li>
+<li>Rotating the part clears all holes and supports; holes are
+plate-space, not surface-anchored, so they cannot ride the part through
+a re-orient yet.</li>
+<li>Support merge-routing not built — dense contact fields mean dense
+pillar forests.</li>
+<li>Metadata defaults are starting values; real exposure numbers come
+off your machine, your resin, your room.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<ul>
+<li><strong>XY part placement drag</strong> — only ±90° rotates exist;
+no select-and-move on the plate. Chimaera picking is already wired for
+the drill mode; this is the top refinement (pinned in CLAUDE.md).</li>
+<li>Fine (non-90°) rotation.</li>
+<li>Surface-anchored (part-space) drain holes that survive
+re-orientation.</li>
+<li>Kiri merge-routing (pillar trees instead of one pillar per
+contact).</li>
+<li>Fix the stale slicer ref so the test suite compiles and the asserts
+stand watch again.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

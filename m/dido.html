@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIDO — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/dido.jpg" alt="DIDO splash"></div>
+<h1 class="mname">DIDO</h1>
+<p class="tagline">The boundary. Offsets and windings — the most land one hide can hold.</p>
+
+<div class="manual">
+<h1 id="dido--crate-manual">Dido — Crate Manual</h1>
+<h2 id="quickstart">Quickstart</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode toml"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargo.toml</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">[dependencies]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">dido</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">path</span><span class="op"> =</span> <span class="st">&quot;../Dido&quot;</span><span class="op"> }</span></span></code></pre></div>
+<p>The central type is <code>dido::Poly</code> — a closed 2D polygon —
+and its <code>offset</code> method:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">dido::</span><span class="op">{</span>Poly<span class="op">,</span> subtract<span class="op">};</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> part <span class="op">=</span> <span class="pp">Poly::</span>new(<span class="pp">vec!</span>[[<span class="dv">0.0</span><span class="op">,</span> <span class="dv">0.0</span>]<span class="op">,</span> [<span class="dv">100.0</span><span class="op">,</span> <span class="dv">0.0</span>]<span class="op">,</span> [<span class="dv">100.0</span><span class="op">,</span> <span class="dv">50.0</span>]<span class="op">,</span> [<span class="dv">0.0</span><span class="op">,</span> <span class="dv">50.0</span>]])<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> toolpaths <span class="op">=</span> part<span class="op">.</span>offset(<span class="dv">3.175</span>)<span class="op">;</span>            <span class="co">// grow by cutter radius (mm)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> pocket    <span class="op">=</span> part<span class="op">.</span>offset(<span class="op">-</span><span class="dv">3.175</span>)<span class="op">;</span>           <span class="co">// shrink — may split or vanish</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> remaining <span class="op">=</span> subtract(<span class="op">&amp;</span>toolpaths<span class="op">,</span> <span class="op">&amp;</span>pocket)<span class="op">;</span> <span class="co">// boolean over polygon sets</span></span></code></pre></div>
+<h2 id="what-it-is">What it is</h2>
+<p>Compensation for the Leviathan Design Suite. The tool is not
+infinitely thin: the drawn line and the cut line are different lines,
+and this crate computes the difference — cutter comp for Hephaestus,
+kerf for Iris, support regions for Jove. Thin seams over two proven
+engines, no polygon math of our own: offsetting =
+<code>cavalier_contours</code>, booleans = <code>i_overlay</code>. Arc
+joins from offsetting are flattened to segments (1e-3 mm tolerance).
+Sovereign, local-first; PolyForm Small Business licensed.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p>Dido, queen of Carthage, was granted as much land as one oxhide could
+cover — so she cut the hide into a thin strip and enclosed a whole hill
+with it. Mathematicians still call the maximum-enclosure boundary
+problem "Dido's problem." This crate lives on exactly that boundary:
+given a closed outline, how much ground does the tool actually
+claim.</p>
+<h2 id="api-surface">API surface</h2>
+<ul>
+<li><code>Poly { pts: Vec&lt;[f64; 2]&gt; }</code> — closed polygon,
+straight edges, last point joins the first.
+<code>Poly::new(pts)</code>.</li>
+<li><code>Poly::offset(delta) -&gt; Vec&lt;Poly&gt;</code> — positive
+grows, negative shrinks, regardless of input winding. May split into
+several polygons (shrinking a dumbbell) or return empty (shrinking past
+the middle).</li>
+<li><code>Poly::signed_area()</code> (shoelace, positive = CCW),
+<code>area()</code>, <code>is_ccw()</code>,
+<code>set_winding(ccw)</code> — winding is how consumers tell outsides
+(CCW) from holes (CW).</li>
+<li><code>union(&amp;[Poly], &amp;[Poly])</code>,
+<code>subtract(..)</code>, <code>intersect(..)</code> — booleans over
+polygon sets, NonZero fill; results keep outer-CCW / hole-CW winding so
+<code>is_ccw()</code> still classifies them.</li>
+</ul>
+<h2 id="consumers">Consumers</h2>
+<p>Hephaestus (CAM) is the primary consumer — cutter-radius offsets for
+2.5D pocketing and profiling. Iris takes kerf compensation for
+laser/plasma, and Jove uses the same offsets for resin support
+regions.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li><code>offset()</code> normalizes the input winding to CCW internally
+and does NOT restore the original winding on its output — a latent
+contract break for callers that feed CW holes through it. Open
+finding.</li>
+<li>Arc flattening tolerance is a fixed <code>ARC_ERROR = 1e-3</code>
+mm; becomes a parameter only when a consumer cares.</li>
+<li>Polygons only: no arcs in, no arcs out (Kiri's engine was Clipper,
+so the consumers already expect flattened geometry).</li>
+<li>Degenerate results (&lt; 3 points) are silently dropped from offset
+and boolean outputs.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

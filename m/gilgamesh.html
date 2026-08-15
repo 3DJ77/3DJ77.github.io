@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GILGAMESH — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/gilgamesh.jpg" alt="GILGAMESH splash"></div>
+<h1 class="mname">GILGAMESH</h1>
+<p class="tagline">Image to mesh. A photo becomes a printable solid.</p>
+
+<div class="manual">
+<h1 id="gilgamesh--operator-manual">GilgaMESH — Operator Manual</h1>
+<p>Image-to-mesh lane of the Leviathan Design Suite. Sovereign,
+local-first. PolyForm Small Business licensed
+(<code>LICENSE.md</code>).</p>
+<h2 id="quickstart">Quickstart</h2>
+<pre><code>trellis-make photo.png             # image -&gt; printable STL
+trellis-make &quot;a garden gnome&quot; 120  # words -&gt; image -&gt; STL, 120 mm tall</code></pre>
+<p>Either way you end with a watertight STL in
+<code>~/Desktop/bezier/</code> ready for the slicer. That's the whole
+interface — one command, one or two args.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>A picture — or plain words — becomes a printable solid. The TRELLIS
+server on the GPU host reconstructs a textured GLB from the image, a
+converter scales it to your height in mm, and Blender voxel-remeshes it
+watertight. Photo in, solid out.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p>Gilgamesh: the hero-king of Uruk who went looking for what lasts.
+GilgaMESH makes lasting solids out of fleeting pictures — and the MESH
+pun carries the module.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>The chain</strong>: [FLUX paints, words-mode only] -&gt;
+trellis-server (Vulkan trellis.cpp, Tiamat :8080) -&gt; textured GLB
+-&gt; <code>trellis_to_stl.py</code> scales to height -&gt; Blender
+voxel remesh -&gt; watertight STL.</li>
+<li><strong>Words mode</strong>: no file at arg 1 means it's a prompt;
+FLUX paints a single centered object on a plain background first (draft,
+no upscale — the mesh model resamples anyway).</li>
+<li><strong>HEIGHT_MM</strong>: second arg, default 80. Sets the tallest
+dimension of the final STL.</li>
+<li><strong>TRELLIS_HOST</strong>: env var, default
+<code>10.0.0.2</code>. Point it elsewhere if the server moves.</li>
+<li><strong>Output</strong>: <code>NAME.glb</code> (textured mesh),
+<code>NAME.stl</code> (raw at height), <code>NAME-watertight.stl</code>
+(sliceable) — all in <code>~/Desktop/bezier/</code>.</li>
+<li><strong>Fail-loud</strong>: <code>curl -sf</code> (fixed 2026-08-15)
+— a server error stops the run naming the step; nothing is deleted on
+failure. No silent 500 written out as a .glb ever again.</li>
+<li><strong>Lease-safe</strong>: the GPU job runs under
+<code>flock /tmp/xos_gpu_lock.json</code> — the Styx lease — so it waits
+its turn instead of colliding with the resident model. Nemotron stays
+resident throughout.</li>
+</ul>
+<h2 id="using-it">Using it</h2>
+<pre><code>trellis-make ~/Pictures/bracket.png        # photo of a thing, 80 mm
+trellis-make part-sketch.jpg 45            # 45 mm tall
+trellis-make &quot;a socket organizer tray&quot; 60  # no such file -&gt; it&#39;s a prompt
+TRELLIS_HOST=10.0.0.3 trellis-make x.png   # different GPU host</code></pre>
+<p>Best input: one object, centered, plain background, decent light. The
+words path builds that framing into the prompt automatically. Watch the
+step tags (<code>[flux]</code>, <code>[trellis]</code>,
+<code>[remesh]</code>) — whichever prints last is where a failed run
+died. Deployed copy is <code>~/bin/trellis-make</code>; keep it in sync
+with the repo copy.</p>
+<h2 id="how-it-connects">How it connects</h2>
+<ul>
+<li><strong>GPU work</strong> runs on the Tiamat host under the Styx
+flock lease, beside the HADES-kept models — no collisions, no
+evictions.</li>
+<li><strong>Downstream</strong>: the watertight STL feeds Jove (resin
+prep) and Hephaestus (CAM); the GLB views in Labyrinth.</li>
+<li><strong>Words mode</strong> shares Morpheus's FLUX model stack — one
+paint pipeline, two consumers.</li>
+</ul>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li>trellis-server must be up on the GPU host (:8080). Down server =
+loud stop at the <code>[trellis]</code> step.</li>
+<li>Reconstruction is minutes, not seconds. The 40-minute curl timeout
+is headroom, not a promise.</li>
+<li>Quality tracks the input photo: cluttered background, off-center
+subject, or bad light come back as mush. Fix the picture, not the
+mesh.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<ul>
+<li>Deeper suite integration (Iris/Vitruvius hand-offs).</li>
+<li>The trellis-server unit is not always-on yet — it may need starting
+on the GPU host before a run.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

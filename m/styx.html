@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STYX — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/styx.jpg" alt="STYX splash"></div>
+<h1 class="mname">STYX</h1>
+<p class="tagline">The oath. One job crosses the GPU at a time.</p>
+
+<div class="manual">
+<h1 id="styx--crate-manual">Styx — Crate Manual</h1>
+<h2 id="quickstart">Quickstart</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode toml"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargo.toml</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">[dependencies]</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">styx</span> <span class="op">=</span> <span class="op">{ </span><span class="dt">path</span><span class="op"> =</span> <span class="st">&quot;../Styx&quot;</span><span class="op"> }</span></span></code></pre></div>
+<p>The central type is <code>styx::Lease</code> — an exclusive claim on
+the GPU, held for as long as the value lives:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">styx::</span><span class="op">{</span>Endpoint<span class="op">,</span> Lease<span class="op">,</span> ensure_model<span class="op">,</span> run<span class="op">};</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> lease <span class="op">=</span> <span class="pp">Lease::</span>acquire(<span class="st">&quot;hephaestus&quot;</span>)<span class="op">?;</span>     <span class="co">// flock, non-blocking: busy = Err</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> ep <span class="op">=</span> <span class="pp">Endpoint::</span><span class="kw">default</span>()<span class="op">;</span>                  <span class="co">// Nemotron shim on 10.0.0.2:18205</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ensure_model(<span class="op">&amp;</span>ep<span class="op">,</span> <span class="op">&amp;</span>lease)<span class="op">?;</span>                    <span class="co">// wake a cold model, wait it out</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> answer <span class="op">=</span> run(<span class="op">&amp;</span>ep<span class="op">,</span> <span class="st">&quot;prompt&quot;</span><span class="op">,</span> <span class="cn">Some</span>(<span class="op">&amp;</span>lease))<span class="op">?;</span> <span class="co">// one completion under the lease</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">// drop(lease) → the kernel releases the lock</span></span></code></pre></div>
+<h2 id="what-it-is">What it is</h2>
+<p>The only way anything in the Leviathan Design Suite touches the GPU.
+Three things, never more: an <code>Endpoint</code>, a borrowable
+<code>Lease</code>, and <code>ensure_model</code>. The lock is
+<code>flock(2)</code> — kernel-arbitrated, so there is no check-then-act
+race, and the kernel releases it when the process dies. That is why
+there is no timeout, no zombie recovery, no PID staleness check.
+Sovereign, local-first; PolyForm Small Business licensed.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p>The Styx is the river every soul must cross one at a time, and an
+oath sworn on it binds even a god. The GPU lease is that oath: while one
+holder has it, nobody else crosses. All GPU work on Tiamat serializes
+through this one crossing.</p>
+<p>The canonical lock file is
+<code>DEFAULT_LOCK_FILE = /tmp/xos_gpu_lock.json</code> (override:
+<code>$XOS_GPU_LOCK_FILE</code>). <strong>The flock IS the truth — never
+parse the label file.</strong> The JSON body is a best-effort display
+label written <em>after</em> the lock is held; check busy with a
+non-blocking flock attempt
+(<code>flock -n /tmp/xos_gpu_lock.json -c true</code>), never with
+<code>cat</code>.</p>
+<h2 id="api-surface">API surface</h2>
+<ul>
+<li><code>Lease::acquire(holder) -&gt; Result&lt;Lease, String&gt;</code>
+— <code>flock(LOCK_EX | LOCK_NB)</code>; fails immediately if held. No
+retry, no wait: a busy GPU is an answer, not an error to paper over.
+<code>holder()</code> returns the name; <code>Drop</code> clears the
+label and the kernel releases the lock.</li>
+<li><code>Endpoint</code> — base_url / model / systemd unit / swapmech
+URL. <code>Endpoint::default()</code> = Nemotron-3 Super via the shim
+(<code>:18205</code>, swap <code>:18206</code>). Not <code>:18081</code>
+— the Spine gateway is dead.</li>
+<li><code>ensure_model(&amp;Endpoint, &amp;Lease)</code> — takes
+<code>&amp;Lease</code> so the type system makes swapping the resident
+model without the GPU impossible; readiness wait against a hard 180 s
+deadline, then fail loud.</li>
+<li><code>run(&amp;Endpoint, prompt, Option&lt;&amp;Lease&gt;)</code> —
+one completion. <code>Some(lease)</code> borrows the caller's claim;
+<code>None</code> acquires one for the call. Sets
+<code>enable_thinking: false</code> (required by the nemotron
+shim).</li>
+<li><code>lock_path()</code> / <code>current_label()</code> — path
+resolution and the display-only label read.</li>
+</ul>
+<h2 id="consumers">Consumers</h2>
+<p>Every GPU job in the fleet: Morpheus renders, GilgaMESH mesh
+generation, HADES-kept resident models, Oannes/cgen completions, and any
+bash/python lane via the same primitive
+(<code>flock /tmp/xos_gpu_lock.json -c '…'</code>,
+<code>fcntl.flock</code>). Same file, same kernel lock, no protocol to
+conform to.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li><code>ureq</code> is pulled with default features, which drags in an
+unused TLS stack for plain-HTTP LAN calls — open finding.</li>
+<li>Admission test for new code: <em>would a module that never talks to
+the GPU machine still need it?</em> Printer profiles fail it. Keep it
+three things.</li>
+<li><code>ensure_model</code> needs the swapmech admin token
+(<code>~/.config/spine/admin-token</code> or
+<code>$XOS_ADMIN_TOKEN_FILE</code>); without it the call fails loud, by
+design.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

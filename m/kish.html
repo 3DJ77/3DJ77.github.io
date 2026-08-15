@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KISH — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/kish.jpg" alt="KISH splash"></div>
+<h1 class="mname">KISH</h1>
+<p class="tagline">The library. Notebooks and reports, grounded in your own sources.</p>
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/kish-ui-dubs.jpg" alt="the dub library — every notebook, its sources and chunks" loading="lazy"><figcaption>the dub library — every notebook, its sources and chunks</figcaption></figure></div>
+<div class="manual">
+<h1 id="kish--operator-manual">Kish — Operator Manual</h1>
+<p>Sovereign notebook / report engine. Rust, PolyForm Small Business
+1.0.0. v0.1 shipped 2026-07-10. Repo <code>~/XOS/Kish</code>, remote
+<code>github.com/3DJ77/Kish</code> (private).</p>
+<h2 id="quickstart">Quickstart</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/XOS/Kish</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> ping orchestrate        <span class="co"># prove the Tiamat seam answers</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> dub mynotes             <span class="co"># create a notebook (a &quot;Dub&quot;)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> ingest mynotes doc.pdf  <span class="co"># extract + chunk + embed</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> doctor mynotes          <span class="co"># audit what actually indexed</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> ask mynotes <span class="st">&quot;what does the doc say about X?&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">./target/release/kish</span> report mynotes <span class="st">&quot;topic&quot;</span>  <span class="co"># cited report -&gt; ~/XOS/Notebook/mynotes/</span></span></code></pre></div>
+<p>Binary resolves its root via <code>KISH_ROOT</code>, else walks up
+from cwd, else from the executable — runs from anywhere, including a
+desktop entry.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>Grounded notebooks and reports over your OWN sources — the anti-cloud
+NotebookLM. Genesis: Google nuked the operator's NotebookLM work; Kish
+is the replacement that lives in these walls. Every model call goes to
+local cluster endpoints; nothing leaves the LAN. Answers cite the
+sources they came from, and <code>doctor</code> tells you when disk and
+index disagree instead of letting RAG hand back a nearest neighbour.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p>Kish: the first Sumerian city where "kingship descended from heaven"
+after the flood — the first library-city. Knowledge held in your own
+walls, not rented. The vocabulary follows: a notebook is a
+<strong>Dub</strong> (clay tablet), the index is <strong>Clay</strong>,
+the writer is <strong>Thoth</strong>, image styles are
+<strong>idiolects</strong>.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Dubs</strong> — per-notebook workspaces under
+<code>dubs/&lt;name&gt;/</code> (sources, clay-index, config).</li>
+<li><strong>Ingest</strong> — <code>md/txt</code> read direct;
+<code>pdf</code> via <code>pdftotext</code>; <code>html/docx/epub</code>
+via <code>pandoc</code>. Thin-source guard rejects stubs unless
+<code>--allow-thin</code>.</li>
+<li><strong>Retrieval (Clay)</strong> — nomic embeddings, linear cosine
+scan (HNSW deliberately deferred), embed-model pinned in
+<code>index.json</code> — mismatched model errors, never silently
+degrades.</li>
+<li><strong>Ask</strong> — cited RAG answer; <code>--attach FILE</code>
+inlines textual files (64 KiB cap).</li>
+<li><strong>Report</strong> — cited markdown report to
+<code>~/XOS/Notebook/&lt;dub&gt;/</code>; <code>--story</code> for
+narrative prose (events/names still source-bound).</li>
+<li><strong>Folio</strong> — illustrated book: Thoth writes scenes,
+Eidolon-Forge paints one plate per scene (FLUX-schnell via one GPU
+lease), bound to HTML <strong>and</strong> native PDF
+(<code>folio_pdf.rs</code>, printpdf — the google-chrome shell-out is
+gone, per the 2026-07-26 sovereignty ruling). <code>--draft</code> /
+<code>folio-finalize</code> / <code>folio-redraft</code> give a
+composition-proof loop; <code>--reuse-plates</code> re-binds without
+repainting.</li>
+<li><strong>Idiolects</strong> — ~29 built-in visual voices
+(<code>kish idiolect list</code>), mixable per axis
+(<code>--medium/--palette/--framing</code>), exportable to TOML,
+<code>compose</code> prints the exact FLUX prompt without painting.</li>
+<li><strong>Exhibit</strong> — one subject painted in EVERY idiolect,
+tiled into a contact sheet.</li>
+<li><strong>Doctor</strong> — per-source chunk audit, thin flags,
+disk-vs-index disagreement; <code>--json</code> for machines.</li>
+<li><strong>UI</strong> — <code>kish ui</code> opens the native fyrox
+window (Osirion tokens; iced retired 2026-07-30). Operator launches his
+own surfaces — never programmatically on :0.</li>
+</ul>
+<h2 id="using-it">Using it</h2>
+<ul>
+<li><code>kish dubs</code> — JSON listing of every Dub (feeds the
+UI).</li>
+<li>Re-ingest of the same file upserts by source, no duplicate
+chunks.</li>
+<li><code>kish folio &lt;dub&gt; "&lt;topic&gt;" --idiolect lapis-glaze --scenes 8</code>
+— fails loud if the model returns fewer scenes than asked; no silently
+merged myths.</li>
+<li><code>--size</code> is the DIFFUSION edge (768 native for
+FLUX-schnell; ESRGAN 4x makes it 3072 out). Do NOT pass 3072 — that's an
+OOM, not a bigger picture.</li>
+<li>Dub store override: <code>KISH_DUB_ROOT</code>; report root
+override: <code>KISH_NOTEBOOK_ROOT</code>.</li>
+</ul>
+<h2 id="how-it-connects">How it connects</h2>
+<p>Model seam in <code>kish.toml</code> — local OpenAI-compatible
+endpoints only:</p>
+<div class="twrap"><table>
+<thead>
+<tr class="header">
+<th>alias</th>
+<th>endpoint</th>
+<th>model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>orchestrate</td>
+<td><code>http://10.0.0.2:18205/v1</code> (Tiamat nemotron3 shim)</td>
+<td><code>nemotron3</code></td>
+</tr>
+<tr class="even">
+<td>synthesize</td>
+<td>same (resident-model-wins; per-Dub <code>[override.X]</code> for
+alternates)</td>
+<td><code>nemotron3</code></td>
+</tr>
+<tr class="odd">
+<td>embed</td>
+<td><code>http://127.0.0.1:18110/v1</code> (Locutous CPU,
+<code>llama-server@kish-embed</code>)</td>
+<td><code>nomic-embed-text</code> (v1.5, Apache-2.0)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Spine gateway is retired (2026-08-01) — Kish talks direct to the
+shim. A per-Dub override replaces the WHOLE alias
+<code>{base_url, model}</code>, never just the model name.</p>
+<p>Siblings: <strong>Morpheus</strong> renders the images for release
+artifacts (Kish = the report half of "image+report for release");
+<strong>Oannes</strong> is the shop-floor advisor sibling. Folio
+painting shells to
+<code>Eidolon-Forge/python/eidolon_chat_pipeline.py</code> (Tiamat GPU,
+one lease per batch).</p>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li>Embed endpoint down ⇒ ingest/ask/report dead. Chat lane cold-starts
+~60s; poll the response body, not the port.</li>
+<li>Not pure Rust yet: shells to <code>python3</code> (Eidolon),
+<code>pdftotext</code>, <code>pandoc</code>, <code>montage</code>
+(exhibit sheet). The Eidolon Python port is a design decision, not a
+refactor — gated on Eidolon-Forge's own Rust port.</li>
+<li>Linear scan only — fine at current corpus sizes; swap to HNSW when a
+Dub outgrows it (index.json migration deferred to that day).</li>
+<li><code>kish-embed</code> systemd unit inherits
+<code>Restart=on-failure</code> with no <code>StartLimit*</code> — if it
+ever flaps, look there first (the spine-server crash-loop lesson).</li>
+<li><code>Ui</code> doc-comment in <code>main.rs</code> still says
+"iced" — stale comment, fyrox runs.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<ul>
+<li>Fyrox port is IN but the full "proper window GUI" job (T2) plus
+Osirion visual language pass is gated behind the ponytail full
+audit.</li>
+<li>Pure-Rust runtime (Job 2): Eidolon pipeline port is the real one;
+<code>montage</code> could go to the <code>image</code> crate any
+time.</li>
+<li><code>folio</code> 10-arg signature refactor (clippy, out of scope
+so far).</li>
+<li>Podcast/audio generation — deferred (Speechnote + local LLM,
+later).</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>
