@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,8 +57,12 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/chimaera.jpg" alt="CHIMAERA splash"></div>
 <h1 class="mname">CHIMAERA</h1>
+<div class="lore"><p>The Chimaera is the impossible hybrid — lion, goat, serpent in one
+body. This crate fuses three unrelated concerns the same way: camera,
+spacemouse, and picking, one body, none of them domain logic.</p></div>
 <p class="tagline">The hands. Camera, puck, and pointer — many beasts, one body.</p>
-
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/chimaera-ray-picking.jpg" alt="Chimaera's ray picking planting drill points on the stock plane" loading="lazy"><figcaption>Chimaera's ray picking planting drill points on the stock plane</figcaption></figure></div>
 <div class="manual">
 <h1 id="chimaera--crate-manual">Chimaera — Crate Manual</h1>
 <h2 id="quickstart">Quickstart</h2>
@@ -81,10 +88,6 @@ set of hands. Sovereign, local-first, fyrox 1.0 only; PolyForm Small
 Business licensed. Ground truth for every sign in here = operator hands
 — the <code>pan_canon_*</code> tests pin the grab-the-world contract;
 never re-derive from documentation.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p>The Chimaera is the impossible hybrid — lion, goat, serpent in one
-body. This crate fuses three unrelated concerns the same way: camera,
-spacemouse, and picking, one body, none of them domain logic.</p>
 <h2 id="api-surface">API surface</h2>
 <ul>
 <li><code>camera::OrbitCamera</code> — orbit target/radius, quaternion

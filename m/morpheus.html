@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,6 +57,17 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/morpheus.jpg" alt="MORPHEUS splash"></div>
 <h1 class="mname">MORPHEUS</h1>
+<div class="lore"><p>Morpheus is the god of dreams — Greek <em>morphē</em>, "form". He
+shapes images out of nothing; so does this. Kin in the pantheon:</p>
+<ul>
+<li><strong>Galatea</strong> — reserved for the video layer (still →
+motion), later.</li>
+<li><strong>HADES</strong> — the Tiamat-side resident-model keeper
+(<code>tools/sd-serve.sh</code>, deployed as
+<code>tiamat:~/sd-serve</code>). Decides which giant is awake in the
+vault; everything else sleeps until called. Command name stays
+<code>sd-serve</code>.</li>
+</ul></div>
 <p class="tagline">Image generation on your own iron. No queue, no account.</p>
 <div class="shots-head">IN ACTION</div>
 <div class="shots"><figure><img src="shots/morpheus-folio.jpg" alt="the folio strip collects every shape" loading="lazy"><figcaption>the folio strip collects every shape</figcaption></figure><figure><img src="shots/morpheus-shaped-dragon-knocker.jpg" alt="prompt to canvas — shaped on the shop's own iron" loading="lazy"><figcaption>prompt to canvas — shaped on the shop's own iron</figcaption></figure></div>
@@ -90,18 +104,6 @@ of "image + report for release": <strong>Morpheus</strong> makes the
 picture, <strong>Kish</strong> makes the report. It made every Leviathan
 module splash and the LEVIATHAN masthead.</p>
 <p>No web tech. No Python UI. One binary, one window, remote GPU.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p>Morpheus is the god of dreams — Greek <em>morphē</em>, "form". He
-shapes images out of nothing; so does this. Kin in the pantheon:</p>
-<ul>
-<li><strong>Galatea</strong> — reserved for the video layer (still →
-motion), later.</li>
-<li><strong>HADES</strong> — the Tiamat-side resident-model keeper
-(<code>tools/sd-serve.sh</code>, deployed as
-<code>tiamat:~/sd-serve</code>). Decides which giant is awake in the
-vault; everything else sleeps until called. Command name stays
-<code>sd-serve</code>.</li>
-</ul>
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Canvas + folio</strong> — big canvas shows the latest

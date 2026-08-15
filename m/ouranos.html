@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,6 +57,12 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/ouranos.jpg" alt="OURANOS splash"></div>
 <h1 class="mname">OURANOS</h1>
+<div class="lore"><p><strong>Ouranos</strong> is the primordial Greek sky — the dome
+itself, arched over the world. The module was "Buck Dome" (after
+Buckminster Fuller) until it earned a proper noun.
+<strong>ATLAS</strong>, the in-repo FEA, is the titan who holds up
+Ouranos: the load-bearer holds up the sky-dome, the solver holds up the
+design.</p></div>
 <p class="tagline">Geodesic dome design. Cut lists, hub schedules, FEA — tape-measure ready.</p>
 <div class="shots-head">IN ACTION</div>
 <div class="shots"><figure><img src="shots/ouranos-argo-nav.jpg" alt="the NAV panel — ARGO's shared feel" loading="lazy"><figcaption>the NAV panel — ARGO's shared feel</figcaption></figure><figure><img src="shots/ouranos-atlas-fea.jpg" alt="ATLAS: member utilization, both tails" loading="lazy"><figcaption>ATLAS: member utilization, both tails</figcaption></figure><figure><img src="shots/ouranos-base-mode.jpg" alt="Base mode with pinned joints" loading="lazy"><figcaption>Base mode with pinned joints</figcaption></figure><figure><img src="shots/ouranos-cover-clickout.jpg" alt="Cover mode — click panels out" loading="lazy"><figcaption>Cover mode — click panels out</figcaption></figure><figure><img src="shots/ouranos-framework-night.jpg" alt="the framework under the night sky" loading="lazy"><figcaption>the framework under the night sky</figcaption></figure><figure><img src="shots/ouranos-fullerene-soccerball.jpg" alt="fullerene dual — the soccer-ball combo" loading="lazy"><figcaption>fullerene dual — the soccer-ball combo</figcaption></figure></div>
@@ -95,13 +104,6 @@ domerama, monolithicdome) informed WHAT to compute — never source code.
 Cut lengths are HUB-ADJUSTED: struts have a real cross-section, so cut =
 chord − offset(A end) − offset(B end). Cutting raw chords on 3.5" timber
 produces a dome that cannot close.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p><strong>Ouranos</strong> is the primordial Greek sky — the dome
-itself, arched over the world. The module was "Buck Dome" (after
-Buckminster Fuller) until it earned a proper noun.
-<strong>ATLAS</strong>, the in-repo FEA, is the titan who holds up
-Ouranos: the load-bearer holds up the sky-dome, the solver holds up the
-design.</p>
 <h2 id="features">Features</h2>
 <h3 id="geometry-the-left-panel-dropdowns">Geometry (the left-panel
 dropdowns)</h3>

@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,8 +57,13 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/oannes.jpg" alt="OANNES splash"></div>
 <h1 class="mname">OANNES</h1>
+<div class="lore"><p>Oannes: the Babylonian apkallu — the fish-cloaked sage who rose from
+the water to teach humanity the crafts, then went back in the evening.
+Knowledge from the deep, handed over and left with you. Advisor, never a
+tutor.</p></div>
 <p class="tagline">The shop advisor. Grounded answers, honest G-code post.</p>
-
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/oannes-post-pane.jpg" alt="the post pane: a real toolpath cleaned, report + preview in the scrollback" loading="lazy"><figcaption>the post pane: a real toolpath cleaned, report + preview in the scrollback</figcaption></figure></div>
 <div class="manual">
 <h1 id="oannes--operator-manual">Oannes — Operator Manual</h1>
 <p>Shop advisor + G-code post. Leviathan Design Suite. Sovereign,
@@ -69,8 +77,11 @@ local-first, PolyForm Small Business licensed.</p>
 ./oannes gcode in.nc -o out.nc --precision 4
 ./oannes gcode in.nc --review               # + model advisory to stdout</code></pre>
 <p>Or the window: <code>oannes-win</code> (cargo feature
-<code>win</code>) — ask box on top, session scrollback below, "Sources
-▸/▾" toggle per answer.</p>
+<code>win</code>) — ask box on top, a <strong>g-code post row</strong>
+under it (<code>Post .nc…</code> = deterministic clean;
+<code>Post + review…</code> adds the Nemotron advisory, which takes the
+Styx lease), session scrollback below, "Sources ▸/▾" toggle per
+answer.</p>
 <h2 id="what-it-is">What it is</h2>
 <p>A grounded advisor. Every answer is composed from a local corpus of
 CNC curriculum (<code>corpus/</code> — Fanuc, Okuma OSP, Renishaw
@@ -79,11 +90,6 @@ grounded it. No corpus hit, it says so — the persona prompts forbid
 invented G-codes and macro numbers. Plus a G-code post-processor
 (<code>tools/gcode.py</code>): a deterministic cleanup pass that always
 runs, and an opt-in advisory review that is printed, never applied.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p>Oannes: the Babylonian apkallu — the fish-cloaked sage who rose from
-the water to teach humanity the crafts, then went back in the evening.
-Knowledge from the deep, handed over and left with you. Advisor, never a
-tutor.</p>
 <h2 id="features">Features</h2>
 <p><strong>Advisor</strong> (<code>tools/oannes_engine.py</code>):</p>
 <ul>
@@ -128,6 +134,12 @@ takes the GPU lease (<code>flock /tmp/xos_gpu_lock.json</code>) around
 the generation call, so it waits its turn instead of colliding with a
 resident model. Cold model means ~60s before the answer lands; the
 answer arrives all at once.</li>
+<li>Window post lane: <code>Post .nc…</code> picks a file (zenity),
+writes <code>&lt;stem&gt;-oannes.nc</code> beside it, and logs the
+removal report in the session scrollback; the entry's Sources toggle
+holds the head of the cleaned file.
+<code>OANNES_OPEN=&lt;path&gt; oannes-win</code> posts a file at startup
+(headless testing).</li>
 <li>Window: type the question, Enter. Each entry shows the clean answer;
 flip "Sources ▸" open to audit which corpus file and heading it stands
 on.</li>

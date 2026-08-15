@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,6 +57,12 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/kish.jpg" alt="KISH splash"></div>
 <h1 class="mname">KISH</h1>
+<div class="lore"><p>Kish: the first Sumerian city where "kingship descended from heaven"
+after the flood — the first library-city. Knowledge held in your own
+walls, not rented. The vocabulary follows: a notebook is a
+<strong>Dub</strong> (clay tablet), the index is <strong>Clay</strong>,
+the writer is <strong>Thoth</strong>, image styles are
+<strong>idiolects</strong>.</p></div>
 <p class="tagline">The library. Notebooks and reports, grounded in your own sources.</p>
 <div class="shots-head">IN ACTION</div>
 <div class="shots"><figure><img src="shots/kish-ui-dubs.jpg" alt="the dub library — every notebook, its sources and chunks" loading="lazy"><figcaption>the dub library — every notebook, its sources and chunks</figcaption></figure></div>
@@ -82,13 +91,6 @@ is the replacement that lives in these walls. Every model call goes to
 local cluster endpoints; nothing leaves the LAN. Answers cite the
 sources they came from, and <code>doctor</code> tells you when disk and
 index disagree instead of letting RAG hand back a nearest neighbour.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p>Kish: the first Sumerian city where "kingship descended from heaven"
-after the flood — the first library-city. Knowledge held in your own
-walls, not rented. The vocabulary follows: a notebook is a
-<strong>Dub</strong> (clay tablet), the index is <strong>Clay</strong>,
-the writer is <strong>Thoth</strong>, image styles are
-<strong>idiolects</strong>.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Dubs</strong> — per-notebook workspaces under

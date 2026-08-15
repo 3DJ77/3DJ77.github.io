@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,8 +57,21 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/styx.jpg" alt="STYX splash"></div>
 <h1 class="mname">STYX</h1>
+<div class="lore"><p>The Styx is the river every soul must cross one at a time, and an
+oath sworn on it binds even a god. The GPU lease is that oath: while one
+holder has it, nobody else crosses. All GPU work on Tiamat serializes
+through this one crossing.</p>
+<p>The canonical lock file is
+<code>DEFAULT_LOCK_FILE = /tmp/xos_gpu_lock.json</code> (override:
+<code>$XOS_GPU_LOCK_FILE</code>). <strong>The flock IS the truth — never
+parse the label file.</strong> The JSON body is a best-effort display
+label written <em>after</em> the lock is held; check busy with a
+non-blocking flock attempt
+(<code>flock -n /tmp/xos_gpu_lock.json -c true</code>), never with
+<code>cat</code>.</p></div>
 <p class="tagline">The oath. One job crosses the GPU at a time.</p>
-
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/styx-lease-held.jpg" alt="the oath, live: the lease check refused while a resident model holds it" loading="lazy"><figcaption>the oath, live: the lease check refused while a resident model holds it</figcaption></figure></div>
 <div class="manual">
 <h1 id="styx--crate-manual">Styx — Crate Manual</h1>
 <h2 id="quickstart">Quickstart</h2>
@@ -81,19 +97,6 @@ Three things, never more: an <code>Endpoint</code>, a borrowable
 race, and the kernel releases it when the process dies. That is why
 there is no timeout, no zombie recovery, no PID staleness check.
 Sovereign, local-first; PolyForm Small Business licensed.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p>The Styx is the river every soul must cross one at a time, and an
-oath sworn on it binds even a god. The GPU lease is that oath: while one
-holder has it, nobody else crosses. All GPU work on Tiamat serializes
-through this one crossing.</p>
-<p>The canonical lock file is
-<code>DEFAULT_LOCK_FILE = /tmp/xos_gpu_lock.json</code> (override:
-<code>$XOS_GPU_LOCK_FILE</code>). <strong>The flock IS the truth — never
-parse the label file.</strong> The JSON body is a best-effort display
-label written <em>after</em> the lock is held; check busy with a
-non-blocking flock attempt
-(<code>flock -n /tmp/xos_gpu_lock.json -c true</code>), never with
-<code>cat</code>.</p>
 <h2 id="api-surface">API surface</h2>
 <ul>
 <li><code>Lease::acquire(holder) -&gt; Result&lt;Lease, String&gt;</code>

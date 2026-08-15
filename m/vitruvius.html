@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,6 +57,13 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/vitruvius.jpg" alt="VITRUVIUS splash"></div>
 <h1 class="mname">VITRUVIUS</h1>
+<div class="lore"><p>Vitruvius was the Roman architect and engineer whose <em>De
+architectura</em> is the oldest surviving work on the discipline — the
+book that gave design its three tests: <strong>firmitas, utilitas,
+venustas</strong> — soundness, usefulness, beauty. A CAD module that
+exists to design real parts for a real shop takes the name of the man
+who first wrote down what a design owes the person who builds from
+it.</p></div>
 <p class="tagline">CAD, sovereign. Solids in, drawings out.</p>
 <div class="shots-head">IN ACTION</div>
 <div class="shots"><figure><img src="shots/vitruvius-scene-loaded.jpg" alt="a scene under the gizmos and inspector" loading="lazy"><figcaption>a scene under the gizmos and inspector</figcaption></figure></div>
@@ -87,14 +97,6 @@ hand-modeling path never depends on it.</p>
 chartered. The binary is <code>target/release/vitruvius</code>. 84
 in-crate tests (<code>cargo test</code>); the camera/spacemouse canon
 tests live in the Chimaera crate.</p>
-<h2 id="why-the-name">Why the name</h2>
-<p>Vitruvius was the Roman architect and engineer whose <em>De
-architectura</em> is the oldest surviving work on the discipline — the
-book that gave design its three tests: <strong>firmitas, utilitas,
-venustas</strong> — soundness, usefulness, beauty. A CAD module that
-exists to design real parts for a real shop takes the name of the man
-who first wrote down what a design owes the person who builds from
-it.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Palette primitives</strong> — BOX, SPHERE, CYLINDER, WEDGE,

@@ -18,6 +18,9 @@
   .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
   h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
     margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
   .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
   .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
     margin:1.8rem 0 0.6rem; }
@@ -54,18 +57,25 @@
 <div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
 <div class="hero"><img src="../splash/argo.jpg" alt="ARGO splash"></div>
 <h1 class="mname">ARGO</h1>
+<div class="lore"><p>The Argo carried fifty heroes but sailed as one ship — many hands, one
+helm, steering by one star. Every window in the suite is another helmsman
+on the same vessel: whatever your hands learn in one module, every other
+module already knows.</p></div>
 <p class="tagline">The helm. Every window steers by one shared feel — mouse, puck, and star.</p>
-
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/argo-nav-pane.jpg" alt="the ARGO pane in Hephaestus — calibration inherited from other windows" loading="lazy"><figcaption>the ARGO pane in Hephaestus — calibration inherited from other windows</figcaption></figure></div>
 <div class="manual">
 
-<h2>One ship, many helmsmen</h2>
+<h2>What it is</h2>
 <p>ARGO is the shared feel: one calibration file
 (<code>~/.config/signature/nav.json</code>) that every Leviathan window
-steers by. Mouse orbit, zoom, and pan gains; spacemouse signs and sources;
-the Shift attitude layer — tuned once in any window's NAV panel, honored by
-all of them. (The buttons still read NAV.)</p>
-<p>Each window writes only the keys it owns — a read-modify-write, so one
-module's tuning never erases another's.</p>
+steers by. Mouse orbit/zoom/pan sensitivity and direction; SpaceMouse
+signs, sources, sensitivity, and fly speed; the Shift attitude layer.
+Tune it in any window's NAV panel — Vitruvius, Ouranos, Hephaestus — and
+every window follows. The buttons still read NAV, as ruled.</p>
+<p>Each window writes only the keys it owns — read-modify-write — so one
+module's tuning never erases another's. The pane below is Hephaestus's,
+showing calibration inherited from tuning done in other windows.</p>
 </div>
 <footer>
 <p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
