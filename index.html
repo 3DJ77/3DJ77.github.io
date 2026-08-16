@@ -108,6 +108,91 @@
     border-radius: 12px;
     line-height: 0;
   }
+  /* ── the veils: canvas drapes over unreleased modules ── */
+  .veiled .mlink { cursor: default; }
+  .veiled .mlink:hover .m-name { color: var(--gold); }
+  .veiled .frame { position: relative; display: block; }
+  .drape {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .placard {
+    background: linear-gradient(175deg, #d8b968, #a3813c 70%, #8a6a2f);
+    border: 1px solid #6e5416;
+    border-radius: 2px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    color: #2e2410;
+    text-shadow: 0 1px 0 rgba(255,255,255,.4);  /* engraved */
+    box-shadow: 0 2px 8px rgba(0,0,0,.5);
+    white-space: nowrap;
+  }
+  /* ── ancient-scroll view counter ── */
+  .scroll-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 1.6rem;
+  }
+  .scroll-roll {
+    width: 13px;
+    height: 74px;
+    border-radius: 7px;
+    background: linear-gradient(90deg, #6b5327, #c9b171 45%, #6b5327);
+    box-shadow: 0 2px 6px rgba(0,0,0,.6);
+  }
+  .scroll-roll::before { content: ""; }
+  .scroll-body {
+    background: linear-gradient(180deg, #cbb98d, #e8dcbe 18% 82%, #cbb98d);
+    border-top: 1px solid #8a6a2f;
+    border-bottom: 1px solid #8a6a2f;
+    padding: 10px 18px 8px;
+    text-align: center;
+  }
+  .odometer {
+    display: inline-flex;
+    border: 2px solid #8a6a2f;
+    border-radius: 3px;
+    background: #f3ecd8;
+    box-shadow: inset 0 0 6px rgba(74,55,19,.55);
+    overflow: hidden;
+  }
+  .odometer .digit {
+    height: 1.5em;
+    overflow: hidden;
+    padding: 0 0.28em;
+    border-right: 1px solid rgba(138,106,47,.55);
+    font: italic 700 1.3rem/1.5 "Z003", "URW Chancery L", "Apple Chancery", "Monotype Corsiva", "Brush Script MT", Georgia, serif;
+    color: #3a2a10;
+    /* wheel curvature — each cell shaded top and bottom like a drum */
+    background: linear-gradient(180deg, rgba(74,55,19,.35), transparent 30% 70%, rgba(74,55,19,.35));
+  }
+  .odometer .digit:last-child { border-right: 0; }
+  .odometer .strip {
+    display: block;
+    transition: transform 1.4s cubic-bezier(.25,.9,.3,1);
+  }
+  .odometer .strip span { display: block; height: 1.5em; position: relative; }
+  /* the scribe's seven — crossbar through the stem, slanted with the italic */
+  .odometer .strip .n7::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 0.42em;
+    height: 0.07em;
+    background: currentColor;
+    transform: translateX(-38%) rotate(-11deg);
+    border-radius: 0.04em;
+  }
+  .scroll-label {
+    margin-top: 5px;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    color: #6b5327;
+  }
 </style>
 </head>
 <body>
@@ -197,7 +282,7 @@
     <p class="m-what">The keeper. Giants sleep in the vault; one wakes when called.</p>
   </div>
   <div class="module"><a href="m/ziz.html" class="mlink"><img src="splash/ziz.jpg" alt="Ziz — a colossal bird of constellations spanning the night sky" loading="lazy"><div class="m-name">ZIZ</div></a>
-    <p class="m-what">The mind-space. The whole sky of thought at once.</p>
+    <p class="m-what">The mind-space. Your knowledge graph in 3D &mdash; point it at a vault, fly the sky of it.</p>
   </div>
 </div>
 
@@ -211,6 +296,84 @@
     <img src="kofi-qr.png" alt="Tip via Ko-fi — scan or click" width="140" height="140">
   </a>
   <p><a href="https://ko-fi.com/3DJ77">ko-fi.com/3DJ77</a></p>
+
+  <div class="scroll-counter" aria-label="page view counter">
+    <div class="scroll-roll"></div>
+    <div class="scroll-body">
+      <div class="odometer" id="odometer"></div>
+      <div class="scroll-label">VIEWS</div>
+    </div>
+    <div class="scroll-roll"></div>
+  </div>
+  <script>
+  /* The advent wall: modules named here hang veiled — unclickable, art
+     covered. Drop day = delete the module's name from VEILED. */
+  (function () {
+    var VEILED = ['tiamat','vitruvius','hephaestus','iris','jove','oannes',
+                  'gilgamesh','labyrinth','nazca','ouranos','morpheus','kish',
+                  'chimaera','styx','dido','argo','hades','ziz'];
+    var PLACARD = 'STILL IN THE DEEP';
+    /* Week before a drop, announce it: NEXT = {name:'iris', label:'SURFACES WITH DROP IV'} */
+    var NEXT = { name: '', label: '' };
+    document.querySelectorAll('.suite .module').forEach(function (card) {
+      var link = card.querySelector('.mlink');
+      var img = card.querySelector('img');
+      if (!link || !img) return;
+      var name = (link.getAttribute('href') || '').replace(/^m\//, '').replace(/\.html$/, '');
+      if (VEILED.indexOf(name) === -1) return;
+      card.classList.add('veiled');
+      link.removeAttribute('href');
+      /* the veiled art is never requested — the canvas replaces it */
+      img.src = 'splash/veil.jpg';
+      img.alt = 'Veiled — not yet on exhibit';
+      var frame = document.createElement('span');
+      frame.className = 'frame';
+      img.parentNode.insertBefore(frame, img);
+      frame.appendChild(img);
+      var drape = document.createElement('span');
+      drape.className = 'drape';
+      drape.innerHTML = '<span class="placard">' +
+        (name === NEXT.name && NEXT.label ? NEXT.label : PLACARD) + '</span>';
+      frame.appendChild(drape);
+    });
+  })();
+  (function () {
+    var od = document.getElementById('odometer');
+    var DIGITS = 6;
+    function build() {
+      for (var i = 0; i < DIGITS; i++) {
+        var cell = document.createElement('span');
+        cell.className = 'digit';
+        var strip = document.createElement('span');
+        strip.className = 'strip';
+        for (var d = 0; d <= 9; d++) {
+          var num = document.createElement('span');
+          if (d === 7) num.className = 'n7';
+          num.textContent = d;
+          strip.appendChild(num);
+        }
+        cell.appendChild(strip);
+        od.appendChild(cell);
+      }
+    }
+    function spin(n) {
+      var s = String(n).padStart(DIGITS, '0').slice(-DIGITS);
+      var strips = od.querySelectorAll('.strip');
+      for (var i = 0; i < DIGITS; i++) {
+        strips[i].style.transitionDelay = (0.12 * (DIGITS - 1 - i)) + 's';
+        strips[i].style.transform = 'translateY(-' + (+s[i] * 1.5) + 'em)';
+      }
+    }
+    build();
+    /* ponytail: Abacus hit counter (MIT, no account); swap endpoint when
+       self-hosted web infra lands (ROLLOUT.md sales-triggered roadmap).
+       Fails to 000000. */
+    fetch('https://abacus.jasoncameron.dev/hit/leviathan-3dj77/site-views')
+      .then(function (r) { return r.json(); })
+      .then(function (d) { spin(d.value); })
+      .catch(function () {});
+  })();
+  </script>
 </footer>
 
 </body>
