@@ -108,7 +108,30 @@
     border-radius: 12px;
     line-height: 0;
   }
-  .herald { margin-top: 0.4rem; }
+  .herald { margin-top: 0.4rem; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+  .hform { display: flex; gap: 0; }
+  .hform input {
+    background: var(--panel);
+    border: 1px solid var(--gold);
+    border-right: 0;
+    color: var(--dim);
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.7rem 1rem;
+    width: min(20rem, 60vw);
+  }
+  .hform input:focus { outline: none; color: var(--gold); }
+  .hform button {
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    color: var(--bg);
+    font: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+  }
+  .hform button:hover { background: #f0d060; }
   .hbtn {
     display: inline-block;
     border: 1px solid var(--gold);
@@ -304,8 +327,11 @@
 <div class="suite-head" style="margin-top:2.2rem">THE HERALD</div>
 <div class="suite-sub">every unveiling announced &mdash; with a sneak peek of what surfaces next week</div>
 <div class="herald">
-  <a class="hbtn" href="https://ko-fi.com/3DJ77">follow on Ko-fi &rarr; drops land in your inbox</a>
-  <!-- email list: Buttondown signup form slots in here -->
+  <form class="hform" action="https://buttondown.com/api/emails/embed-subscribe/cashblack77" method="post" target="_blank">
+    <input type="email" name="email" placeholder="you@shop.example" required aria-label="email address">
+    <button type="submit">join the list_</button>
+  </form>
+  <a class="hbtn" href="https://ko-fi.com/3DJ77">or follow on Ko-fi &rarr; drops land in your inbox</a>
 </div>
 
 <footer>
