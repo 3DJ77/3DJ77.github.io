@@ -4,30 +4,109 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>Springhouse</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Springhouse — Reconfiguring</title>
 <style>
+  :root {
+    --bg:     #0d0f0e;
+    --panel:  #131715;
+    --border: #2a3028;
+    --gold:   #d4af37;
+    --dim:    #9aa89f;
+    --green:  #4ade80;
+  }
+  * { box-sizing: border-box; }
   body {
-    background: #0d0f0e;
-    color: #9aa89f;
+    background: var(--bg);
+    color: var(--dim);
     font-family: "DejaVu Sans Mono", "Cascadia Mono", Consolas, monospace;
     margin: 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 2.5rem 1.5rem;
   }
-  main { max-width: 32rem; }
-  p { font-size: 0.9rem; line-height: 1.7; margin: 0 0 1rem; }
+  main { max-width: 44rem; width: 100%; }
+  .brand {
+    color: var(--gold);
+    letter-spacing: 0.22em;
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+  }
+  h1 {
+    font-size: 1.05rem;
+    font-weight: normal;
+    letter-spacing: 0.16em;
+    color: var(--green);
+    margin: 0 0 2rem;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.6rem 1.7rem;
+    margin-bottom: 2rem;
+  }
+  p { font-size: 0.88rem; line-height: 1.75; margin: 0 0 1.1rem; }
   p:last-child { margin-bottom: 0; }
-  .m { color: #d4af37; letter-spacing: 0.18em; font-size: 0.8rem; margin-bottom: 1.4rem; }
+  .status {
+    font-size: 0.8rem;
+    color: var(--green);
+    line-height: 2;
+    border-top: 1px solid var(--border);
+    padding-top: 1.4rem;
+  }
+  .status div::before { content: "> "; }
+  .status div::after { content: "_"; }
+  footer {
+    margin-top: 2.2rem;
+    font-size: 0.72rem;
+    color: var(--border);
+    letter-spacing: 0.1em;
+  }
 </style>
 </head>
 <body>
 <main>
-  <p class="m">SPRINGHOUSE</p>
-  <p>Nothing here at the moment.</p>
-  <p>Back when there is something worth showing.</p>
+
+  <div class="brand">SPRINGHOUSE</div>
+  <h1>RECONFIGURING</h1>
+
+  <div class="panel">
+    <p>Springhouse is undertaking a structured reassessment of its product
+    architecture and go-to-market posture. External release activity is
+    paused pending completion of a value-proposition validation exercise.
+    This is a deliberate, resourced decision and not a suspension of
+    operations.</p>
+
+    <p>The review covers distribution posture, deployment topology, and the
+    degree of alignment between delivered platform capability and
+    addressable demand. Preliminary findings indicate a non-trivial
+    variance between engineering throughput and validated market pull,
+    which we are working to characterise before committing further release
+    surface.</p>
+
+    <p>Roadmap consolidation is ongoing. Development continues across the
+    core platform layer while we evaluate whether the current offering
+    constitutes a differentiated proposition in a category with
+    well-capitalised incumbents, or whether resources are better allocated
+    against an adjacent vector.</p>
+
+    <p>No launch timeline is being communicated at this stage. Further
+    clarity will follow once the assessment concludes.</p>
+  </div>
+
+  <div class="status">
+    <div>strategic review in progress &mdash; no external commitments outstanding</div>
+    <div>no product is currently offered for sale or download</div>
+    <div>enquiries are not being taken at this time</div>
+  </div>
+
+  <footer>SPRINGHOUSE</footer>
+
 </main>
 </body>
 </html>
