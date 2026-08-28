@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+  <rect width="640" height="480" fill="#131715"/>
+  <rect width="640" height="480" fill="none" stroke="#2a3028" stroke-width="2"/>
+  <g stroke="#d4af37" stroke-width="1" opacity="0.35">
+    <line x1="0" y1="120" x2="640" y2="120"/>
+    <line x1="0" y1="240" x2="640" y2="240"/>
+    <line x1="0" y1="360" x2="640" y2="360"/>
+    <line x1="160" y1="0" x2="160" y2="480"/>
+    <line x1="320" y1="0" x2="320" y2="480"/>
+    <line x1="480" y1="0" x2="480" y2="480"/>
+  </g>
+  <g fill="#d4af37">
+    <circle cx="220" cy="170" r="5"/>
+    <circle cx="300" cy="150" r="5"/>
+    <circle cx="380" cy="175" r="5"/>
+    <circle cx="260" cy="230" r="5"/>
+    <circle cx="340" cy="225" r="5"/>
+    <circle cx="420" cy="245" r="5"/>
+    <circle cx="230" cy="290" r="5"/>
+    <circle cx="310" cy="300" r="5"/>
+    <circle cx="390" cy="285" r="5"/>
+  </g>
+  <text x="320" y="410" text-anchor="middle" font-family="DejaVu Sans Mono, monospace" font-size="16" letter-spacing="4" fill="#4ade80">STRUCTURED LIGHT — STILL ON THE BENCH</text>
+</svg>
