@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRUCTOR — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/structor.jpg" alt="STRUCTOR splash"></div>
+<h1 class="mname">STRUCTOR</h1>
+<div class="lore"><p>Structor was the Roman architect and engineer whose <em>De
+architectura</em> is the oldest surviving work on the discipline — the
+book that gave design its three tests: <strong>firmitas, utilitas,
+venustas</strong> — soundness, usefulness, beauty. A CAD module that
+exists to design real parts for a real shop takes the name of the man
+who first wrote down what a design owes the person who builds from
+it.</p></div>
+<p class="tagline">CAD, sovereign. Solids in, drawings out.</p>
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/structor-scene-loaded.jpg" alt="a scene under the gizmos and inspector" loading="lazy"><figcaption>a scene under the gizmos and inspector</figcaption></figure></div>
+<div class="manual">
+<h1 id="structor--operator-manual">Structor — Operator Manual</h1>
+<h2 id="quickstart">Quickstart</h2>
+<pre><code>cargo build --release
+target/release/structor</code></pre>
+<p>Click a palette button (top-left) — BOX / SPHERE / CYLINDER / WEDGE /
+PYRAMID — to drop a solid on the plate. Left-drag moves it; rings
+rotate; grab the bounding-box handles to scale (corners = uniform, faces
+= one axis). <strong>Ctrl+B</strong> bakes the scene to STL.
+<strong>Ctrl+S</strong> saves a <code>.SigN</code> file.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>Structor is the design module of the Leviathan Design Suite: a
+sovereign, local-first CAD program in Rust on fyrox. It is a TinkerCAD
+replacement — drop primitive solids on a build plate, drag/rotate/scale
+them with gizmos, mark negatives as holes, group and boolean-merge, then
+bake the scene through OpenSCAD to a watertight STL. No browser, no
+cloud, no account. Everything runs on the local machine; the only
+network calls are optional AI requests to LLM endpoints on the
+operator's own cluster.</p>
+<p>The scene is a tree of shapes that maps 1:1 onto a JSON-CSG grammar,
+so a saved <code>.SigN</code> file is a readable spec, not an opaque
+blob. Boolean preview and merge use the manifold engine — the same
+backend OpenSCAD uses — so what you preview is what the bake produces.
+An AI CO-OP pane can edit the scene from plain-language instructions or
+write raw OpenSCAD for complex parts, but the deterministic
+hand-modeling path never depends on it.</p>
+<p>Formerly named SigNature; renamed 2026-08-09 when the suite was
+chartered. The binary is <code>target/release/structor</code>. 84
+in-crate tests (<code>cargo test</code>); the camera/spacemouse canon
+tests live in the Chimaera crate.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Palette primitives</strong> — BOX, SPHERE, CYLINDER, WEDGE,
+PYRAMID spawn at the nearest free grid cell; shape-glyph icon
+buttons.</li>
+<li><strong>SCAD template shapes</strong> — CONE, TORUS, TUBE, HEX
+PRISM, ROUND BOX, CAPSULE, SLOPE RING, GEAR (real computed involute
+flanks; teeth/module/face-width inputs — same module + different teeth =
+gears that mesh). Templates compile through OpenSCAD and land as
+grab-editable meshes.</li>
+<li><strong>Gizmos</strong> — move arrows, rotate rings (22.5° snap with
+degree compass), bounding-box scale handles: 8 corners = uniform, 6
+faces = single axis, opposite point anchored, Esc restores exactly.</li>
+<li><strong>Multi-select</strong> — Shift+click or Ctrl+click builds a
+set; Ctrl+A selects all; the set body-drags rigidly with the gizmo at
+the centroid (move only).</li>
+<li><strong>Groups and merge</strong> — Ctrl+G: solids-only = logical
+group; solid+hole = applies the boolean into one merged part (manifold
+CSG — OpenSCAD's own engine). Ctrl+U ungroups/un-merges. Ctrl+W welds
+any 2+ selected parts into one polyhedron regardless of hole mix.
+Non-manifold parts fail LOUD ("MERGE FAIL: n part(s) not manifold"),
+never silently dropped.</li>
+<li><strong>Holes</strong> — H toggles solid↔︎hole; P previews the
+whole-scene boolean non-destructively.</li>
+<li><strong>Snap</strong> — grid snap (GRID picker .1/.25/.5/1/5), SMART
+surface snap (parts ride up onto parts), feature-point snap
+(corners/face-centers/cap-cardinals, Ctrl suppresses), and <strong>Pin
+Snap</strong>: armed mode places exact operator-chosen surface points
+that persist in the file and ride transforms.</li>
+<li><strong>Color</strong> — own-drawn HSV color wheel + value bar,
+PAINT arm mode, 8-preset row; colors persist in <code>.SigN</code>.</li>
+<li><strong>Mirror</strong> — MIR X/Y/Z in the TRANSFORM menu, about
+combined-bounds center.</li>
+<li><strong>Align</strong> — X/Y/Z × min/mid/max grid with
+multi-selection, against combined bounds or a picked reference
+part.</li>
+<li><strong>Undo/redo</strong> — snapshot history, checkpoint at every
+mutation; Ctrl+Z/Ctrl+Y. Copy/paste with Ctrl+C/Ctrl+V.</li>
+<li><strong>Import</strong> — STL (binary+ASCII) and OBJ via the IMPORT
+button (zenity dialog) or <code>SIG_IMPORT=&lt;path&gt;</code> at
+launch; meshes are welded, normalized, and grab-editable; imported-mesh
+W/H/D live in the inspector and rescale uniformly.</li>
+<li><strong>Export</strong> — EXPORT STL via zenity save dialog; each
+export appends a <code>signature.export</code> event to
+<code>~/XOS/.timeline-events.jsonl</code>.</li>
+<li><strong>Save/load</strong> — Ctrl+S writes <code>.SigN</code>
+(JSON-CSG: units, solids, colors, pins);
+<code>SIG_OPEN=&lt;path&gt;</code> loads at launch.</li>
+<li><strong>Bake</strong> — Ctrl+B runs the scene through the
+Lattice-Loom wx3 pipeline → OpenSCAD → STL + receipt + thumbnail, in
+<code>out/</code> anchored to the repo.</li>
+<li><strong>CO-OP AI pane</strong> — right-side popout (edge tab or C):
+plain-language <code>edit_solid</code> scene edits, a
+<code>&lt;SCAD&gt;</code> escape hatch where the model writes stock
+OpenSCAD for complex parts (one self-repair round on compile errors),
+SPEC build mode (≤2 clarifying questions → parameter sheet →
+<code>go</code> confirms), a count register that cross-checks requested
+quantities against the compiled program, and a VLM judge that renders
+the part and rules on shape class (advisory; JUDGE FAIL triggers one
+repair round). <strong>Honest note:</strong> the AI lane needs a
+configured LLM endpoint (<code>SIG_LLM_URL</code>, default the GPU
+host's nemotron shim) and its reliability work is still open — the
+AI-assist claim is deliberately OFF the public page until it holds.</li>
+<li><strong>Backdrops</strong> — SHOP / HILLS / SPACE skydome
+wallpapers, BG LEVEL trim.</li>
+<li><strong>SpaceMouse</strong> — direct hidraw driver (no daemon), full
+6-axis nav with the ARGO shared-feel system: every
+sign/source/sensitivity is user data in
+<code>~/.config/signature/nav.json</code>, edited live in the NAV
+panel.</li>
+<li><strong>Wheel/pan canon</strong> — all wheel and pan input routes
+through one seam each, ground-truthed to operator hands (scroll up =
+camera away; grab-the-world pan, correct at every yaw).</li>
+<li><strong>Attitude triad</strong> — lower-left mini axes glued to the
+camera; click aligns the view down that axis, re-click flips sides.</li>
+<li><strong>Z-up display language</strong> — every UI surface
+(inspector, ruler, menus) speaks Z-up like a machinist expects; the
+scene stays Y-up internally.</li>
+</ul>
+<h2 id="using-it">Using it</h2>
+<p><strong>Place and edit solids.</strong> Click a palette button; the
+part lands on a free grid cell. Click to select (repeat-click cycles
+overlapping parts). Left-drag moves on the workplane with grid + surface
+snap; arrows nudge by the grid step (Shift ×5, Ctrl+Shift+Up/Down
+raises/lowers). Type exact values in the left inspector; Enter commits.
+Drag a ring to rotate (compass shows the snapped angle; ROT° box in
+TOOLS applies typed degrees). Drag a corner handle for uniform scale, a
+face handle for one axis — it grows toward you, Esc puts everything
+back. T opens the TOOLS panel: GRID step, TRANSFORM (scale/rotate
+±90°/mirror), ALIGN, SNAP, colors, backdrops.</p>
+<p><strong>Booleans.</strong> Select a part, press H to mark it a hole.
+P previews the cut without committing. Select the hole plus its solids
+and Ctrl+G to apply the boolean — the result is one merged,
+still-editable part; Ctrl+U brings the sources back. Ctrl+W welds any
+multi-selection into one part in a single stroke.</p>
+<p><strong>Save and bake.</strong> Ctrl+S saves <code>.SigN</code> to
+<code>out/</code>. Ctrl+B bakes: watch the CO-OP status line for
+<code>...Baking</code> → <code>BAKE OK</code>; the STL, receipt, and
+thumbnail land in <code>out/</code>. EXPORT STL in the toolbar opens a
+save dialog for shipping the mesh elsewhere.</p>
+<p><strong>Navigate.</strong> Right-drag or left-drag empty space =
+orbit. Middle-drag = pan (the scene follows the cursor). Wheel = zoom
+(scroll up backs the camera away). WASD pans the view. Home (or H with
+nothing selected) = home view. With the SpaceMouse: tilt = fly,
+push/pull = lift, twist = yaw. Hold <strong>Shift</strong> for the
+attitude layer — tilt L/R = roll, tilt F/B = pitch, fly gated off. Hold
+<strong>L-Alt</strong> to boost fly speed (<code>SIG_FLY_BOOST</code>,
+default 6×). Left puck button = home.</p>
+<p><strong>The NAV panel.</strong> If any axis feels backwards, don't
+relaunch with env flips — open the NAV panel and fix it there:
+per-function sign flips, gesture-source reassignment, puck sensitivity,
+fly speed, and the mouse feel block (orbit/zoom/ pan sens + direction).
+Every click writes <code>~/.config/signature/nav.json</code>. Load
+order: baked default ← nav.json ← <code>SIG_*</code> env (env wins, as
+launch trim).</p>
+<p><strong>The CO-OP pane.</strong> Edge tab or C opens it; drag the
+left grab bar to resize. Type an instruction and Enter: plain edits go
+through <code>edit_solid</code> (the model sees the whole spec plus a
+MESHES ON PLATE block); complex parts come back as
+<code>&lt;SCAD&gt;</code> programs, compiled and dropped on the plate.
+Toggle SPEC for the spec-build round: answer its ≤2 questions, review
+the parameter sheet, <code>go</code> builds, <code>cancel</code>/Esc
+aborts. The DEBUG feed (newest first) is copyable with Ctrl+C. Every AI
+part gets a COUNT check and an advisory judge verdict on the status
+line. UNITS toggles mm/in for the sheet.</p>
+<h2 id="how-it-connects">How it connects</h2>
+<ul>
+<li><strong>Chimaera</strong> (<code>../Chimaera</code>, path dep) — the
+camera, interaction-math, and spacemouse crate. Nav canon tests live
+there; edit viewport feel THERE.</li>
+<li><strong>ARGO</strong> — the suite-wide nav-feel system:
+<code>~/.config/signature/nav.json</code> is shared with Ouranos (the
+Buck Dome window) — one feel file across the suite; the shared
+<code>mouse</code> block carries orbit/zoom/pan sens and direction.</li>
+<li><strong>Bake pipeline</strong> — Lattice-Loom's wx3 solid pipeline →
+OpenSCAD → STL. Baked STLs are plain files in <code>out/</code>;
+downstream Leviathan modules (Jove, GilgaMESH, Labyrinth) take STL as
+input.</li>
+<li><strong>Timeline</strong> — exports append
+<code>signature.export</code> events to
+<code>~/XOS/.timeline-events.jsonl</code> for the operator surface's
+timeline dots.</li>
+<li><strong>LLM endpoints</strong> — CO-OP posts to
+<code>SIG_LLM_URL</code> (default the GPU host's nemotron shim
+<code>http://$GPU_HOST:18205</code>); the judge renders via local
+<code>openscad</code> and asks a VLM endpoint. Structor calls over HTTP
+and holds no GPU itself — host-side GPU serialization is the Styx lease,
+owned by whatever runs the model server.</li>
+</ul>
+<h2 id="env-knobs">Env knobs</h2>
+<p>Env is launch-time trim; the NAV panel / nav.json is the durable home
+for feel.</p>
+<div class="twrap"><table>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SIG_OPEN</code></td>
+<td>—</td>
+<td>Load a <code>.SigN</code> scene at launch</td>
+</tr>
+<tr class="even">
+<td><code>SIG_IMPORT</code></td>
+<td>—</td>
+<td>Load an STL/OBJ mesh at launch</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_UNITS</code></td>
+<td>mm</td>
+<td><code>in</code> starts the SPEC sheet in inches</td>
+</tr>
+<tr class="even">
+<td><code>SIG_SPACEMOUSE_SENS</code> / <code>_DEADZONE</code></td>
+<td>crate defaults</td>
+<td>Puck sensitivity / deadzone</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_SPACEMOUSE_HIDRAW</code></td>
+<td>auto</td>
+<td>Force a specific <code>/dev/hidraw*</code> node</td>
+</tr>
+<tr class="even">
+<td><code>SIG_ORBIT_SENS</code> / <code>SIG_ZOOM_SENS</code> /
+<code>SIG_PAN_SENS</code></td>
+<td>1.0</td>
+<td>Mouse feel multipliers</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_FLY_SPEED</code></td>
+<td>1.0</td>
+<td>Fly speed multiplier</td>
+</tr>
+<tr class="even">
+<td><code>SIG_FLY_BOOST</code></td>
+<td>6.0</td>
+<td>L-Alt fly multiplier</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_WHEEL_SIGN</code></td>
+<td>1.0</td>
+<td>Hardware wheel trim only — canon is fixed</td>
+</tr>
+<tr class="even">
+<td><code>SIG_TILT_SIGN</code> <code>SIG_STRAFE_SIGN</code>
+<code>SIG_LIFT_SIGN</code> <code>SIG_YAW_SIGN</code>
+<code>SIG_ROLL_SIGN</code> <code>SIG_PITCH_SIGN</code></td>
+<td>baked</td>
+<td>±1 per-axis trim; overrides nav.json</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_SNAP_R</code></td>
+<td>grid_step × 0.5</td>
+<td>Feature-snap catch radius</td>
+</tr>
+<tr class="even">
+<td><code>SIG_COOP_W</code></td>
+<td>340</td>
+<td>CO-OP pane width (clamp 240–720)</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_SPEC</code></td>
+<td>off</td>
+<td><code>1</code> arms SPEC build mode at launch</td>
+</tr>
+<tr class="even">
+<td><code>SIG_LLM_URL</code></td>
+<td><code>http://$GPU_HOST:18205</code></td>
+<td>CO-OP LLM endpoint</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_LLM_TIMEOUT</code></td>
+<td>600</td>
+<td>LLM request timeout, seconds</td>
+</tr>
+<tr class="even">
+<td><code>SIG_JUDGE</code></td>
+<td>on</td>
+<td><code>0</code> disables the visual judge</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_BG_YAW</code> / <code>SIG_BG_PITCH</code> /
+<code>SIG_BG_ROLL</code></td>
+<td>0</td>
+<td>Backdrop orientation</td>
+</tr>
+<tr class="even">
+<td><code>SIG_BG_LIFT</code></td>
+<td>400</td>
+<td>Backdrop dome lift (clamped 0–600)</td>
+</tr>
+<tr class="odd">
+<td><code>SIG_SSAO</code></td>
+<td>off</td>
+<td><code>1</code> re-enables SSAO (off: it bands the skydome)</td>
+</tr>
+<tr class="even">
+<td><code>SIG_INPUT_TRACE</code></td>
+<td>off</td>
+<td><code>1</code> prints wheel/pan/action events to stderr</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li><strong>Plate GLASS finish is not transparent</strong> — it renders
+as a lighter grey; the plate is an opaque box. Pinned; do not expect
+see-through.</li>
+<li>Grid lines are fuzzy-edged on deep zoom-in (bilinear magnification
+blur).</li>
+<li>Hover-glow can light an occluded scale glyph (press correctly
+refuses it).</li>
+<li>Groups don't survive a <code>.SigN</code> round-trip — the file is a
+flat list; a loaded scene comes back ungrouped.</li>
+<li><code>.SigN</code> open is launch-time only (<code>SIG_OPEN</code>);
+no in-app file-open picker yet.</li>
+<li>AI lane: the count register is warn-only and doesn't parse
+word-numbers ("six"); the judge rules on shape class only, single view,
+advisory; SCAD warnings surface but don't block;
+<code>&lt;SCAD&gt;</code> parts are additive (the model doesn't edit
+existing scene parts through that hatch). Endpoint reliability work is
+open — the AI-assist claim stays off the public page until fixed.</li>
+<li>A hole-marked mesh still reports its dims in the AI's MESHES ON
+PLATE block.</li>
+<li>SpaceMouse twist adds slight tilt (local-yaw drift); world-Y yaw is
+a known deferred option.</li>
+<li>Under Xvfb/llvmpipe, colors carry a blue HDR tint — judge color on a
+real display only.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<p>Not built yet. Listed so nobody mistakes them for missing bugs.</p>
+<ul>
+<li>Two-stage judge (VLM eyes → text-model judgement) — measured 7/9 vs
+2/8 single-stage, not yet wired into the app; multi-view renders and a
+stage-1 prompt sweep are the path to 9/9.</li>
+<li>Bake-viewer: load the baked STL back as a preview mesh.</li>
+<li>Regroup-on-load (fix the flat-list round-trip above).</li>
+<li>Group rotate/scale (multi-selection gizmo is move-only today).</li>
+<li>In-app <code>.SigN</code> file-open picker; BG LEVEL numbers
+mirrored into the panel.</li>
+<li>Sharp grid lines at magnification (nearest-neighbour / real line
+geometry).</li>
+<li>Shift-on-face-handle = uniform scale; hot-amber handle visibility
+pass.</li>
+<li>World-Y yaw option for the SpaceMouse twist drift.</li>
+<li>Track B AI lane (CadQuery-class, doctrine-clean runtime) — design
+queued.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

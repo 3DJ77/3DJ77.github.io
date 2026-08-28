@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LABYRINTH — Leviathan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="hero"><img src="../splash/labyrinth.jpg" alt="LABYRINTH splash"></div>
+<h1 class="mname">LABYRINTH</h1>
+<div class="lore"><p>The Labyrinth was Daedalus's masterwork, and it outlived its maker. A
+toolpath IS a labyrinth: one continuous path threading a bounded space,
+and getting it wrong costs you. This viewer walks the maze first. The
+tool was called Daedalus until the operator renamed it 2026-08-15 — same
+code, truer name.</p></div>
+<p class="tagline">The viewer. Walk the maze before the machine does.</p>
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/labyrinth-labyrinth-partnc.jpg" alt="a Hephaestus toolpath walked before the machine runs it" loading="lazy"><figcaption>a Hephaestus toolpath walked before the machine runs it</figcaption></figure></div>
+<div class="manual">
+<h1 id="labyrinth--operator-manual">Labyrinth — Operator Manual</h1>
+<p>3D toolpath and slice-file viewer of the Leviathan Design Suite.
+Sovereign, local-first, Rust + fyrox. PolyForm Small Business license.
+Renamed from Daedalus by operator ruling 2026-08-15.</p>
+<h2 id="quickstart">Quickstart</h2>
+<pre><code>cd ~/XOS/Labyrinth
+cargo build --release          # target/release/ still holds the old daedalus binary — rebuild once
+target/release/labyrinth path/to/job.nc
+target/release/labyrinth path/to/print.ctb</code></pre>
+<p>One CLI argument: the file. No argument → empty scene; hit
+<strong>Load output…</strong> (top-left panel) for a zenity picker
+filtered to <code>*.nc *.gcode *.ngc *.tap *.ctb</code>. Anything not
+ending <code>.ctb</code> is parsed as G-code.</p>
+<p>Camera (Chimaera orbit): <strong>right-drag</strong> orbits,
+<strong>wheel</strong> zooms. Close the window to quit.</p>
+<p>Colors, G-code view:</p>
+<div class="twrap"><table>
+<thead>
+<tr class="header">
+<th>color</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>grey (thin)</td>
+<td>rapid — G0, no cut</td>
+</tr>
+<tr class="even">
+<td>amber</td>
+<td>cut — G1/G2/G3</td>
+</tr>
+<tr class="odd">
+<td>red (thick)</td>
+<td>plunge — a G1 that only descends in Z, the router's danger move</td>
+</tr>
+</tbody>
+</table></div>
+<p>The panel shows filename, move count, rapid/cut/plunge tallies, and
+the bounding box in mm. Everything also echoes to stdout as
+<code>LABYRINTH …</code> lines.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>Walk the maze before the machine does. Labyrinth reads suite output —
+the G-code a post produced, the .ctb a slicer wrote — and draws it in 3D
+so you can eyeball the path before metal or resin is on the line. Moves
+are drawn as square tubes, not lines, so the path reads from any camera
+angle. It is a viewer only: it never edits, never sends, never talks to
+a controller.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>G-code parse</strong> (<code>src/parse.rs</code>, pure and
+headless, 3 tests):
+<ul>
+<li>Words: X/Y/Z coords, G modal group 0–3, I/J arc centers. Modal
+position and modal G carry line to line. Absolute (G90) assumed — that's
+what the suite emits.</li>
+<li><strong>Arcs: I/J-center G2/G3 yes</strong> — interpolated to ≤0.3
+mm chords in the XY plane at current Z. <strong>R-form arcs no</strong>
+— they draw as a straight cut.</li>
+<li>Plunge detection: a G1 with no XY motion and descending Z is flagged
+red.</li>
+</ul></li>
+<li><strong>.ctb decode</strong> (Jove's unencrypted v4/v5 shape): magic
+check, header stats (layers, layer height, total height, exposure,
+resolution) from fixed offsets, plus the embedded RGB15-RLE large
+preview rendered top-right.</li>
+<li><strong>3D render</strong>: rapids/cuts/plunges as three tube
+meshes, auto-centered and auto-framed; tube radius scales with job
+extent. Dark floor slab, one directional light.</li>
+</ul>
+<h2 id="using-it">Using it</h2>
+<ul>
+<li>Point it at Hephaestus or Iris <code>.nc</code> output, orbit, and
+check three things: plunges land where you meant them, rapids clear the
+stock, and no arc collapsed into a straight line (that's an R-form arc —
+see Known limits).</li>
+<li>For a <code>.ctb</code>, you get the header numbers and the preview
+thumbnail — enough to confirm you grabbed the right file, not enough to
+verify layers.</li>
+<li>Loading a second file (button or picker) clears the old view
+first.</li>
+<li>The parser tests run headless:
+<code>cargo test 2&gt;&amp;1 | tail -3</code>.</li>
+</ul>
+<h2 id="how-it-connects">How it connects</h2>
+<ul>
+<li><strong>Hephaestus</strong> — CAM <code>.nc</code> programs: the
+main diet.</li>
+<li><strong>Iris</strong> — laser/plasma G-code also loads here in 3D;
+the flat top-down cut view (the true "Nazca" picture) lives in Iris's
+bed, not here.</li>
+<li><strong>Jove</strong> — <code>.ctb</code> files;
+<code>parse.rs</code> decodes the exact inverse of Jove's preview
+encoder.</li>
+<li><strong>TIAMAT</strong> (the suite board) probes and launches
+Labyrinth like the rest of the suite. Window title: "Labyrinth —
+Leviathan Design Suite".</li>
+</ul>
+<h2 id="known-limits">Known limits</h2>
+<p>A viewer that misdecodes is worse than no viewer — you'd trust a
+wrong picture. These are real, open, confirmed in the current code:</p>
+<ul>
+<li><strong>G92/G28/G10 are not understood.</strong> They don't update
+<code>modal_g</code>, so their coordinate words are decoded as motion
+under whatever G0–G3 was last active. A <code>G92 X0 Y0</code> will draw
+a phantom move. Programs using work-offset or homing lines will backplot
+wrong.</li>
+<li><strong>Parenthetical comments are scanned as moves.</strong> Only
+<code>;</code> comments are stripped. A <code>(TOOL CHANGE X5)</code>
+comment parses its X5 as a real coordinate. Strip paren comments from
+files before trusting the plot.</li>
+<li><strong>Encrypted v5 .ctb is accepted but decoded from the wrong
+offsets.</strong> The encrypted magic passes the check and header stats
+are read from the unencrypted layout — the numbers shown are garbage
+presented as real. The preview is skipped, but don't trust any stat from
+an encrypted file.</li>
+<li>R-form arcs draw straight (by design for now — queued below).</li>
+<li>No G91 (relative) support; incremental programs plot wrong
+silently.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<ul>
+<li><strong>.ctb layer RLE scrubbing</strong> — decode the layer masks
+for a slider through the stack (header + preview only today).</li>
+<li><strong>R-form arcs</strong> — expand G2/G3 R… properly instead of
+drawing straight.</li>
+<li><strong>Move-order playback</strong> — a slider stepping through the
+path in time.</li>
+<li><strong>Rapid/cut/plunge visibility toggles</strong> — declutter
+dense jobs.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

@@ -3,11 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>Springhouse — Reconfiguring</title>
+<title>Leviathan — sovereign computing</title>
 <style>
   :root {
     --bg:     #0d0f0e;
@@ -23,90 +19,362 @@
     color: var(--dim);
     font-family: "DejaVu Sans Mono", "Cascadia Mono", Consolas, monospace;
     margin: 0;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 3rem;
+  }
+  .scrollwrap { max-width: 100%; overflow-x: auto; }
+  pre { margin: 0; }
+  .tagline { margin: 1rem 0 2.5rem; color: var(--green); }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    max-width: min(1680px, 94vw);
+    width: 100%;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 1.1rem 1.2rem;
+  }
+  .card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+  .card p { margin: 0; font-size: 0.85rem; line-height: 1.5; }
+  .status {
+    margin: 2.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+  }
+  .suite-head {
+    margin: 3rem 0 0.4rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+  }
+  .suite-sub {
+    margin: 0 0 1.4rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+  }
+  .suite {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    max-width: min(1680px, 94vw);
+    width: 100%;
+  }
+  .module {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .module img { width: 100%; height: auto; display: block; }
+  .mlink { text-decoration: none; display: block; }
+  .mlink:hover .m-name { color: #f0d060; }
+  .module .m-name {
+    margin: 0.7rem 1rem 0.15rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+  }
+  .module .m-what {
+    margin: 0 1rem 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+  /* ── coming soon: named, art shown, no link ── */
+  .soon { opacity: 0.72; }
+  .soon .m-name { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+  .soon-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--green);
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.4rem;
+    white-space: nowrap;
+  }
+  footer { text-align: center; margin-top: 3rem; }
+  footer p { font-size: 0.8rem; }
+  footer a { color: var(--green); }
+  .qr {
+    display: inline-block;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    line-height: 0;
+  }
+  .herald { margin-top: 0.4rem; display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+  .hform { display: flex; gap: 0; }
+  .hform input {
+    background: var(--panel);
+    border: 1px solid var(--gold);
+    border-right: 0;
+    color: var(--dim);
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 0.7rem 1rem;
+    width: min(20rem, 60vw);
+  }
+  .hform input:focus { outline: none; color: var(--gold); }
+  .hform button {
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    color: var(--bg);
+    font: inherit;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+  }
+  .hform button:hover { background: #f0d060; }
+  .hbtn {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+  }
+  .hbtn:hover { background: var(--gold); color: var(--bg); }
+  /* ── ancient-scroll view counter ── */
+  .scroll-counter {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2.5rem 1.5rem;
+    gap: 2px;
+    margin-top: 1.6rem;
   }
-  main { max-width: 44rem; width: 100%; }
-  .brand {
-    color: var(--gold);
-    letter-spacing: 0.22em;
-    font-size: 0.85rem;
-    margin-bottom: 0.6rem;
+  .scroll-roll {
+    width: 13px;
+    height: 74px;
+    border-radius: 7px;
+    background: linear-gradient(90deg, #6b5327, #c9b171 45%, #6b5327);
+    box-shadow: 0 2px 6px rgba(0,0,0,.6);
   }
-  h1 {
-    font-size: 1.05rem;
-    font-weight: normal;
-    letter-spacing: 0.16em;
-    color: var(--green);
-    margin: 0 0 2rem;
+  .scroll-body {
+    background: linear-gradient(180deg, #cbb98d, #e8dcbe 18% 82%, #cbb98d);
+    border-top: 1px solid #8a6a2f;
+    border-bottom: 1px solid #8a6a2f;
+    padding: 10px 18px 8px;
+    text-align: center;
   }
-  .panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--gold);
-    padding: 1.6rem 1.7rem;
-    margin-bottom: 2rem;
+  .odometer {
+    display: inline-flex;
+    border: 2px solid #8a6a2f;
+    border-radius: 3px;
+    background: #f3ecd8;
+    box-shadow: inset 0 0 6px rgba(74,55,19,.55);
+    overflow: hidden;
   }
-  p { font-size: 0.88rem; line-height: 1.75; margin: 0 0 1.1rem; }
-  p:last-child { margin-bottom: 0; }
-  .status {
-    font-size: 0.8rem;
-    color: var(--green);
-    line-height: 2;
-    border-top: 1px solid var(--border);
-    padding-top: 1.4rem;
+  .odometer .digit {
+    height: 1.5em;
+    overflow: hidden;
+    padding: 0 0.28em;
+    border-right: 1px solid rgba(138,106,47,.55);
+    font: italic 700 1.3rem/1.5 "Z003", "URW Chancery L", "Apple Chancery", "Monotype Corsiva", "Brush Script MT", Georgia, serif;
+    color: #3a2a10;
+    background: linear-gradient(180deg, rgba(74,55,19,.35), transparent 30% 70%, rgba(74,55,19,.35));
   }
-  .status div::before { content: "> "; }
-  .status div::after { content: "_"; }
-  footer {
-    margin-top: 2.2rem;
-    font-size: 0.72rem;
-    color: var(--border);
-    letter-spacing: 0.1em;
+  .odometer .digit:last-child { border-right: 0; }
+  .odometer .strip {
+    display: block;
+    transition: transform 1.4s cubic-bezier(.25,.9,.3,1);
+  }
+  .odometer .strip span { display: block; height: 1.5em; position: relative; }
+  .odometer .strip .n7::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 0.42em;
+    height: 0.07em;
+    background: currentColor;
+    transform: translateX(-38%) rotate(-11deg);
+    border-radius: 0.04em;
+  }
+  .scroll-label {
+    margin-top: 5px;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    color: #6b5327;
   }
 </style>
 </head>
 <body>
-<main>
 
-  <div class="brand">SPRINGHOUSE</div>
-  <h1>RECONFIGURING</h1>
+<div class="wordmark" style="max-width:min(1200px, 92vw);width:100%;"><img src="splash/leviathan-header.jpg" alt="LEVIATHAN — gold letters in the deep, a sea dragon wound through them" style="width:100%;height:auto;display:block;"></div>
 
-  <div class="panel">
-    <p>Springhouse is undertaking a structured reassessment of its product
-    architecture and go-to-market posture. External release activity is
-    paused pending completion of a value-proposition validation exercise.
-    This is a deliberate, resourced decision and not a suspension of
-    operations.</p>
+<div class="tagline">sovereign computing &mdash; your hardware, your files, no accounts<br>built in Rust &mdash; driving toward pure-Rust releases of the whole suite</div>
 
-    <p>The review covers distribution posture, deployment topology, and the
-    degree of alignment between delivered platform capability and
-    addressable demand. Preliminary findings indicate a non-trivial
-    variance between engineering throughput and validated market pull,
-    which we are working to characterise before committing further release
-    surface.</p>
-
-    <p>Roadmap consolidation is ongoing. Development continues across the
-    core platform layer while we evaluate whether the current offering
-    constitutes a differentiated proposition in a category with
-    well-capitalised incumbents, or whether resources are better allocated
-    against an adjacent vector.</p>
-
-    <p>No launch timeline is being communicated at this stage. Further
-    clarity will follow once the assessment concludes.</p>
+<div class="cards">
+  <div class="card">
+    <h2>LOCAL-FIRST</h2>
+    <p>Every tool runs on hardware you own. Nothing phones home, nothing
+    needs a login, nothing stops working when a company changes its mind.</p>
   </div>
-
-  <div class="status">
-    <div>strategic review in progress &mdash; no external commitments outstanding</div>
-    <div>no product is currently offered for sale or download</div>
-    <div>enquiries are not being taken at this time</div>
+  <div class="card">
+    <h2>FAIL-LOUD</h2>
+    <p>No silent fallbacks, no degraded modes. When something breaks it says
+    so, plainly, so you can fix it &mdash; not discover it weeks later.</p>
   </div>
+  <div class="card">
+    <h2>YOUR DISK</h2>
+    <p>Files, not clouds. Plain formats you can read in twenty years. Your
+    work survives any vendor, any subscription, any deletion policy.</p>
+  </div>
+  <div class="card">
+    <h2>IN CONCERT</h2>
+    <p>Not one app &mdash; a system. Notebook, CAD, image forge, print
+    pipeline: modules built to work together on your own machines.</p>
+  </div>
+</div>
 
-  <footer>SPRINGHOUSE</footer>
+<div class="suite-head">THE LEVIATHAN DESIGN SUITE</div>
+<div class="suite-sub">design &rarr; toolpath &rarr; machine &mdash; every module named for the one who did it first</div>
 
-</main>
+<div class="suite">
+  <div class="module"><a href="m/structor.html" class="mlink"><img src="splash/structor.jpg" alt="Structor — carved stone primitives and layout tools" loading="lazy"><div class="m-name">STRUCTOR</div></a>
+    <p class="m-what">CAD, sovereign. Solids in, drawings out.</p>
+  </div>
+  <div class="module"><a href="m/hephaestus.html" class="mlink"><img src="splash/hephaestus.jpg" alt="Hephaestus — the smith at his forge, sparks becoming toolpaths" loading="lazy"><div class="m-name">HEPHAESTUS</div></a>
+    <p class="m-what">CAM. Profiles, pockets, drills, 3D roughing &mdash; straight to G-code.</p>
+  </div>
+  <div class="module"><a href="m/iris.html" class="mlink"><img src="splash/iris.jpg" alt="Iris — a rainbow beam narrowing into a cutting laser" loading="lazy"><div class="m-name">IRIS</div></a>
+    <p class="m-what">Laser &amp; plasma prep. Raster, vectorize, kerf, cut.</p>
+  </div>
+  <div class="module"><a href="m/jove.html" class="mlink"><img src="splash/jove.jpg" alt="Jove — lightning curing a resin lattice on a storm cloud" loading="lazy"><div class="m-name">JOVE</div></a>
+    <p class="m-what">Resin print prep. Supports, drains, slice to the vat.</p>
+  </div>
+  <div class="module"><a href="m/gilgamesh.html" class="mlink"><img src="splash/gilgamesh.jpg" alt="GilgaMESH — the hero built of glowing wireframe" loading="lazy"><div class="m-name">GILGAMESH</div></a>
+    <p class="m-what">Image to mesh. A photo becomes a printable solid.</p>
+  </div>
+  <div class="module"><a href="m/labyrinth.html" class="mlink"><img src="splash/labyrinth.jpg" alt="Labyrinth — a vast maze whose passages glow with toolpath light" loading="lazy"><div class="m-name">LABYRINTH</div></a>
+    <p class="m-what">The viewer. Walk the maze before the machine does.</p>
+  </div>
+</div>
+
+<div class="status">&gt; six modules ready &mdash; free for individuals and small shops, PolyForm Small Business 1.0.0_</div>
+<div class="status">&gt; binaries first, source when the full suite ships_</div>
+
+<div class="suite-head" style="margin-top:2.2rem">COMING SOON</div>
+<div class="suite-sub">still in the shop &mdash; landing free as each one clears the bench</div>
+
+<div class="suite">
+  <div class="module soon"><img src="splash/tiamat.jpg" alt="Tiamat — dragon of the deep coiled around a glowing core" loading="lazy"><div class="m-name">TIAMAT <span class="soon-tag">soon</span></div>
+    <p class="m-what">The host. Every tool on one board &mdash; putting chaos to work.</p>
+  </div>
+  <div class="module soon"><img src="splash/antikythera.jpg" alt="Antikythera — glowing gearworks in a glass case" loading="lazy"><div class="m-name">ANTIKYTHERA <span class="soon-tag">soon</span></div>
+    <p class="m-what">Describe a mechanism, get a placed multi-part assembly. The anchor of the suite &mdash; still being proven out.</p>
+  </div>
+  <div class="module soon"><img src="splash/oannes.jpg" alt="Oannes — the sage from the water with a glowing scroll" loading="lazy"><div class="m-name">OANNES <span class="soon-tag">soon</span></div>
+    <p class="m-what">The shop advisor. Grounded answers, honest G-code post.</p>
+  </div>
+  <div class="module soon"><img src="splash/nazca.jpg" alt="Nazca — a giant hummingbird geoglyph drawn in one glowing toolpath line across a night desert" loading="lazy"><div class="m-name">NAZCA <span class="soon-tag">soon</span></div>
+    <p class="m-what">The bed. Flat-cut toolpaths, drawn like desert lines &mdash; one unbroken stroke.</p>
+  </div>
+  <div class="module soon"><img src="splash/ouranos.jpg" alt="Ouranos — a constellation sky arched over a glowing geodesic dome" loading="lazy"><div class="m-name">OURANOS <span class="soon-tag">soon</span></div>
+    <p class="m-what">Geodesic dome design. Cut lists, hub schedules, FEA &mdash; tape-measure ready.</p>
+  </div>
+  <div class="module soon"><img src="splash/morpheus.jpg" alt="Morpheus — the dream god shaping images from mist" loading="lazy"><div class="m-name">MORPHEUS <span class="soon-tag">soon</span></div>
+    <p class="m-what">Image generation on your own iron. No queue, no account.</p>
+  </div>
+  <div class="module soon"><img src="splash/kish.jpg" alt="Kish — the lit ziggurat library, scribes carrying glowing tablets" loading="lazy"><div class="m-name">KISH <span class="soon-tag">soon</span></div>
+    <p class="m-what">The library. Notebooks and reports, grounded in your own sources.</p>
+  </div>
+  <div class="module soon"><img src="splash/chimaera.jpg" alt="Chimaera — the many-headed beast examining one glowing mechanism" loading="lazy"><div class="m-name">CHIMAERA <span class="soon-tag">soon</span></div>
+    <p class="m-what">The hands. Camera, puck, and pointer &mdash; many beasts, one body.</p>
+  </div>
+  <div class="module soon"><img src="splash/styx.jpg" alt="Styx — the ferryman crossing black water with one lantern" loading="lazy"><div class="m-name">STYX <span class="soon-tag">soon</span></div>
+    <p class="m-what">The oath. One job crosses the GPU at a time.</p>
+  </div>
+  <div class="module soon"><img src="splash/dido.jpg" alt="Dido — the queen sweeping a glowing boundary cord around a hilltop" loading="lazy"><div class="m-name">DIDO <span class="soon-tag">soon</span></div>
+    <p class="m-what">The boundary. Offsets and windings &mdash; the most land one hide can hold.</p>
+  </div>
+  <div class="module soon"><img src="splash/argo.jpg" alt="Argo — the galley rowing as one under a single lantern, steering by one star" loading="lazy"><div class="m-name">ARGO <span class="soon-tag">soon</span></div>
+    <p class="m-what">The helm. Every window steers by one shared feel &mdash; mouse, puck, and star.</p>
+  </div>
+  <div class="module soon"><img src="splash/hades.jpg" alt="Hades — enthroned with a ring of glowing keys before rows of sleeping giants" loading="lazy"><div class="m-name">HADES <span class="soon-tag">soon</span></div>
+    <p class="m-what">The keeper. Giants sleep in the vault; one wakes when called.</p>
+  </div>
+  <div class="module soon"><img src="splash/ziz.jpg" alt="Ziz — a colossal bird of constellations spanning the night sky" loading="lazy"><div class="m-name">ZIZ <span class="soon-tag">soon</span></div>
+    <p class="m-what">The mind-space. Your knowledge graph in 3D &mdash; point it at a vault, fly the sky of it.</p>
+  </div>
+</div>
+
+<div class="status" style="margin-top:1.5rem">&gt; also on the bench, not yet named for the suite &mdash; a 3D scanner and a few other tools still being refined_</div>
+
+<div class="suite-head" style="margin-top:2.2rem">THE HERALD</div>
+<div class="suite-sub">follow for word when each new module clears the bench</div>
+<div class="herald">
+  <form class="hform" action="https://buttondown.com/api/emails/embed-subscribe/cashblack77" method="post" target="_blank">
+    <input type="email" name="email" placeholder="you@shop.example" required aria-label="email address">
+    <button type="submit">join the list_</button>
+  </form>
+  <a class="hbtn" href="https://ko-fi.com/3DJ77">or follow on Ko-fi &rarr; updates land in your inbox</a>
+</div>
+
+<footer>
+  <p>If any of this saves you a subscription &mdash; tips welcome, never required.</p>
+  <a class="qr" href="https://ko-fi.com/3DJ77">
+    <img src="kofi-qr.png" alt="Tip via Ko-fi — scan or click" width="140" height="140">
+  </a>
+  <p><a href="https://ko-fi.com/3DJ77">ko-fi.com/3DJ77</a></p>
+
+  <div class="scroll-counter" aria-label="page view counter">
+    <div class="scroll-roll"></div>
+    <div class="scroll-body">
+      <div class="odometer" id="odometer"></div>
+      <div class="scroll-label">VIEWS</div>
+    </div>
+    <div class="scroll-roll"></div>
+  </div>
+  <script>
+  (function () {
+    var od = document.getElementById('odometer');
+    var DIGITS = 6;
+    function build() {
+      for (var i = 0; i < DIGITS; i++) {
+        var cell = document.createElement('span');
+        cell.className = 'digit';
+        var strip = document.createElement('span');
+        strip.className = 'strip';
+        for (var d = 0; d <= 9; d++) {
+          var num = document.createElement('span');
+          if (d === 7) num.className = 'n7';
+          num.textContent = d;
+          strip.appendChild(num);
+        }
+        cell.appendChild(strip);
+        od.appendChild(cell);
+      }
+    }
+    function spin(n) {
+      var s = String(n).padStart(DIGITS, '0').slice(-DIGITS);
+      var strips = od.querySelectorAll('.strip');
+      for (var i = 0; i < DIGITS; i++) {
+        strips[i].style.transitionDelay = (0.12 * (DIGITS - 1 - i)) + 's';
+        strips[i].style.transform = 'translateY(-' + (+s[i] * 1.5) + 'em)';
+      }
+    }
+    build();
+    /* ponytail: Abacus hit counter (MIT, no account); swap endpoint when
+       self-hosted web infra lands (ROLLOUT.md sales-triggered roadmap).
+       Fails to 000000. */
+    fetch('https://abacus.jasoncameron.dev/hit/leviathan-3dj77/site-views')
+      .then(function (r) { return r.json(); })
+      .then(function (d) { spin(d.value); })
+      .catch(function () {});
+  })();
+  </script>
+</footer>
+
 </body>
 </html>
