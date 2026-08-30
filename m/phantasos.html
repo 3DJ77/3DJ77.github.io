@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHANTASOS — Livyatan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem;
+    margin:1.2rem 0 0.2rem; }
+  .lore { color:var(--dim); font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem;
+    border-left:3px solid var(--gold); padding:0.2rem 0 0.2rem 1rem; }
+  .lore p { margin:0.4rem 0; }
+  .tagline { color:var(--green); margin:0 0 1.6rem; font-size:0.9rem; }
+  .shots-head { color:var(--gold); letter-spacing:0.18em; font-size:0.9rem;
+    margin:1.8rem 0 0.6rem; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:0.8rem; }
+  .shots figure { margin:0; background:var(--panel); border:1px solid var(--border); }
+  .shots img { width:100%; height:auto; display:block; }
+  .shots figcaption { font-size:0.75rem; padding:0.5rem 0.7rem; }
+  .manual { margin-top:1.5rem; font-size:0.88rem; line-height:1.55; }
+  .manual h1 { color:var(--gold); font-size:1.1rem; letter-spacing:0.12em;
+    border-bottom:1px solid var(--border); padding-bottom:0.4rem; }
+  .manual h2 { color:var(--gold); font-size:0.95rem; letter-spacing:0.1em;
+    margin-top:1.8rem; }
+  .manual h3 { color:var(--gold); font-size:0.88rem; margin-top:1.3rem; }
+  .manual a { color:var(--green); }
+  .manual code { background:var(--panel); padding:0.1em 0.35em;
+    border:1px solid var(--border); font-size:0.95em; }
+  .manual pre { background:var(--panel); border:1px solid var(--border);
+    padding:0.8rem 1rem; overflow-x:auto; }
+  .manual pre code { background:none; border:none; padding:0; }
+  .manual .twrap { overflow-x:auto; }
+  .manual table { border-collapse:collapse; font-size:0.82rem; }
+  .manual th, .manual td { border:1px solid var(--border); padding:0.4rem 0.6rem;
+    text-align:left; vertical-align:top; }
+  .manual th { color:var(--gold); }
+  .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
+    padding:0.2rem 1rem; color:var(--dim); }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+  footer a { color:var(--green); }
+</style>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LIVYATAN</a></div>
+<div class="hero"><img src="../splash/phantasos.jpg" alt="PHANTASOS splash"></div>
+<h1 class="mname">PHANTASOS</h1>
+<div class="lore"><p>Phantasos is one of the Oneiroi, brother of Morpheus — the dream-spirit
+whose specific gift was dreams of <em>inanimate objects</em>: stone, wood,
+water, the shapes of things. This module dreams pictures of objects so
+the rest of the suite can make them real. Kin in the pantheon:
+<strong>Galatea</strong> — reserved for the video layer (still → motion),
+later.</p></div>
+<p class="tagline">Image generation on your own iron. No queue, no account.</p>
+<div class="shots-head">IN ACTION</div>
+<div class="shots"><figure><img src="shots/phantasos-folio.jpg" alt="the folio strip collects every shape" loading="lazy"><figcaption>the folio strip collects every shape</figcaption></figure><figure><img src="shots/phantasos-shaped-dragon-knocker.jpg" alt="prompt to canvas — shaped on the shop's own iron" loading="lazy"><figcaption>prompt to canvas — shaped on the shop's own iron</figcaption></figure></div>
+<div class="manual">
+<h1 id="phantasos--operator-manual">Phantasos — Operator Manual</h1>
+<p>Sovereign AI image generation. Type a prompt, get a 1024² render on
+canvas. A module of the Livyatan Design Suite; licensed PolyForm Small
+Business. Everything runs on the machine Phantasos is launched on — no
+network, no remote host, no account.</p>
+<h2 id="hardware">Hardware</h2>
+<p><strong>Needs a real GPU.</strong> The backend is
+<a href="https://github.com/leejet/stable-diffusion.cpp">stable-diffusion.cpp</a>'s
+Vulkan build, so it runs on any GPU that backend supports (AMD, Intel,
+NVIDIA) — not tied to one vendor.</p>
+<p>Measured floor (NVIDIA T1000 8GB, FLUX.1 Schnell q4, 1024×1024, 4
+steps): first render ~6.5 min including model load, ~5 min per render
+after — sampling is ~4.5 min of that. The card must be otherwise free:
+the diffusion weights alone are 6.9GB, so 8GB is the working minimum.
+Text encoding runs on the CPU and VAE decode is tiled by default, which
+is what makes 8GB cards work at all; bigger cards pay a few seconds for
+the same defaults. FLUX.2 dev wants more headroom and patience — it
+renders one-shot with CPU offload and takes minutes even on large
+cards.</p>
+<h2 id="quickstart">Quickstart</h2>
+<pre><code>sudo apt install ./phantasos_&lt;version&gt;_amd64.deb
+phantasos</code></pre>
+<ol type="1">
+<li>Build stable-diffusion.cpp (Vulkan backend) and put
+<code>sd-server</code>/<code>sd-cli</code> on your <code>PATH</code> —
+or set <code>PHANTASOS_SD_DIR</code> to the directory holding them.</li>
+<li>Get weights (FLUX.1 Schnell — Apache-2.0 — and optionally FLUX.2
+dev) into <code>PHANTASOS_MODEL_DIR</code>, default
+<code>~/.local/share/phantasos/models</code>. Weights are licensed by
+their publishers, not by this tool — check their terms (FLUX.2 dev
+carries Black Forest Labs' non-commercial license).</li>
+<li>Run <code>phantasos</code>. Type a prompt, press <strong>Shape</strong>
+(or Enter). First render pays the model load; after that it's resident
+and stays fast.</li>
+<li>The render fills the <strong>canvas</strong> and joins the
+<strong>folio</strong> strip on the right. <strong>Open in gimp</strong>
+(or whatever's current) hands the full-res PNG to an editor;
+<strong>swap</strong> cycles editors; <strong>Fit to monitor</strong>
+opens a monitor-sized copy.</li>
+</ol>
+<p>Headless, same pipeline (prints the output path; <code>--seed</code>
+makes it reproducible):</p>
+<pre><code>phantasos shape "a lighthouse at dusk" out.png
+phantasos shape "a lighthouse at dusk" out.png --model flux2dev --seed 42</code></pre>
+<p>Other suite modules use this seam too: GilgaMESH's words mode and
+Kish's folio plates render through <code>phantasos shape</code> when
+it's on your PATH.</p>
+<h2 id="what-it-is">What it is</h2>
+<p>A standalone Rust app — one window, one binary. It is the image half
+of "image + report": <strong>Phantasos</strong> makes the picture,
+<strong>Kish</strong> makes the report. It made every Livyatan module
+splash and the LIVYATAN masthead.</p>
+<p>No web tech. No Python UI. One binary, one window, your own GPU.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Canvas + folio</strong> — big canvas shows the latest
+render; every render joins the folio (thumbnail strip, newest on top).
+Click a thumbnail to bring it back.</li>
+<li><strong>Model picker</strong> — <code>Model:</code> button cycles
+the two offered models, persisted to
+<code>~/.config/phantasos/model</code>:
+<ul>
+<li><strong>Schnell</strong> (FLUX.1 Schnell, Apache-2.0) — 4 steps,
+fast. Resident: stays loaded between renders.</li>
+<li><strong>FLUX.2 dev</strong> — 20 steps, higher quality.
+Non-resident, one-shot (slow by design).</li>
+</ul></li>
+<li><strong>Local execution only</strong> — the resident model runs
+behind a local <code>sd-server</code> Phantasos starts and keeps warm
+on loopback; the non-resident model runs one-shot via a local
+<code>sd-cli</code> call. No network calls leave the machine.</li>
+<li><strong>Open in…</strong> — hands the current render to
+gimp/krita/inkscape/gthumb/eog/feh/nomacs; first installed wins,
+<code>swap</code> cycles, choice persisted to
+<code>~/.config/phantasos/editor</code>.</li>
+<li><strong>Fit to monitor</strong> — native Lanczos resize to the
+monitor the window is on (up or down), then opens the copy in the
+editor.</li>
+</ul>
+<div class="twrap"><table>
+<thead>
+<tr class="header">
+<th>var</th>
+<th>default</th>
+<th>what</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>PHANTASOS_MODEL_DIR</code></td>
+<td><code>~/.local/share/phantasos/models</code></td>
+<td>weight files (<code>flux/</code>, <code>flux2/</code>)</td>
+</tr>
+<tr class="even">
+<td><code>PHANTASOS_SD_DIR</code></td>
+<td>(PATH)</td>
+<td>directory holding <code>sd-server</code>/<code>sd-cli</code></td>
+</tr>
+<tr class="odd">
+<td><code>PHANTASOS_SD_PORT</code></td>
+<td><code>7860</code></td>
+<td>local port <code>sd-server</code> listens on</td>
+</tr>
+<tr class="even">
+<td><code>PHANTASOS_OUT_DIR</code></td>
+<td><code>~/Phantasos</code></td>
+<td>where renders land</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="using-it">Using it</h2>
+<ul>
+<li><strong>Render</strong>: pick a model, type, Shape. Status line
+tells you what's happening; there's no progress bar yet — "shaping…"
+then the image lands.</li>
+<li><strong>Cold start</strong>: first render after Phantasos starts or
+a model switch blocks while it loads the model (idempotent — a no-op if
+that model is already resident, otherwise it swaps servers and waits for
+"listening on" or fails loud).</li>
+<li><strong>Model switch</strong>: cycling the Model button is free; the
+load cost is paid on the next Shape.</li>
+<li><strong>Revisit</strong>: click any folio thumbnail — canvas swaps
+back, Open/Fit act on it.</li>
+<li><strong>Files</strong>: everything is a plain PNG in
+<code>PHANTASOS_OUT_DIR</code> (default <code>~/Phantasos</code>).</li>
+</ul>
+<h2 id="known-limits">Known limits</h2>
+<ul>
+<li><strong>Fixed 1024² and fixed steps</strong> — steps/size control is
+the next small add.</li>
+<li><strong>FLUX.2 dev is slow one-shot by design</strong> — its long
+CPU-offload first step outlasts a kept-open server connection, so it
+can't ride the resident path.</li>
+<li><strong>Cold-start tax</strong> — first render after Phantasos
+starts or a model switch pays the full model load from disk. Every fresh
+launch reloads on first render.</li>
+<li><strong>No negative prompt; no seed field in the window</strong> —
+window renders are random-seed today (headless
+<code>phantasos shape --seed</code> is reproducible).</li>
+<li><strong>No progress bar</strong> — status text only.</li>
+<li><strong>Chroma1-HD and FLUX.1 dev aren't offered</strong> — both
+weave a cross-hatch artifact on constrained-VRAM Vulkan paths across
+every setting tried.</li>
+</ul>
+<h2 id="queued">Queued</h2>
+<ul>
+<li>Steps/size control in the prompt row.</li>
+<li>Seed field in the window; negative prompt.</li>
+<li>Progress feedback during long shapes.</li>
+<li><strong>Galatea</strong> — the still→motion layer.</li>
+</ul>
+
+</div>
+<footer>
+<p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+</footer>
+</div>
+</body>
+</html>

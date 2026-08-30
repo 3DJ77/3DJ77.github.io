@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STRUCTOR — Leviathan</title>
+<title>STRUCTOR — Livyatan</title>
 <style>
   :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
           --dim:#9aa89f; --green:#4ade80; }
@@ -54,7 +54,7 @@
 </head>
 <body>
 <div class="col">
-<div class="crumb"><a href="../index.html">&larr; LEVIATHAN</a></div>
+<div class="crumb"><a href="../index.html">&larr; LIVYATAN</a></div>
 <div class="hero"><img src="../splash/structor.jpg" alt="STRUCTOR splash"></div>
 <h1 class="mname">STRUCTOR</h1>
 <div class="lore"><p>Structor was the Roman architect and engineer whose <em>De
@@ -78,7 +78,7 @@ rotate; grab the bounding-box handles to scale (corners = uniform, faces
 = one axis). <strong>Ctrl+B</strong> bakes the scene to STL.
 <strong>Ctrl+S</strong> saves a <code>.SigN</code> file.</p>
 <h2 id="what-it-is">What it is</h2>
-<p>Structor is the design module of the Leviathan Design Suite: a
+<p>Structor is the design module of the Livyatan Design Suite: a
 sovereign, local-first CAD program in Rust on fyrox. It is a TinkerCAD
 replacement — drop primitive solids on a build plate, drag/rotate/scale
 them with gizmos, mark negatives as holes, group and boolean-merge, then
@@ -163,7 +163,7 @@ AI-assist claim is deliberately OFF the public page until it holds.</li>
 <li><strong>Backdrops</strong> — SHOP / HILLS / SPACE skydome
 wallpapers, BG LEVEL trim.</li>
 <li><strong>SpaceMouse</strong> — direct hidraw driver (no daemon), full
-6-axis nav with the ARGO shared-feel system: every
+6-axis nav with the Chimaera shared-feel system: every
 sign/source/sensitivity is user data in
 <code>~/.config/signature/nav.json</code>, edited live in the NAV
 panel.</li>
@@ -227,13 +227,13 @@ line. UNITS toggles mm/in for the sheet.</p>
 <li><strong>Chimaera</strong> (<code>../Chimaera</code>, path dep) — the
 camera, interaction-math, and spacemouse crate. Nav canon tests live
 there; edit viewport feel THERE.</li>
-<li><strong>ARGO</strong> — the suite-wide nav-feel system:
+<li><strong>Chimaera helm</strong> — the suite-wide nav-feel system:
 <code>~/.config/signature/nav.json</code> is shared with Ouranos (the
 Buck Dome window) — one feel file across the suite; the shared
 <code>mouse</code> block carries orbit/zoom/pan sens and direction.</li>
 <li><strong>Bake pipeline</strong> — Lattice-Loom's wx3 solid pipeline →
 OpenSCAD → STL. Baked STLs are plain files in <code>out/</code>;
-downstream Leviathan modules (Jove, GilgaMESH, Labyrinth) take STL as
+downstream Livyatan modules (Jove, GilgaMESH, Labyrinth) take STL as
 input.</li>
 <li><strong>Timeline</strong> — exports append
 <code>signature.export</code> events to
