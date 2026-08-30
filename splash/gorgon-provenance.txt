@@ -1,0 +1,4 @@
+gorgon splash: up-t2i-82 chosen by Jay 2026-08-30 10:40 ("the lighting the
+gaze and the modesty and pose all hit right"). FLUX Schnell seed 82, upright
+"U" prompt — full recipe in ~/Desktop/gorgon-splash-candidates/WINNER-RECIPE.md.
+Site crop: y 130-706 band of the 1024x1024, scaled to 768x432.
