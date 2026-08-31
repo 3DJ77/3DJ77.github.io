@@ -1,0 +1,6 @@
+structor splash: w4b-v1-t2i-1310 chosen by Jay 2026-08-30 20:33 — FLUX Schnell
+seed 1310, 1152x640, "the obelisk is THE project" scriptorium prompt (blank
+obelisk turned three-quarters, soft tip gradation, parchment of sigil studies
++ construction lines/compass arcs/margin arithmetic). Replaces the 08-22
+seed-901 stone-primitives still life (see git history). Full prompt in
+/tmp/obelisk-w4b.py lineage; candidates in ~/Desktop/structor-splash-candidates/.
