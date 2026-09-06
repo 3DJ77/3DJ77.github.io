@@ -48,6 +48,17 @@
   .manual th { color:var(--gold); }
   .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
     padding:0.2rem 1rem; color:var(--dim); }
+  .getit { border:1px solid var(--gold); background:var(--panel);
+    padding:1rem 1.2rem; margin:0 0 1.8rem; }
+  .getit a.dl { color:var(--bg); background:var(--gold); text-decoration:none;
+    display:inline-block; padding:0.55rem 1.1rem; letter-spacing:0.1em;
+    font-weight:bold; font-size:0.9rem; }
+  .getit a.dl:hover { background:var(--green); }
+  .getit .inst { font-size:0.8rem; margin:0.8rem 0 0; }
+  .getit .inst code { background:var(--bg); padding:0.1em 0.35em;
+    border:1px solid var(--border); }
+  .getit .repo { font-size:0.78rem; margin:0.5rem 0 0; }
+  .getit .repo a { color:var(--green); }
   footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
   footer a { color:var(--green); }
 </style>
@@ -65,38 +76,50 @@ exists to design real parts for a real shop takes the name of the man
 who first wrote down what a design owes the person who builds from
 it.</p></div>
 <p class="tagline">CAD, sovereign. Solids in, drawings out.</p>
+<div class="getit">
+<a class="dl" href="https://github.com/3DJ77/Livyatan/releases/download/structor-v0.11.0/structor_0.11.0_amd64.deb" download>&darr; DOWNLOAD Structor 0.11.0 (.deb)</a>
+<p class="inst">Debian 13 / Ubuntu 24.04+ &mdash; install with <code>sudo apt install ./structor_0.11.0_amd64.deb</code></p>
+<p class="repo">All modules and docs: <a href="https://github.com/3DJ77/Livyatan">https://github.com/3DJ77/Livyatan</a></p>
+</div>
 <div class="shots-head">IN ACTION</div>
 <div class="shots"><figure><img src="shots/structor-scene-loaded.jpg" alt="a scene under the gizmos and inspector" loading="lazy"><figcaption>a scene under the gizmos and inspector</figcaption></figure></div>
 <div class="manual">
-<h1 id="structor--operator-manual">Structor — Operator Manual</h1>
+<h1 id="structor-operator-manual">Structor — Operator Manual</h1>
 <h2 id="quickstart">Quickstart</h2>
-<pre><code>cargo build --release
-target/release/structor</code></pre>
+<pre><code>sudo apt install ./structor_0.11.0_amd64.deb
+structor</code></pre>
 <p>Click a palette button (top-left) — BOX / SPHERE / CYLINDER / WEDGE /
-PYRAMID — to drop a solid on the plate. Left-drag moves it; rings
-rotate; grab the bounding-box handles to scale (corners = uniform, faces
-= one axis). <strong>Ctrl+B</strong> bakes the scene to STL.
-<strong>Ctrl+S</strong> saves a <code>.SigN</code> file.</p>
+PYRAMID — to drop a solid on the plate. New parts (and the cube a fresh
+scene opens with) arrive at one inch, 25.4 mm; GEAR is sized by its
+teeth and module. Left-drag moves it; rings rotate; grab the
+bounding-box handles to scale (corners = uniform, faces = one axis).
+<strong>EXPORT STL</strong> writes the scene to STL.
+<strong>SAVE</strong> (Ctrl+S) writes a <code>.SigN</code> file,
+<strong>OPEN</strong> (Ctrl+O) loads one — both through the file dialog,
+default folder <code>~/Structor</code>.</p>
 <h2 id="what-it-is">What it is</h2>
 <p>Structor is the design module of the Livyatan Design Suite: a
-sovereign, local-first CAD program in Rust on fyrox. It is a TinkerCAD
-replacement — drop primitive solids on a build plate, drag/rotate/scale
-them with gizmos, mark negatives as holes, group and boolean-merge, then
-bake the scene through OpenSCAD to a watertight STL. No browser, no
-cloud, no account. Everything runs on the local machine; the only
-network calls are optional AI requests to LLM endpoints on the
-operator's own cluster.</p>
+sovereign, local-first CAD program in Rust on fyrox. It is an alternative
+to online cloud-based CAD platforms — drop primitive solids on a build
+plate, drag/rotate/scale them with gizmos, mark negatives as holes, group
+and boolean-merge, then
+export the resolved solid to a watertight STL. No browser, no cloud, no
+account, no network. Everything runs on the local machine.</p>
 <p>The scene is a tree of shapes that maps 1:1 onto a JSON-CSG grammar,
 so a saved <code>.SigN</code> file is a readable spec, not an opaque
 blob. Boolean preview and merge use the manifold engine — the same
-backend OpenSCAD uses — so what you preview is what the bake produces.
-An AI CO-OP pane can edit the scene from plain-language instructions or
-write raw OpenSCAD for complex parts, but the deterministic
-hand-modeling path never depends on it.</p>
-<p>Formerly named SigNature; renamed 2026-08-09 when the suite was
-chartered. The binary is <code>target/release/structor</code>. 84
-in-crate tests (<code>cargo test</code>); the camera/spacemouse canon
-tests live in the Chimaera crate.</p>
+backend OpenSCAD uses — so what you preview is what the export
+produces.</p>
+<p>The installed binary is <code>/usr/bin/structor</code>. 85 in-crate
+tests (<code>cargo test</code>); the camera/spacemouse canon tests live
+in the vendored chimaera crate.</p>
+<h2 id="why-the-name">Why the name</h2>
+<p><em>Structor</em> is Latin for <strong>builder</strong> — the worker
+who raises the structure, and the root the word “structure” itself grew
+from. In Rome a structor was the tradesman on the wall, not the patron
+with the drawings: the one whose hands had to make the plan true. A CAD
+module that exists to design real parts for a real shop takes the
+builder’s name, not the architect’s.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Palette primitives</strong> — BOX, SPHERE, CYLINDER, WEDGE,
@@ -105,8 +128,8 @@ buttons.</li>
 <li><strong>SCAD template shapes</strong> — CONE, TORUS, TUBE, HEX
 PRISM, ROUND BOX, CAPSULE, SLOPE RING, GEAR (real computed involute
 flanks; teeth/module/face-width inputs — same module + different teeth =
-gears that mesh). Templates compile through OpenSCAD and land as
-grab-editable meshes.</li>
+gears that mesh). Shapes are built natively in-process (no external
+programs) and land as grab-editable meshes.</li>
 <li><strong>Gizmos</strong> — move arrows, rotate rings (22.5° snap with
 degree compass), bounding-box scale handles: 8 corners = uniform, 6
 faces = single axis, opposite point anchored, Esc restores exactly.</li>
@@ -115,9 +138,9 @@ set; Ctrl+A selects all; the set body-drags rigidly with the gizmo at
 the centroid (move only).</li>
 <li><strong>Groups and merge</strong> — Ctrl+G: solids-only = logical
 group; solid+hole = applies the boolean into one merged part (manifold
-CSG — OpenSCAD's own engine). Ctrl+U ungroups/un-merges. Ctrl+W welds
+CSG — OpenSCAD’s own engine). Ctrl+U ungroups/un-merges. Ctrl+W welds
 any 2+ selected parts into one polyhedron regardless of hole mix.
-Non-manifold parts fail LOUD ("MERGE FAIL: n part(s) not manifold"),
+Non-manifold parts fail LOUD (“MERGE FAIL: n part(s) not manifold”),
 never silently dropped.</li>
 <li><strong>Holes</strong> — H toggles solid↔︎hole; P previews the
 whole-scene boolean non-destructively.</li>
@@ -134,38 +157,96 @@ combined-bounds center.</li>
 multi-selection, against combined bounds or a picked reference
 part.</li>
 <li><strong>Undo/redo</strong> — snapshot history, checkpoint at every
-mutation; Ctrl+Z/Ctrl+Y. Copy/paste with Ctrl+C/Ctrl+V.</li>
+mutation; UNDO / REDO buttons carry the depth, Ctrl+Z / Ctrl+Y.</li>
+<li><strong>Parts outliner</strong> (2026-09-05) — the list under the
+palette: one row per part, the dot hides/shows it (same as HIDE), the
+name selects it.</li>
+<li><strong>Type on spawn</strong> — a palette click leaves the keyboard
+in the new part’s first dimension field:
+<code>50 Tab 20 Tab 3 Enter</code>.</li>
+<li><strong>Title bar</strong> — <code>Structor — bracket.SigN *</code>,
+the star while unsaved. Closing with unsaved changes writes the autosave
+first, then asks whether to save to the scene’s file.</li>
+<li><strong>REST</strong> — drops the selection’s base onto the plate;
+with two parts picked the last-clicked one stacks on the other.</li>
+<li><strong>FIT ALL</strong> (H with nothing selected) — frames every
+part; Home is still the home view. <strong>MEASURE</strong> — click two
+points on parts, read the distance (and the X/Y/Z legs) on the status
+line; Esc exits. <strong>RECENT</strong> — the last five scenes plus the
+autosave. <strong>UNITS</strong> on the toolbar — the inspector, readout
+and MEASURE follow it (rotations stay degrees). The status line reads
+the selection
+(<code>BOX 3 · 25.40 × 25.40 × 25.40 mm · 2 hidden</code>), the part
+under the cursor lights up, and the wheel zooms toward the cursor.</li>
+<li><strong>Look (2026-09-05)</strong> — Solarized dark is the suite
+palette (every module, one shared crate); toolbar faces carry the verb
+only, the chord and the sentence are in the hover tooltip; the toolbar
+centres on the window; the size/position inspector sits on the right;
+every shape is on the palette (no MORE drawer) with a rendered icon of
+the part; the colour wheel paints the selected part live; a fill light
+and ambient lift keep the shadow side readable; the shop backdrop’s
+aisle runs straight behind the plate.</li>
+<li><strong>PLATE clear keeps the grid</strong> (2026-09-05): the grid
+is its own lines-only sheet when the plate is hidden. HOME and FIT ALL
+always return the camera from a SpaceMouse fly to orbit (the “zoom won’t
+re-lock” report).</li>
+<li><strong>Photo domes</strong> — SHOP / HILLS / SPACE in the VIEW menu
+are the older backdrops: an equirect panorama on a sphere around the
+plate, self-lit, the ground slab hidden while one is up. Where the
+sphere sits relative to the plate is the operator’s placement (MAGIC
+CARPET / BG LEVEL below); the shipped defaults are the numbers placed by
+the author on 2026-09-05.</li>
+<li><strong>Text + / Text −</strong> — UI text scale for every Livyatan
+module, saved to <code>~/.config/livyatan/ui-scale</code>; restart to
+apply.</li>
+<li><strong>The backdrop is a level, the plate is the ship
+(2026-09-05).</strong> The backdrop sphere has a full placement —
+position and yaw/pitch/roll — around the plate. <strong>MAGIC
+CARPET</strong> (DEBUG pane) hands the SpaceMouse to the backdrop: tilt
+= glide it forward/back and sideways, push/pull = up/down, twist = yaw,
+Shift+tilt = pitch/roll, Alt = fast. <strong>VIEW → BG LEVEL</strong>
+does the same without the puck (FWD BACK LEFT RIGHT UP DOWN, YAW PITCH
+ROLL, RESET) and shows the live numbers. The placement locks per
+backdrop to <code>~/.config/structor/backdrop.json</code> when the
+window closes (and when the carpet is switched off) and comes back next
+launch; <code>SIG_BG_X/Y/Z/YAW/PITCH/ROLL</code> set the launch
+defaults. Copy/paste with Ctrl+C/Ctrl+V.</li>
 <li><strong>Import</strong> — STL (binary+ASCII) and OBJ via the IMPORT
 button (zenity dialog) or <code>SIG_IMPORT=&lt;path&gt;</code> at
 launch; meshes are welded, normalized, and grab-editable; imported-mesh
-W/H/D live in the inspector and rescale uniformly.</li>
-<li><strong>Export</strong> — EXPORT STL via zenity save dialog; each
-export appends a <code>signature.export</code> event to
-<code>~/XOS/.timeline-events.jsonl</code>.</li>
-<li><strong>Save/load</strong> — Ctrl+S writes <code>.SigN</code>
-(JSON-CSG: units, solids, colors, pins);
-<code>SIG_OPEN=&lt;path&gt;</code> loads at launch.</li>
-<li><strong>Bake</strong> — Ctrl+B runs the scene through the
-Lattice-Loom wx3 pipeline → OpenSCAD → STL + receipt + thumbnail, in
-<code>out/</code> anchored to the repo.</li>
-<li><strong>CO-OP AI pane</strong> — right-side popout (edge tab or C):
-plain-language <code>edit_solid</code> scene edits, a
-<code>&lt;SCAD&gt;</code> escape hatch where the model writes stock
-OpenSCAD for complex parts (one self-repair round on compile errors),
-SPEC build mode (≤2 clarifying questions → parameter sheet →
-<code>go</code> confirms), a count register that cross-checks requested
-quantities against the compiled program, and a VLM judge that renders
-the part and rules on shape class (advisory; JUDGE FAIL triggers one
-repair round). <strong>Honest note:</strong> the AI lane needs a
-configured LLM endpoint (<code>SIG_LLM_URL</code>, default the GPU
-host's nemotron shim) and its reliability work is still open — the
-AI-assist claim is deliberately OFF the public page until it holds.</li>
-<li><strong>Backdrops</strong> — SHOP / HILLS / SPACE skydome
-wallpapers, BG LEVEL trim.</li>
+dims (X/Y/Z, display order — 2026-08-31) live in the inspector and are
+per-axis (2026-09-04): typing W, H or D scales only that axis, the other
+two hold, and the part’s pins ride the same scale.</li>
+<li><strong>Export</strong> — EXPORT STL via zenity save dialog.</li>
+<li><strong>Save/load</strong> — SAVE / Ctrl+S writes <code>.SigN</code>
+(JSON-CSG: units, solids, colors, pins, groups, fab tags) through a save
+dialog the first time and silently to the same file after; OPEN / Ctrl+O
+loads one (undoable). Default folder <code>~/Structor</code>.
+<code>SIG_OPEN=&lt;path&gt;</code> still loads at launch.</li>
+<li><strong>Autosave</strong> — once a minute, only when the scene
+changed, to <code>~/Structor/autosave.SigN</code>; the status line says
+so. A previous session’s autosave is announced in the DEBUG feed at
+launch — OPEN it if you need it.</li>
+<li><strong>Hide</strong> — HIDE removes the selection (and its group)
+from the viewport and from picking; SHOW ALL restores. Hidden parts stay
+in the tree, the P preview and every export — hiding is a view, not a
+delete.</li>
+<li><strong>Z datum</strong> — the inspector’s Z row is the part’s BASE,
+so Z = 0 rests it on the plate (the centre is what moves; the ruler’s Z
+leg reads the same base).</li>
+<li><strong>Environments</strong> — VIEW menu. SHOP 3D (the launch
+view), HILLS 3D and SPACE 3D are levels: real geometry at 1 mm units — a
+30 m shop bay with the build plate lying on a granite surface-plate
+inspection bench and a bridge crane under the trusses, open ground under
+the hills sky, a station bay with a planet through the hatch — so the
+view keeps true perspective from any angle. SHOP / HILLS / SPACE are the
+older skydome wallpapers. BG LEVEL / MAGIC CARPET move whichever is up.
+Stay inside a level’s walls: orbiting out past them shows the sky
+through the back of the wall.</li>
 <li><strong>SpaceMouse</strong> — direct hidraw driver (no daemon), full
-6-axis nav with the Chimaera shared-feel system: every
+6-axis nav with the CHIMAERA shared-feel system: every
 sign/source/sensitivity is user data in
-<code>~/.config/signature/nav.json</code>, edited live in the NAV
+<code>~/.config/structor/nav.json</code>, edited live in the NAV
 panel.</li>
 <li><strong>Wheel/pan canon</strong> — all wheel and pan input routes
 through one seam each, ground-truthed to operator hands (scroll up =
@@ -192,11 +273,14 @@ P previews the cut without committing. Select the hole plus its solids
 and Ctrl+G to apply the boolean — the result is one merged,
 still-editable part; Ctrl+U brings the sources back. Ctrl+W welds any
 multi-selection into one part in a single stroke.</p>
-<p><strong>Save and bake.</strong> Ctrl+S saves <code>.SigN</code> to
-<code>out/</code>. Ctrl+B bakes: watch the CO-OP status line for
-<code>...Baking</code> → <code>BAKE OK</code>; the STL, receipt, and
-thumbnail land in <code>out/</code>. EXPORT STL in the toolbar opens a
-save dialog for shipping the mesh elsewhere.</p>
+<p><strong>Save and export.</strong> SAVE / Ctrl+S writes
+<code>.SigN</code> (dialog on the first save, default
+<code>~/Structor/</code>, then silently to that file); OPEN / Ctrl+O
+loads one. EXPORT STL in the toolbar opens a save dialog (defaulting to
+<code>~/Desktop</code>) and writes the boolean-resolved solid — exactly
+what the P preview shows — as binary STL. Any part that is not manifold
+is named in the status line and excluded from the merge rather than
+silently dropped.</p>
 <p><strong>Navigate.</strong> Right-drag or left-drag empty space =
 orbit. Middle-drag = pan (the scene follows the cursor). Wheel = zoom
 (scroll up backs the camera away). WASD pans the view. Home (or H with
@@ -205,51 +289,37 @@ push/pull = lift, twist = yaw. Hold <strong>Shift</strong> for the
 attitude layer — tilt L/R = roll, tilt F/B = pitch, fly gated off. Hold
 <strong>L-Alt</strong> to boost fly speed (<code>SIG_FLY_BOOST</code>,
 default 6×). Left puck button = home.</p>
-<p><strong>The NAV panel.</strong> If any axis feels backwards, don't
+<p><strong>The NAV panel.</strong> If any axis feels backwards, don’t
 relaunch with env flips — open the NAV panel and fix it there:
 per-function sign flips, gesture-source reassignment, puck sensitivity,
 fly speed, and the mouse feel block (orbit/zoom/ pan sens + direction).
-Every click writes <code>~/.config/signature/nav.json</code>. Load
-order: baked default ← nav.json ← <code>SIG_*</code> env (env wins, as
-launch trim).</p>
-<p><strong>The CO-OP pane.</strong> Edge tab or C opens it; drag the
-left grab bar to resize. Type an instruction and Enter: plain edits go
-through <code>edit_solid</code> (the model sees the whole spec plus a
-MESHES ON PLATE block); complex parts come back as
-<code>&lt;SCAD&gt;</code> programs, compiled and dropped on the plate.
-Toggle SPEC for the spec-build round: answer its ≤2 questions, review
-the parameter sheet, <code>go</code> builds, <code>cancel</code>/Esc
-aborts. The DEBUG feed (newest first) is copyable with Ctrl+C. Every AI
-part gets a COUNT check and an advisory judge verdict on the status
-line. UNITS toggles mm/in for the sheet.</p>
+Every click writes <code>~/.config/structor/nav.json</code>. Load order:
+baked default ← nav.json ← <code>SIG_*</code> env (env wins, as launch
+trim).</p>
+<p><strong>The DEBUG pane.</strong> Edge tab or C opens it; drag the
+left grab bar to resize. The feed (newest first) records every status
+transition — imports, exports, merges, welds — and is copyable with
+Ctrl+C. UNITS toggles mm/in display.</p>
 <h2 id="how-it-connects">How it connects</h2>
 <ul>
-<li><strong>Chimaera</strong> (<code>../Chimaera</code>, path dep) — the
-camera, interaction-math, and spacemouse crate. Nav canon tests live
+<li><strong>chimaera</strong> (<code>chimaera/</code>, vendored crate) —
+the camera, interaction-math, and spacemouse crate. Nav canon tests live
 there; edit viewport feel THERE.</li>
-<li><strong>Chimaera helm</strong> — the suite-wide nav-feel system:
-<code>~/.config/signature/nav.json</code> is shared with Ouranos (the
-Buck Dome window) — one feel file across the suite; the shared
-<code>mouse</code> block carries orbit/zoom/pan sens and direction.</li>
-<li><strong>Bake pipeline</strong> — Lattice-Loom's wx3 solid pipeline →
-OpenSCAD → STL. Baked STLs are plain files in <code>out/</code>;
-downstream Livyatan modules (Jove, GilgaMESH, Labyrinth) take STL as
-input.</li>
-<li><strong>Timeline</strong> — exports append
-<code>signature.export</code> events to
-<code>~/XOS/.timeline-events.jsonl</code> for the operator surface's
-timeline dots.</li>
-<li><strong>LLM endpoints</strong> — CO-OP posts to
-<code>SIG_LLM_URL</code> (default the GPU host's nemotron shim
-<code>http://$GPU_HOST:18205</code>); the judge renders via local
-<code>openscad</code> and asks a VLM endpoint. Structor calls over HTTP
-and holds no GPU itself — host-side GPU serialization is the Styx lease,
-owned by whatever runs the model server.</li>
+<li><strong>CHIMAERA</strong> — the suite-wide nav-feel system (né ARGO,
+renamed — Linux Foundation holds ARGO®):
+<code>~/.config/structor/nav.json</code> carries every
+sign/source/sensitivity; the <code>mouse</code> block carries
+orbit/zoom/ pan sens and direction.</li>
 </ul>
 <h2 id="env-knobs">Env knobs</h2>
 <p>Env is launch-time trim; the NAV panel / nav.json is the durable home
 for feel.</p>
 <div class="twrap"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -271,7 +341,7 @@ for feel.</p>
 <tr class="odd">
 <td><code>SIG_UNITS</code></td>
 <td>mm</td>
-<td><code>in</code> starts the SPEC sheet in inches</td>
+<td><code>in</code> starts the UNITS toggle in inches</td>
 </tr>
 <tr class="even">
 <td><code>SIG_SPACEMOUSE_SENS</code> / <code>_DEADZONE</code></td>
@@ -319,27 +389,7 @@ for feel.</p>
 <tr class="even">
 <td><code>SIG_COOP_W</code></td>
 <td>340</td>
-<td>CO-OP pane width (clamp 240–720)</td>
-</tr>
-<tr class="odd">
-<td><code>SIG_SPEC</code></td>
-<td>off</td>
-<td><code>1</code> arms SPEC build mode at launch</td>
-</tr>
-<tr class="even">
-<td><code>SIG_LLM_URL</code></td>
-<td><code>http://$GPU_HOST:18205</code></td>
-<td>CO-OP LLM endpoint</td>
-</tr>
-<tr class="odd">
-<td><code>SIG_LLM_TIMEOUT</code></td>
-<td>600</td>
-<td>LLM request timeout, seconds</td>
-</tr>
-<tr class="even">
-<td><code>SIG_JUDGE</code></td>
-<td>on</td>
-<td><code>0</code> disables the visual judge</td>
+<td>DEBUG pane width (clamp 240–720)</td>
 </tr>
 <tr class="odd">
 <td><code>SIG_BG_YAW</code> / <code>SIG_BG_PITCH</code> /
@@ -360,7 +410,32 @@ for feel.</p>
 <tr class="even">
 <td><code>SIG_INPUT_TRACE</code></td>
 <td>off</td>
-<td><code>1</code> prints wheel/pan/action events to stderr</td>
+<td>set (any value) to print WHEEL/PAN input events to stderr</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="developer-test-knobs">Developer / test knobs</h3>
+<p>Not for operators — read only by the test suite
+(<code>cargo test</code>); the shipped binary never consults them.</p>
+<div class="twrap"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Default</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SHOP_TEST_DIR</code></td>
+<td><code>$TMPDIR/structor-whips-e2e</code></td>
+<td>Directory the shop-export end-to-end test writes its
+MANIFEST/BOM/cut files into, so a developer can inspect the output</td>
 </tr>
 </tbody>
 </table></div>
@@ -373,44 +448,77 @@ see-through.</li>
 blur).</li>
 <li>Hover-glow can light an occluded scale glyph (press correctly
 refuses it).</li>
-<li>Groups don't survive a <code>.SigN</code> round-trip — the file is a
-flat list; a loaded scene comes back ungrouped.</li>
-<li><code>.SigN</code> open is launch-time only (<code>SIG_OPEN</code>);
-no in-app file-open picker yet.</li>
-<li>AI lane: the count register is warn-only and doesn't parse
-word-numbers ("six"); the judge rules on shape class only, single view,
-advisory; SCAD warnings surface but don't block;
-<code>&lt;SCAD&gt;</code> parts are additive (the model doesn't edit
-existing scene parts through that hatch). Endpoint reliability work is
-open — the AI-assist claim stays off the public page until fixed.</li>
-<li>A hole-marked mesh still reports its dims in the AI's MESHES ON
-PLATE block.</li>
+<li><del>Groups don’t survive a <code>.SigN</code> round-trip</del>
+FIXED 2026-08-31: group ids ride the root <code>groups</code> array
+(index-aligned like colors/pins/fab) and restore on load.</li>
 <li>SpaceMouse twist adds slight tilt (local-yaw drift); world-Y yaw is
 a known deferred option.</li>
 <li>Under Xvfb/llvmpipe, colors carry a blue HDR tint — judge color on a
 real display only.</li>
 </ul>
+<h2 id="shop-export-2026-08-31">Shop export (2026-08-31)</h2>
+<p>The model is truth: dimensioned drawings and machine cut files come
+FROM the scene (the shop-export design note; first customer = the WHIPS
+gasifier).</p>
+<ul>
+<li><strong>F</strong> cycles the selection’s Pro-Tag: untagged → FLAT →
+ROLLED → CNC → PRINT → CAST → STOCK. The tag names the toolchain, not
+the geometry: FLAT/ROLLED → plasma (Hephaestus profile), CNC →
+Hephaestus STL lane, PRINT/CAST → Jove (CAST scaled up for shrink),
+STOCK → BOM row only.</li>
+<li><strong>Shift+F</strong> steps a ROLLED part’s seam by 45°;
+<strong>Shift+T</strong> cycles its plate through stock gauges (16ga →
+1/8” → 3/16” → 1/4” → 3/8”). Both announce in the hint line and DEBUG
+feed.</li>
+<li>Hole boundary JSONs are cut with
+<code>hephaestus profile --inside</code> (comp rides INTO a hole;
+without it every hole comes out one kerf oversize) — the manifest says
+so next to the files. CNC/PRINT/CAST STLs are re-origined: centered on
+X/Y, resting on Z=0 — they land in a slicer/CAM at the origin, not
+wherever the part sat on the plate.</li>
+<li><strong>SHOP EXPORT</strong> (toolbar) picks a directory and writes
+<code>shop-&lt;epoch&gt;/</code>: per-part DXF R12 + Hephaestus boundary
+JSON + letter-landscape SVG sheet (FLAT/ROLLED), per-part STL
+(CNC/PRINT/CAST), plus <code>bom.csv</code> and
+<code>MANIFEST.txt</code>. Untagged parts are skipped loudly; geometry
+errors abort the whole export (no partial truth).</li>
+<li>A part = a group (its holes ride along) or a lone object. FLAT =
+viewed along local +Y; ROLLED unrolls a developable Cylinder/Cone at
+mid-surface (defaults: 1/8” plate, seam 0°; edit Rolled params in the
+.SigN for now). A ROLLED sphere/mesh is a hard error — that’s pressing,
+not plasma.</li>
+<li>ROLLED <strong>ports unwrap exactly</strong>: a hole cylinder in the
+group (radial or angled — its own rotation is honored) is intersected
+with the mid-surface sample-by-sample and mapped through the unroll
+isometry onto the flat, so the cut hole comes out round on the finished
+roll. A port that crosses the seam errors with “change seam_deg”;
+seam_deg decides where the split lands, so it’s load-bearing once ports
+exist.</li>
+<li>UNITS: model and cut files are mm; sheets display inches. One
+conversion, at the machine — every sheet and manifest says so.</li>
+<li>CONE palette button now spawns the parametric cone/frustum (H/R1/R2
+in the inspector; R2=0 = full cone) — required for rolled-frustum
+patterns.</li>
+</ul>
 <h2 id="queued">Queued</h2>
 <p>Not built yet. Listed so nobody mistakes them for missing bugs.</p>
 <ul>
-<li>Two-stage judge (VLM eyes → text-model judgement) — measured 7/9 vs
-2/8 single-stage, not yet wired into the app; multi-view renders and a
-stage-1 prompt sweep are the path to 9/9.</li>
-<li>Bake-viewer: load the baked STL back as a preview mesh.</li>
-<li>Regroup-on-load (fix the flat-list round-trip above).</li>
+<li><del>Regroup-on-load</del> built 2026-08-31 (with the shop-export
+lane).</li>
 <li>Group rotate/scale (multi-selection gizmo is move-only today).</li>
-<li>In-app <code>.SigN</code> file-open picker; BG LEVEL numbers
-mirrored into the panel.</li>
+<li><del>In-app <code>.SigN</code> file-open picker</del> built
+2026-09-05 (OPEN / Ctrl+O); BG LEVEL numbers mirrored into the
+panel.</li>
+<li>Hidden parts are session-only (not saved in <code>.SigN</code>);
+Ctrl+A still selects them.</li>
 <li>Sharp grid lines at magnification (nearest-neighbour / real line
 geometry).</li>
 <li>Shift-on-face-handle = uniform scale; hot-amber handle visibility
 pass.</li>
 <li>World-Y yaw option for the SpaceMouse twist drift.</li>
-<li>Track B AI lane (CadQuery-class, doctrine-clean runtime) — design
-queued.</li>
 </ul>
-
 </div>
+
 <footer>
 <p>free for individuals and small shops — PolyForm Small Business 1.0.0</p>
 <p><a href="../index.html">&larr; back to the suite</a></p>

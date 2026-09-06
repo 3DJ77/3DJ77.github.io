@@ -48,6 +48,17 @@
   .manual th { color:var(--gold); }
   .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
     padding:0.2rem 1rem; color:var(--dim); }
+  .getit { border:1px solid var(--gold); background:var(--panel);
+    padding:1rem 1.2rem; margin:0 0 1.8rem; }
+  .getit a.dl { color:var(--bg); background:var(--gold); text-decoration:none;
+    display:inline-block; padding:0.55rem 1.1rem; letter-spacing:0.1em;
+    font-weight:bold; font-size:0.9rem; }
+  .getit a.dl:hover { background:var(--green); }
+  .getit .inst { font-size:0.8rem; margin:0.8rem 0 0; }
+  .getit .inst code { background:var(--bg); padding:0.1em 0.35em;
+    border:1px solid var(--border); }
+  .getit .repo { font-size:0.78rem; margin:0.5rem 0 0; }
+  .getit .repo a { color:var(--green); }
   footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
   footer a { color:var(--green); }
 </style>
@@ -60,10 +71,13 @@
 <div class="lore"><p>Phantasos is one of the Oneiroi, brother of Morpheus — the dream-spirit
 whose specific gift was dreams of <em>inanimate objects</em>: stone, wood,
 water, the shapes of things. This module dreams pictures of objects so
-the rest of the suite can make them real. Kin in the pantheon:
-<strong>Galatea</strong> — reserved for the video layer (still → motion),
-later.</p></div>
+the rest of the suite can make them real.</p></div>
 <p class="tagline">Image generation on your own iron. No queue, no account.</p>
+<div class="getit">
+<a class="dl" href="https://github.com/3DJ77/Livyatan/releases/download/phantasos-v0.3.0/phantasos_0.3.0_amd64.deb" download>&darr; DOWNLOAD Phantasos 0.3.0 (.deb)</a>
+<p class="inst">Debian 13 / Ubuntu 24.04+ &mdash; install with <code>sudo apt install ./phantasos_0.3.0_amd64.deb</code></p>
+<p class="repo">All modules and docs: <a href="https://github.com/3DJ77/Livyatan">https://github.com/3DJ77/Livyatan</a></p>
+</div>
 <div class="shots-head">IN ACTION</div>
 <div class="shots"><figure><img src="shots/phantasos-folio.jpg" alt="the folio strip collects every shape" loading="lazy"><figcaption>the folio strip collects every shape</figcaption></figure><figure><img src="shots/phantasos-shaped-dragon-knocker.jpg" alt="prompt to canvas — shaped on the shop's own iron" loading="lazy"><figcaption>prompt to canvas — shaped on the shop's own iron</figcaption></figure></div>
 <div class="manual">
@@ -179,9 +193,10 @@ editor.</li>
 </table></div>
 <h2 id="using-it">Using it</h2>
 <ul>
-<li><strong>Render</strong>: pick a model, type, Shape. Status line
-tells you what's happening; there's no progress bar yet — "shaping…"
-then the image lands.</li>
+<li><strong>Render</strong>: pick a model, type, Shape. The hourglass
+takes the canvas while the render runs, its sand paced to the learned
+time for your machine; the status line says what's happening, then the
+image lands.</li>
 <li><strong>Cold start</strong>: first render after Phantasos starts or
 a model switch blocks while it loads the model (idempotent — a no-op if
 that model is already resident, otherwise it swaps servers and waits for
@@ -206,7 +221,6 @@ launch reloads on first render.</li>
 <li><strong>No negative prompt; no seed field in the window</strong> —
 window renders are random-seed today (headless
 <code>phantasos shape --seed</code> is reproducible).</li>
-<li><strong>No progress bar</strong> — status text only.</li>
 <li><strong>Chroma1-HD and FLUX.1 dev aren't offered</strong> — both
 weave a cross-hatch artifact on constrained-VRAM Vulkan paths across
 every setting tried.</li>
@@ -216,7 +230,6 @@ every setting tried.</li>
 <li>Steps/size control in the prompt row.</li>
 <li>Seed field in the window; negative prompt.</li>
 <li>Progress feedback during long shapes.</li>
-<li><strong>Galatea</strong> — the still→motion layer.</li>
 </ul>
 
 </div>

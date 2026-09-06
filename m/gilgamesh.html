@@ -48,6 +48,17 @@
   .manual th { color:var(--gold); }
   .manual blockquote { border-left:3px solid var(--gold); margin:1rem 0;
     padding:0.2rem 1rem; color:var(--dim); }
+  .getit { border:1px solid var(--gold); background:var(--panel);
+    padding:1rem 1.2rem; margin:0 0 1.8rem; }
+  .getit a.dl { color:var(--bg); background:var(--gold); text-decoration:none;
+    display:inline-block; padding:0.55rem 1.1rem; letter-spacing:0.1em;
+    font-weight:bold; font-size:0.9rem; }
+  .getit a.dl:hover { background:var(--green); }
+  .getit .inst { font-size:0.8rem; margin:0.8rem 0 0; }
+  .getit .inst code { background:var(--bg); padding:0.1em 0.35em;
+    border:1px solid var(--border); }
+  .getit .repo { font-size:0.78rem; margin:0.5rem 0 0; }
+  .getit .repo a { color:var(--green); }
   footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
   footer a { color:var(--green); }
 </style>
@@ -61,8 +72,13 @@
 GilgaMESH makes lasting solids out of fleeting pictures — and the MESH
 pun carries the module.</p></div>
 <p class="tagline">Image to mesh. A photo becomes a printable solid.</p>
+<div class="getit">
+<a class="dl" href="https://github.com/3DJ77/Livyatan/releases/download/gilgamesh-v0.2.0/gilgamesh_0.2.0_amd64.deb" download>&darr; DOWNLOAD GilgaMESH 0.2.0 (.deb)</a>
+<p class="inst">Debian 13 / Ubuntu 24.04+ &mdash; install with <code>sudo apt install ./gilgamesh_0.2.0_amd64.deb</code></p>
+<p class="repo">All modules and docs: <a href="https://github.com/3DJ77/Livyatan">https://github.com/3DJ77/Livyatan</a></p>
+</div>
 <div class="shots-head">IN ACTION</div>
-<div class="shots"><figure><img src="shots/gilgamesh-output-gnome.jpg" alt="its output: a photo became this printable solid (on Jove's plate)" loading="lazy"><figcaption>its output: a photo became this printable solid (on Jove's plate)</figcaption></figure></div>
+<div class="shots"><figure><img src="shots/gilgamesh-obelisk-model.jpg" alt="the obelisk model, hand-drawn sigils carved into the stone face" loading="lazy"><figcaption>the model. Glyphs drawn on paper by hand, carved into the face by <b>Nazca</b>; <b>GilgaMESH</b> welded the carve and the body into one watertight solid (<code>gilgamesh remesh</code>) so it would slice.</figcaption></figure><figure><img src="shots/gilgamesh-obelisk-print.jpg" alt="the same obelisk printed in galaxy black PLA, glyphs legible in the surface" loading="lazy"><figcaption>the print. Ender-3 Max, 0.2&nbsp;mm, about 2.5&nbsp;hours, galaxy black PLA &mdash; the same file, off the plate.</figcaption></figure></div>
 <div class="manual">
 <h1 id="gilgamesh--operator-manual">GilgaMESH — Operator Manual</h1>
 <p>Image-to-mesh lane of the Livyatan Design Suite. Sovereign,
@@ -98,16 +114,15 @@ wherever the server moves.</li>
 <li><strong>Fail-loud</strong>: <code>curl -sf</code> (fixed 2026-08-15)
 — a server error stops the run naming the step; nothing is deleted on
 failure. No silent 500 written out as a .glb ever again.</li>
-<li><strong>Lease-safe</strong>: the GPU job runs under
-<code>flock /tmp/xos_gpu_lock.json</code> — the Styx lease — so it waits
-its turn instead of colliding with the resident model. Nemotron stays
-resident throughout.</li>
+<li><strong>Lease-safe</strong>: the GPU job runs under the Styx lease,
+so it waits its turn instead of colliding with whatever else is holding
+the card. A model already resident stays resident.</li>
 </ul>
 <h2 id="using-it">Using it</h2>
 <pre><code>trellis-make ~/Pictures/bracket.png        # photo of a thing, 80 mm
 trellis-make part-sketch.jpg 45            # 45 mm tall
 trellis-make &quot;a socket organizer tray&quot; 60  # no such file -&gt; it&#39;s a prompt
-TRELLIS_HOST=10.0.0.3 trellis-make x.png   # different GPU host</code></pre>
+TRELLIS_HOST=your-gpu-host trellis-make x.png   # different GPU host</code></pre>
 <p>Best input: one object, centered, plain background, decent light. The
 words path builds that framing into the prompt automatically. Watch the
 step tags (<code>[flux]</code>, <code>[trellis]</code>,
