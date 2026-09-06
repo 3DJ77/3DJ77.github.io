@@ -27,6 +27,20 @@
   .scrollwrap { max-width: 100%; overflow-x: auto; }
   pre { margin: 0; }
   .tagline { margin: 1rem 0 2.5rem; color: var(--green); }
+  /* ponytail: native form POSTing straight to Buttondown — no JS, no
+     embed script, no account beyond the one already wired. */
+  .signup { max-width:640px; margin:1.4rem auto 0; text-align:center; }
+  .signup form { display:flex; gap:0.5rem; justify-content:center;
+    flex-wrap:wrap; margin:0.7rem 0 0.4rem; }
+  .signup input[type=email] { flex:1 1 18rem; max-width:22rem;
+    background:var(--panel); border:1px solid var(--border);
+    color:var(--dim); padding:0.6rem 0.8rem; font:inherit; font-size:0.9rem; }
+  .signup input[type=email]:focus { outline:none; border-color:var(--gold); }
+  .signup button { background:var(--gold); color:var(--bg); border:none;
+    padding:0.6rem 1.3rem; font:inherit; font-size:0.88rem; font-weight:bold;
+    letter-spacing:0.08em; cursor:pointer; }
+  .signup button:hover { background:var(--green); }
+  .signup .fine { font-size:0.76rem; color:var(--dim); opacity:0.75; }
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -312,6 +326,16 @@
     <li><b>2026-08-29</b> &mdash; Iris merges into Nazca; Ziz becomes Oneira.</li>
     <li><b>2026-08-28</b> &mdash; The wall reopens: the first free modules land; others hold for more testing.</li>
   </ul>
+</div>
+
+<div class="signup">
+  <form action="https://buttondown.com/api/emails/embed-subscribe/cashblack77"
+        method="post" target="_blank">
+    <input type="email" name="email" placeholder="you@example.com" required>
+    <button type="submit">GET THE HERALD</button>
+  </form>
+  <p class="fine">One email per drop &mdash; what unveiled, what it does, and what
+  surfaces next. No other mail, ever. Unsubscribe in one click.</p>
 </div>
 
 <footer>
