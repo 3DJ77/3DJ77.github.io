@@ -1,0 +1,14 @@
+hephaestus splash FINAL: heph-r11-night-s7515-nohook, chosen by Jay 2026-09-12 19:24
+("winner winner chicken dinner" on r10-s7515, then one more pass to remove the ceiling hook — "done, go").
+
+Bearded smith, arms folded, appraising a chalk elevation of the obelisk scribed on a slate slab;
+a man-sized black obelisk with gold edge lines stands behind the bench; night, forge banked to
+red embers, two candles. No glowing eyes (not in the myth), no gnome.
+
+FLUX.2 klein on Tiamat :7860, steps 4 / cfg 1.0 / euler, 1344x768 native 16:9, downscaled to 768x432 (resize-to-fill + center crop, 1344x768 is 1.75:1).
+Lineage: r6-05-slate-s7005 (txt2img) -> r9-appraise-s7505 (ref edit: arms folded + schematic)
+-> r10-night-s7515 (ref edit: night + small obelisk) -> r11 (ref edit: hook removed).
+Rulings that shaped it: realistic period work not a CAM metaphor; hammer+chisel not a scalpel;
+obelisk small enough to get through the shop door. All rounds + prompts in
+~/Desktop/hephaestus-splash-candidates/ALL-RENDERS/round*-RECIPES.md.
+Replaces the 08-15 generic smith-at-anvil (kept at ~/Desktop/hephaestus-splash-candidates/hephaestus-OLD-2026-08-15.jpg).
