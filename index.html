@@ -397,15 +397,16 @@
       }
     }
     build();
-    /* ponytail: Abacus hit counter (MIT, no account); swap endpoint when
-       self-hosted web infra lands (ROLLOUT.md sales-triggered roadmap).
+    /* Self-hosted GoatCounter public counter (site total, page views).
+       count arrives as a formatted string ("1 234"); keep digits only.
        Fails to 000000. */
-    fetch('https://abacus.jasoncameron.dev/hit/livyatan-3dj77/site-views')
+    fetch('https://stats.g54xyz0.com/counter/TOTAL.json')
       .then(function (r) { return r.json(); })
-      .then(function (d) { spin(d.value); })
+      .then(function (d) { spin(+String(d.count).replace(/\D/g, '')); })
       .catch(function () {});
   })();
   </script>
+<p class="made-at">G54XYZ0 &mdash; Start Here.<br>made at Springhouse Manufacturing Center, North Anson, Maine</p>
 </footer>
 
 </body>
