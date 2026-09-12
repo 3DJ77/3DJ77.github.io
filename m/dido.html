@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIDO — Livyatan</title>
+<style>
+  :root { --bg:#0d0f0e; --panel:#131715; --border:#2a3028; --gold:#d4af37;
+          --dim:#9aa89f; --green:#4ade80; }
+  * { box-sizing: border-box; }
+  body { background:var(--bg); color:var(--dim);
+    font-family:"DejaVu Sans Mono","Cascadia Mono",Consolas,monospace;
+    margin:0; display:flex; flex-direction:column; align-items:center;
+    padding:2rem 1rem 3rem; }
+  .col { max-width:940px; width:100%; }
+  .crumb { font-size:0.8rem; margin-bottom:1.2rem; }
+  .crumb a, footer a, .lore a { color:var(--green); text-decoration:none; }
+  .hero img { width:100%; height:auto; display:block; border:1px solid var(--border); }
+  h1.mname { color:var(--gold); letter-spacing:0.2em; font-size:1.4rem; margin:1.2rem 0 0.2rem; }
+  .lore { font-size:0.92rem; line-height:1.6; margin:0.6rem 0 0.9rem; border-left:2px solid var(--border); padding-left:0.9rem; }
+  .tagline { color:var(--green); margin:0 0 1.2rem; }
+  .soon-tag { display:inline-block; font-size:0.7rem; letter-spacing:0.15em; color:var(--green);
+    border:1px solid var(--border); padding:0.15rem 0.5rem; margin-bottom:1rem; }
+  p { line-height:1.65; }
+  .signup { max-width:640px; margin:2rem auto 0; text-align:center; border:1px solid var(--border); padding:1.2rem 1rem; }
+  .signup .lead { color:var(--gold); margin:0; letter-spacing:0.08em; font-size:0.9rem; }
+  .signup form { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; margin:0.7rem 0 0.4rem; }
+  .signup input[type=email] { flex:1 1 18rem; max-width:22rem; background:var(--panel);
+    border:1px solid var(--border); color:var(--dim); padding:0.6rem 0.8rem; font:inherit; font-size:0.9rem; }
+  .signup input[type=email]:focus { outline:none; border-color:var(--gold); }
+  .signup button { background:var(--gold); color:var(--bg); border:none; padding:0.6rem 1.3rem;
+    font:inherit; font-size:0.88rem; font-weight:bold; letter-spacing:0.08em; cursor:pointer; }
+  .signup button:hover { background:var(--green); }
+  .signup .fine { font-size:0.76rem; opacity:0.75; }
+  footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
+</style>
+<script data-goatcounter="https://stats.g54xyz0.com/count"
+        async src="https://stats.g54xyz0.com/count.js"></script>
+</head>
+<body>
+<div class="col">
+<div class="crumb"><a href="../index.html">&larr; LIVYATAN</a></div>
+<div class="hero"><img src="../splash/dido.jpg" alt="DIDO splash"></div>
+<h1 class="mname">DIDO</h1>
+<span class="soon-tag">STILL IN THE DEEP &mdash; surfacing when it clears the bench</span>
+<div class="lore"><p>Dido, queen of Carthage, was granted as much land as one oxhide could cover &mdash; so she cut the hide into a thin strip and enclosed a whole hill with it. Mathematicians still call the maximum-enclosure boundary problem &ldquo;Dido&rsquo;s problem.&rdquo;</p></div>
+<p class="tagline">The boundary. Offsets and windings &mdash; the most land one hide can hold.</p>
+<p>The tool is not infinitely thin. The line you drew and the line the machine cuts are different lines, and Dido computes the difference: cutter compensation for milling, kerf for laser and plasma, support regions for resin. Every module that turns a drawing into a cut leans on it.</p>
+<p>You will rarely open Dido on its own. You will see its work every time a part comes off the machine at the size you drew it.</p>
+<div class="signup">
+  <p class="lead">BE TOLD WHEN DIDO SURFACES</p>
+  <form action="https://herald.g54xyz0.com/subscribe" method="post" target="_blank">
+    <input type="email" name="email" placeholder="you@shop.example" required aria-label="email address">
+    <button type="submit">GET THE HERALD</button>
+  </form>
+  <p class="fine">One email per drop &mdash; what unveiled, what it does, and what
+  surfaces next. No other mail, ever. Say the word and you're off the list.</p>
+</div>
+<footer>
+<p><a href="../index.html">&larr; back to the suite</a></p>
+<p class="made-at"><a href="https://g54xyz0.com">G54XYZ0 &mdash; Start Here.</a><br>made at Springhouse Manufacturing Center, North Anson, Maine</p>
+</footer>
+</div>
+</body>
+</html>
