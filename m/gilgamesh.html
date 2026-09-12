@@ -62,6 +62,16 @@
   footer { margin-top:3rem; font-size:0.8rem; text-align:center; }
   footer a { color:var(--green); }
 </style>
+<!-- Analytics: GoatCounter — referrers, uniques and per-page counts, which the
+     Abacus hit counter below cannot give (it counts page loads, no source).
+     No cookies, no personal data, no consent banner — the only kind defensible
+     on a site whose pitch is "no account and nothing phoning home".
+     Open source and self-hostable: swap the data-goatcounter URL when the
+     self-hosted web infra lands, same as the Abacus note in index.html.
+     To keep your OWN visits out of the numbers, run this once per browser on
+     the live site:  localStorage.setItem('skipgc', 't')  -->
+<script data-goatcounter="https://stats.g54xyz0.com/count"
+        async src="https://stats.g54xyz0.com/count.js"></script>
 </head>
 <body>
 <div class="col">
@@ -86,7 +96,7 @@ local-first. PolyForm Small Business licensed
 (<code>LICENSE.md</code>).</p>
 <h2 id="quickstart">Quickstart</h2>
 <pre><code>trellis-make photo.png             # image -&gt; printable STL
-trellis-make &quot;a garden gnome&quot; 120  # words -&gt; image -&gt; STL, 120 mm tall</code></pre>
+trellis-make &quot;a benchy&quot; 120  # words -&gt; image -&gt; STL, 120 mm tall</code></pre>
 <p>Either way you end with a watertight STL in
 <code>~/Desktop/bezier/</code> ready for the slicer. That's the whole
 interface — one command, one or two args.</p>
